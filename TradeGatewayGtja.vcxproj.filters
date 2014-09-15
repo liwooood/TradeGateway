@@ -298,9 +298,6 @@
     <ClInclude Include="business\SunGuard\SywgConnect.h">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\ThreadSafeQueue\job_queue.h">
-      <Filter>线程安全Queue</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\common\ThreadPool\worker.h">
       <Filter>线程池ThreadPool</Filter>
     </ClInclude>
@@ -399,6 +396,9 @@
     </ClInclude>
     <ClInclude Include="ConnectPool\ConnectPool.h">
       <Filter>业务层\柜台连接池</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadSafeQueue\job_queue.h">
+      <Filter>线程安全Queue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

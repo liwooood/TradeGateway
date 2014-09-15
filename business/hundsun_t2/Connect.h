@@ -34,6 +34,7 @@ public:
 	bool CreateConnect();
 	bool ReConnect();
 	void CloseConnect();
-	void * getConnect();
+
+	//CCallbackImpl * get();
 };
 #endif

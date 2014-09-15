@@ -1,6 +1,5 @@
 #include "ConnectPool.h"
 #include "./config/ConfigManager.h"
-
 #include "./output/FileLog.h"
 
 
@@ -22,13 +21,8 @@ ConnectPool::~ConnectPool(void)
 
 bool ConnectPool::CreateConnPool()
 {
-	
 	gFileLog::instance().Log("开始创建连接池");
 
-	bool bRet = false;
-
-	
-	m_bCreatePool = true;
 
 	// 初始化连接数=柜台服务器数 * m_nConnPoolMin
 	// 假设服务器有4个, m_nConnPoolMin=2, 创建后s1, s2, s3, s4, s1,s2,s3,s4
@@ -53,7 +47,7 @@ bool ConnectPool::CreateConnPool()
 	} // end for 初始次数
 	
 
-	m_nConnCount = m_pool.queue_.size();
+	int m_nConnCount = m_pool.queue_.size();
 
 	if (m_nConnCount == 0)
 	{
@@ -61,7 +55,7 @@ bool ConnectPool::CreateConnPool()
 		gFileLog::instance().Log(msg);
 		
 
-		bRet = false;
+		m_bCreatePool = false;
 	}
 	else
 	{
@@ -69,18 +63,16 @@ bool ConnectPool::CreateConnPool()
 		gFileLog::instance().Log(msg);
 
 
-		bRet = true;
+		m_bCreatePool = true;
 	}
 
 
-	return bRet;
+	return m_bCreatePool;
 }
 
 
 bool ConnectPool::IncreaseConnPool()
 {
-	bool bRet = false;
-
 	int nOldSize = m_pool.queue_.size();
 
 
@@ -106,7 +98,7 @@ bool ConnectPool::IncreaseConnPool()
 	} // end for 增长次数
 		
 
-	m_nConnCount = m_pool.queue_.size();
+	int m_nConnCount = m_pool.queue_.size();
 
 	if (m_nConnCount == nOldSize)
 	{
@@ -114,7 +106,7 @@ bool ConnectPool::IncreaseConnPool()
 		std::string msg = "扩充连接池失败";
 		gFileLog::instance().Log(msg);
 
-		bRet = false;
+		m_bCreatePool = false;
 	}
 	else
 	{
@@ -122,10 +114,10 @@ bool ConnectPool::IncreaseConnPool()
 		gFileLog::instance().Log(msg);
 
 
-		bRet = true;
+		m_bCreatePool = true;
 	}
 
-	return bRet;
+	return m_bCreatePool;
 }
 
 
@@ -195,12 +187,7 @@ void ConnectPool::CloseConnPool()
 
 	m_pool.stop();
 
-	/*
-	方案一
-	Connect * pConn = m_pool.pop();
-	*/
-
-	// 方案二
+	
 	for (std::deque<Connect*>::iterator pos = m_pool.queue_.begin(); pos != m_pool.queue_.end(); pos++)
 	{
 		Connect * pConn = *pos;
@@ -215,7 +202,7 @@ void ConnectPool::CloseConnPool()
 	
 }
 
-bool ConnectPool::IsCreatePool()
+bool ConnectPool::IsCreatePoolSuccess()
 {
 	return m_bCreatePool;
 }
