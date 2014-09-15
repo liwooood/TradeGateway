@@ -139,6 +139,9 @@
     <ClInclude Include="agc_encrypt.h" />
     <ClInclude Include="business\apexsoft\DingDian.h" />
     <ClInclude Include="business\apexsoft\TradeBusinessDingDian.h" />
+    <ClInclude Include="business\hundsun_t2\CallbackImpl.h" />
+    <ClInclude Include="business\hundsun_t2\Connect.h" />
+    <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h" />
     <ClInclude Include="business\IBusiness.h" />
     <ClInclude Include="business\SunGuard\AGC.h" />
@@ -153,13 +156,8 @@
     <ClInclude Include="ConnectPool\BusinessSystem.h" />
     <ClInclude Include="ConnectPool\BusinessType.h" />
     <Text Include="bin_release\ChangeLog.txt" />
-    <Text Include="ConnectPool\Connect.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
     <ClInclude Include="ConnectPool\ConnectManager.h" />
-    <Text Include="ConnectPool\ConnectPool.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
+    <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
     <ClInclude Include="encrypt\MyBotan.h" />
     <ClInclude Include="lib\XML\pugiconfig.hpp" />
@@ -228,6 +226,8 @@
   <ItemGroup>
     <ClCompile Include="business\apexsoft\DingDian.cpp" />
     <ClCompile Include="business\apexsoft\TradeBusinessDingDian.cpp" />
+    <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp" />
+    <ClCompile Include="business\hundsun_t2\Connect.cpp" />
     <ClCompile Include="business\hundsun_t2\TradeBusinessT2.cpp" />
     <ClCompile Include="business\IBusiness.cpp" />
     <ClCompile Include="business\SunGuard\AGC.cpp" />
@@ -242,13 +242,8 @@
     <ClCompile Include="ConnectPool\Branch.cpp" />
     <ClCompile Include="ConnectPool\BusinessSystem.cpp" />
     <ClCompile Include="ConnectPool\BusinessType.cpp" />
-    <Text Include="ConnectPool\Connect.cpp.txt">
-      <FileType>CppCode</FileType>
-    </Text>
     <ClCompile Include="ConnectPool\ConnectManager.cpp" />
-    <Text Include="ConnectPool\ConnectPool.cpp.txt">
-      <FileType>CppCode</FileType>
-    </Text>
+    <ClCompile Include="ConnectPool\ConnectPool.cpp" />
     <ClCompile Include="ConnectPool\Counter.cpp" />
     <ClCompile Include="encrypt\MyBotan.cpp" />
     <ClCompile Include="encrypt\testbotan.cpp" />

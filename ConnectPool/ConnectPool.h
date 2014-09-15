@@ -2,10 +2,13 @@
 #define _CONNECT_POOL_H_
 
 #include <vector>
-#include "connect.h"
+
+#include "ThreadSafeQueue/job_queue.h"
+
+#include "business/hundsun_t2/connect.h"
 #include "common.h"
 #include "Counter.h"
-#include "ThreadSafeQueue/job_queue.h"
+
 
 class ConnectPool
 {

@@ -107,9 +107,6 @@
     <Filter Include="业务层\柜台连接池">
       <UniqueIdentifier>{7136fcfd-ff1c-4f68-a54b-5c73a557861b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="业务层\柜台连接池\代码作废">
-      <UniqueIdentifier>{9dc1211c-4960-473b-9d34-f15a8d1fd8b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="第三方库\Zlib">
       <UniqueIdentifier>{ede17966-2a39-4557-8423-3f2ee643f40c}</UniqueIdentifier>
     </Filter>
@@ -190,9 +187,6 @@
     </Filter>
     <Filter Include="业务层\柜台系统\顶点">
       <UniqueIdentifier>{1bd17284-b664-4c6d-b16b-646b9c676689}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\顶点\顶点配置文件">
-      <UniqueIdentifier>{9b70e119-f458-4402-9376-47b2d0c993a4}</UniqueIdentifier>
     </Filter>
     <Filter Include="业务层\柜台系统\恒生COM">
       <UniqueIdentifier>{1d9588fa-f777-42e1-9431-c01714ba1185}</UniqueIdentifier>
@@ -364,9 +358,6 @@
     <ClInclude Include="network\ssl_tcp\TcpServer.h">
       <Filter>网络层\网络服务\TCP</Filter>
     </ClInclude>
-    <ClInclude Include="business\apexsoft\DingDian.h">
-      <Filter>业务层\柜台系统\顶点\顶点配置文件</Filter>
-    </ClInclude>
     <ClInclude Include="network\io_service_pool.h">
       <Filter>网络层</Filter>
     </ClInclude>
@@ -393,6 +384,21 @@
     </ClInclude>
     <ClInclude Include="common.h">
       <Filter>公共类型</Filter>
+    </ClInclude>
+    <ClInclude Include="business\hundsun_t2\CallbackImpl.h">
+      <Filter>业务层\柜台系统\恒生T2</Filter>
+    </ClInclude>
+    <ClInclude Include="business\hundsun_t2\t2sdk_interface.h">
+      <Filter>业务层\柜台系统\恒生T2</Filter>
+    </ClInclude>
+    <ClInclude Include="business\hundsun_t2\Connect.h">
+      <Filter>业务层\柜台系统\恒生T2</Filter>
+    </ClInclude>
+    <ClInclude Include="business\apexsoft\DingDian.h">
+      <Filter>业务层\柜台系统\顶点</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectPool\ConnectPool.h">
+      <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -486,9 +492,6 @@
     <ClCompile Include="network\ssl_tcp\SSLServer.cpp">
       <Filter>网络层\网络服务\SSL</Filter>
     </ClCompile>
-    <ClCompile Include="business\apexsoft\DingDian.cpp">
-      <Filter>业务层\柜台系统\顶点\顶点配置文件</Filter>
-    </ClCompile>
     <ClCompile Include="network\ssl_tcp\TcpServer.cpp">
       <Filter>网络层\网络服务\TCP</Filter>
     </ClCompile>
@@ -515,6 +518,18 @@
     </ClCompile>
     <ClCompile Include="business\SunGuard\Crc.cpp">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+    </ClCompile>
+    <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp">
+      <Filter>业务层\柜台系统\恒生T2</Filter>
+    </ClCompile>
+    <ClCompile Include="business\hundsun_t2\Connect.cpp">
+      <Filter>业务层\柜台系统\恒生T2</Filter>
+    </ClCompile>
+    <ClCompile Include="business\apexsoft\DingDian.cpp">
+      <Filter>业务层\柜台系统\顶点</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\ConnectPool.cpp">
+      <Filter>业务层\柜台连接池</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -558,9 +573,6 @@
     <None Include="network\ssl\proto2cpp.bat">
       <Filter>网络层\网络消息\SSL old\protobuf</Filter>
     </None>
-    <None Include="bin\tradeparam.map">
-      <Filter>业务层\柜台系统\顶点\顶点配置文件</Filter>
-    </None>
     <None Include="bin_release\wer.reg">
       <Filter>CrashDump</Filter>
     </None>
@@ -581,6 +593,9 @@
     </None>
     <None Include="文档\系统设计文档\业务时序图.vsdx">
       <Filter>文档</Filter>
+    </None>
+    <None Include="bin\tradeparam.map">
+      <Filter>业务层\柜台系统\顶点</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -608,14 +623,14 @@
     <Xml Include="bin_debug\kingdom_win_filterfield.xml">
       <Filter>日志\过滤敏感字段</Filter>
     </Xml>
-    <Xml Include="bin\OutputDomain.xml">
-      <Filter>业务层\柜台系统\顶点\顶点配置文件</Filter>
-    </Xml>
     <Xml Include="bin_debug\agc.xml">
       <Filter>业务层\柜台系统\金仕达AGC/WGX\AGC配置文件\debug</Filter>
     </Xml>
     <Xml Include="bin_release\agc.xml">
       <Filter>业务层\柜台系统\金仕达AGC/WGX\AGC配置文件\release</Filter>
+    </Xml>
+    <Xml Include="bin\OutputDomain.xml">
+      <Filter>业务层\柜台系统\顶点</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>
@@ -699,18 +714,6 @@
     </Text>
     <Text Include="network\ISession.cpp.txt">
       <Filter>网络层\会话层</Filter>
-    </Text>
-    <Text Include="ConnectPool\Connect.cpp.txt">
-      <Filter>业务层\柜台连接池\代码作废</Filter>
-    </Text>
-    <Text Include="ConnectPool\Connect.h.txt">
-      <Filter>业务层\柜台连接池\代码作废</Filter>
-    </Text>
-    <Text Include="ConnectPool\ConnectPool.cpp.txt">
-      <Filter>业务层\柜台连接池\代码作废</Filter>
-    </Text>
-    <Text Include="ConnectPool\ConnectPool.h.txt">
-      <Filter>业务层\柜台连接池\代码作废</Filter>
     </Text>
     <Text Include="bin_release\ChangeLog.txt">
       <Filter>配置文件\release</Filter>

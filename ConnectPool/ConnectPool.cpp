@@ -19,10 +19,11 @@ ConnectPool::~ConnectPool(void)
 	CloseConnPool();
 }
 
+
 bool ConnectPool::CreateConnPool()
 {
-		std::string msg = "开始创建连接池";
-		gFileLog::instance().Log(msg);
+	
+	gFileLog::instance().Log("开始创建连接池");
 
 	bool bRet = false;
 
@@ -149,7 +150,7 @@ bool ConnectPool::IncreaseConnPool()
 		return NULL;
 	}
 
-
+	/*
 	if (pConn->IsTimeout())
 	{
 		if (!pConn->ReConnect())
@@ -160,6 +161,7 @@ bool ConnectPool::IncreaseConnPool()
 			return NULL;
 		}
 	}
+	*/
 
 	msg = "获取连接成功, " + pConn->GetConnectInfo();
 	gFileLog::instance().Log(msg);
