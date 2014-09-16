@@ -10,8 +10,10 @@ class CCallbackImpl : public CCallbackInterface
 {
 private:
 	std::string response;
+
 	// 应答事件
 	HANDLE hResEvent;
+
 	// 连接中断事件
 	HANDLE hCloseEvent;
 
@@ -40,5 +42,6 @@ public:
 	void FUNCTION_CALL_MODE OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSend, IBizMessage* lpMsg);
 
 	std::string getResponse();
+	void SetCloseEvent(HANDLE& hCloseEvent);
 };
 #endif

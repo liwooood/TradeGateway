@@ -188,9 +188,6 @@
     <Filter Include="业务层\柜台系统\顶点">
       <UniqueIdentifier>{1bd17284-b664-4c6d-b16b-646b9c676689}</UniqueIdentifier>
     </Filter>
-    <Filter Include="业务层\柜台系统\恒生COM">
-      <UniqueIdentifier>{1d9588fa-f777-42e1-9431-c01714ba1185}</UniqueIdentifier>
-    </Filter>
     <Filter Include="业务层\柜台系统\新意">
       <UniqueIdentifier>{0c5d470e-69bf-475a-8d45-bffde1689acb}</UniqueIdentifier>
     </Filter>
@@ -223,6 +220,9 @@
     </Filter>
     <Filter Include="文档">
       <UniqueIdentifier>{01414a86-b515-4f95-82d9-d074a90dfd09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\柜台系统\恒生CommX">
+      <UniqueIdentifier>{1d9588fa-f777-42e1-9431-c01714ba1185}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

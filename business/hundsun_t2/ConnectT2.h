@@ -18,23 +18,33 @@
 class ConnectT2 : public CConnect
 {
 private:
-	CConfigInterface * lpConfig;
-	CConnectionInterface * lpConnection;
 	int m_nID;
 	Counter m_Counter;
 	std::string m_sServerInfo;
+	int connectTimeout;
+
+	CConfigInterface * lpConfig;
+	CConnectionInterface * lpConnection;
+
 	CCallbackImpl callback;
+	// 连接中断事件
+	HANDLE hCloseEvent;
+
+private:
+	static DWORD WINAPI AutoConnect(LPVOID lpParam);
 
 
 public:
 	ConnectT2(int ConnectNo, Counter counter);
 	~ConnectT2(void);
 
-	void init();
+
 	virtual std::string GetConnectInfo();
 	virtual bool CreateConnect();
-	bool ReConnect();
 	virtual void CloseConnect();
+
+	//bool ReConnect();
+	
 
 	//CCallbackImpl * get();
 };

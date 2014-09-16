@@ -55,6 +55,7 @@ void CCallbackImpl::OnClose(CConnectionInterface *lpConnection)
     
 
     // 在OnClose回调函数中激活事件，表示连接已经断开
+	// ConnectT2::AutoConnect会重连
     SetEvent(hCloseEvent);
 }
 
@@ -122,4 +123,9 @@ void CCallbackImpl::Reserved7()
 
 void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSend, IBizMessage* lpMsg)
 {
+}
+
+void CCallbackImpl::SetCloseEvent(HANDLE& closeEvent)
+{
+	this->hCloseEvent = closeEvent;
 }
