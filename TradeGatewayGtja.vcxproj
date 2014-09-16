@@ -139,7 +139,7 @@
     <ClInclude Include="business\apexsoft\DingDian.h" />
     <ClInclude Include="business\apexsoft\TradeBusinessDingDian.h" />
     <ClInclude Include="business\hundsun_t2\CallbackImpl.h" />
-    <ClInclude Include="business\hundsun_t2\Connect.h" />
+    <ClInclude Include="business\hundsun_t2\ConnectT2.h" />
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h" />
     <ClInclude Include="business\IBusiness.h" />
@@ -155,6 +155,7 @@
     <ClInclude Include="ConnectPool\BusinessSystem.h" />
     <ClInclude Include="ConnectPool\BusinessType.h" />
     <Text Include="bin_release\ChangeLog.txt" />
+    <ClInclude Include="ConnectPool\Connect.h" />
     <ClInclude Include="ConnectPool\ConnectManager.h" />
     <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
@@ -227,7 +228,7 @@
     <ClCompile Include="business\apexsoft\DingDian.cpp" />
     <ClCompile Include="business\apexsoft\TradeBusinessDingDian.cpp" />
     <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp" />
-    <ClCompile Include="business\hundsun_t2\Connect.cpp" />
+    <ClCompile Include="business\hundsun_t2\ConnectT2.cpp" />
     <ClCompile Include="business\hundsun_t2\TradeBusinessT2.cpp" />
     <ClCompile Include="business\IBusiness.cpp" />
     <ClCompile Include="business\SunGuard\AGC.cpp" />
@@ -242,6 +243,7 @@
     <ClCompile Include="ConnectPool\Branch.cpp" />
     <ClCompile Include="ConnectPool\BusinessSystem.cpp" />
     <ClCompile Include="ConnectPool\BusinessType.cpp" />
+    <ClCompile Include="ConnectPool\Connect.cpp" />
     <ClCompile Include="ConnectPool\ConnectManager.cpp" />
     <ClCompile Include="ConnectPool\ConnectPool.cpp" />
     <ClCompile Include="ConnectPool\Counter.cpp" />

@@ -12,9 +12,10 @@
 #include "t2sdk_interface.h"
 #include "connectpool/Counter.h"
 #include "CallbackImpl.h"
+#include "connectpool/connect.h"
 
 
-class Connect
+class ConnectT2 : public CConnect
 {
 private:
 	CConfigInterface * lpConfig;
@@ -26,14 +27,14 @@ private:
 
 
 public:
-	Connect(int ConnectNo, Counter counter);
-	~Connect(void);
+	ConnectT2(int ConnectNo, Counter counter);
+	~ConnectT2(void);
 
 	void init();
-	std::string GetConnectInfo();
-	bool CreateConnect();
+	virtual std::string GetConnectInfo();
+	virtual bool CreateConnect();
 	bool ReConnect();
-	void CloseConnect();
+	virtual void CloseConnect();
 
 	//CCallbackImpl * get();
 };

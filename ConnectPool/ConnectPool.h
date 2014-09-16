@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "ThreadSafeQueue/job_queue.h"
+#include "Connect.h"
 
-#include "business/hundsun_t2/connect.h"
 #include "common.h"
 #include "Counter.h"
 
@@ -14,8 +14,9 @@ class ConnectPool
 {
 private:
 	// 直接整合std::deque比较好
-	typedef job_queue<Connect*> conn_queue_type;
+	typedef job_queue<CConnect*> conn_queue_type;
 	conn_queue_type m_pool;
+	//std::vector<conn_queue_type> pool;
 
 	std::vector<Counter> m_vCounter;
 	int m_nID; // 连接序列号
@@ -29,8 +30,8 @@ public:
 	bool IncreaseConnPool();
 	void CloseConnPool();
 
-	Connect* GetConnect();
-	void PushConnect(Connect * pConn);
+	CConnect* GetConnect();
+	void PushConnect(CConnect * pConn);
 
 
 	

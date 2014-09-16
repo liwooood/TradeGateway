@@ -1,6 +1,7 @@
 #include "ConnectPool.h"
 #include "./config/ConfigManager.h"
 #include "./output/FileLog.h"
+#include "business/hundsun_t2/ConnectT2.h"
 
 
 
@@ -27,12 +28,14 @@ bool ConnectPool::CreateConnPool()
 	// 初始化连接数=柜台服务器数 * m_nConnPoolMin
 	// 假设服务器有4个, m_nConnPoolMin=2, 创建后s1, s2, s3, s4, s1,s2,s3,s4
 
-	for (int i=0; i < gConfigManager::instance().m_nConnectPoolMin; i++)
+	int totalConnCount = m_vCounter.size() * gConfigManager::instance().m_nConnectPoolMax;
+
+	for (int i=0; i < gConfigManager::instance().m_nConnectPoolMax; i++)
 	{
 		for (std::vector<Counter>::iterator pos = m_vCounter.begin(); pos != m_vCounter.end(); pos++)
 		{
 			
-			Connect * pConn = new Connect(m_nID, *pos);
+			CConnect * pConn = new ConnectT2(m_nID, *pos);
 			if (pConn->CreateConnect())
 			{
 				m_pool.push(pConn);
@@ -47,9 +50,9 @@ bool ConnectPool::CreateConnPool()
 	} // end for 初始次数
 	
 
-	int m_nConnCount = m_pool.queue_.size();
+	
 
-	if (m_nConnCount == 0)
+	if (m_pool.queue_.size() != totalConnCount)
 	{
 		std::string msg = "建立连接池失败";
 		gFileLog::instance().Log(msg);
@@ -70,7 +73,7 @@ bool ConnectPool::CreateConnPool()
 	return m_bCreatePool;
 }
 
-
+/*
 bool ConnectPool::IncreaseConnPool()
 {
 	int nOldSize = m_pool.queue_.size();
@@ -99,6 +102,7 @@ bool ConnectPool::IncreaseConnPool()
 		
 
 	int m_nConnCount = m_pool.queue_.size();
+	
 
 	if (m_nConnCount == nOldSize)
 	{
@@ -119,21 +123,24 @@ bool ConnectPool::IncreaseConnPool()
 
 	return m_bCreatePool;
 }
-
+*/
 
 
 // 获取连接的遍历采用循环方法，不采用随机方法
- Connect* ConnectPool::GetConnect()
+ CConnect* ConnectPool::GetConnect()
 {
 	std::string msg;
+	CConnect * pConn = NULL;
 
+	/*
 	if (m_pool.queue_.empty())
 	{
 		if (!IncreaseConnPool())
 			return NULL;
 	}
+	*/
 
-	Connect *pConn = m_pool.pop();
+	pConn = m_pool.pop();
 	if (pConn == NULL)
 	{
 		msg = "获取连接，失败";
@@ -161,7 +168,7 @@ bool ConnectPool::IncreaseConnPool()
 	return pConn;
 }
 
-void ConnectPool::PushConnect(Connect* pConn)
+void ConnectPool::PushConnect(CConnect* pConn)
 {
 	if (pConn == NULL)
 		return;
@@ -188,9 +195,9 @@ void ConnectPool::CloseConnPool()
 	m_pool.stop();
 
 	
-	for (std::deque<Connect*>::iterator pos = m_pool.queue_.begin(); pos != m_pool.queue_.end(); pos++)
+	for (std::deque<CConnect*>::iterator pos = m_pool.queue_.begin(); pos != m_pool.queue_.end(); pos++)
 	{
-		Connect * pConn = *pos;
+		CConnect * pConn = *pos;
 
 		if (pConn != NULL)
 		{

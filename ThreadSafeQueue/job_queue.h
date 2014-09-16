@@ -80,5 +80,6 @@ public:
 		condition_.notify_all();
 	}
 
+	
 };
 #endif

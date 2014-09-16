@@ -388,17 +388,20 @@
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h">
       <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClInclude>
-    <ClInclude Include="business\hundsun_t2\Connect.h">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
-    </ClInclude>
     <ClInclude Include="business\apexsoft\DingDian.h">
       <Filter>业务层\柜台系统\顶点</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectPool\ConnectPool.h">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClInclude>
     <ClInclude Include="ThreadSafeQueue\job_queue.h">
       <Filter>线程安全Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="business\hundsun_t2\ConnectT2.h">
+      <Filter>业务层\柜台系统\恒生T2</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectPool\ConnectPool.h">
+      <Filter>业务层\柜台系统</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectPool\Connect.h">
+      <Filter>业务层\柜台系统</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -522,14 +525,17 @@
     <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp">
       <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClCompile>
-    <ClCompile Include="business\hundsun_t2\Connect.cpp">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
-    </ClCompile>
     <ClCompile Include="business\apexsoft\DingDian.cpp">
       <Filter>业务层\柜台系统\顶点</Filter>
     </ClCompile>
+    <ClCompile Include="business\hundsun_t2\ConnectT2.cpp">
+      <Filter>业务层\柜台系统\恒生T2</Filter>
+    </ClCompile>
     <ClCompile Include="ConnectPool\ConnectPool.cpp">
-      <Filter>业务层\柜台连接池</Filter>
+      <Filter>业务层\柜台系统</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\Connect.cpp">
+      <Filter>业务层\柜台系统</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

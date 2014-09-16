@@ -5,14 +5,14 @@
 
 #include <boost/format.hpp>
 
-#include "Connect.h"
+#include "ConnectT2.h"
 #include "./config/ConfigManager.h"
 #include "common.h"
 #include "./output/FileLog.h"
 
 
 
-Connect::Connect(int ConnectNo, Counter counter)
+ConnectT2::ConnectT2(int ConnectNo, Counter counter)
 {
 	init();
 
@@ -25,25 +25,26 @@ Connect::Connect(int ConnectNo, Counter counter)
 
 }
 
-void Connect::init()
-{
-	lpConnection = NULL;
-	lpConfig = NULL;
-}
 
-std::string Connect::GetConnectInfo()
-{
-	return m_sServerInfo;
-}
-
-Connect::~Connect(void)
+ConnectT2::~ConnectT2(void)
 {
 	CloseConnect();
 }
 
 
+void ConnectT2::init()
+{
+	lpConnection = NULL;
+	lpConfig = NULL;
+}
 
-bool Connect::CreateConnect()
+std::string ConnectT2::GetConnectInfo()
+{
+	return m_sServerInfo;
+}
+
+
+bool ConnectT2::CreateConnect()
 {
 	int nRetry = gConfigManager::instance().m_nConnectRetry;
 
@@ -103,7 +104,7 @@ bool Connect::CreateConnect()
 
 
 
-bool Connect::ReConnect()
+bool ConnectT2::ReConnect()
 {
 	CloseConnect();
 
@@ -124,7 +125,7 @@ bool Connect::ReConnect()
 }
 
 
-void Connect::CloseConnect()
+void ConnectT2::CloseConnect()
 {
 	if (lpConnection != NULL)
 	{
