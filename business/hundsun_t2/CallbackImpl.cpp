@@ -61,7 +61,7 @@ void CCallbackImpl::OnClose(CConnectionInterface *lpConnection)
 
 void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend, const void *lpUnPackerOrStr, int nResult)
 {
-	SetEvent(hResEvent);
+	
 
 	/*
     switch (nResult)
@@ -93,6 +93,9 @@ void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend,
         }
     }
 	*/
+
+	SetEvent(hResEvent);
+
 }
 
 std::string CCallbackImpl::getResponse()
@@ -125,7 +128,12 @@ void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSe
 {
 }
 
-void CCallbackImpl::SetCloseEvent(HANDLE& closeEvent)
+void CCallbackImpl::SetCloseEvent(HANDLE closeEvent)
 {
 	this->hCloseEvent = closeEvent;
+}
+
+void CCallbackImpl::SetResponseEvent(HANDLE responseEvent)
+{
+	this->hResEvent = responseEvent;
 }

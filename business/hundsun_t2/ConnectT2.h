@@ -29,6 +29,8 @@ private:
 	CCallbackImpl callback;
 	// 连接中断事件
 	HANDLE hCloseEvent;
+	// 应答事件
+	HANDLE hResponseEvent;
 
 private:
 	static DWORD WINAPI AutoConnect(LPVOID lpParam);
@@ -42,6 +44,10 @@ public:
 	virtual std::string GetConnectInfo();
 	virtual bool CreateConnect();
 	virtual void CloseConnect();
+
+	virtual void * GetCounterConnect();
+	virtual HANDLE GetResponseEvent();
+	virtual std::string GetResponse();
 
 	//bool ReConnect();
 	

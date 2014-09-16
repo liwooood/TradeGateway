@@ -42,6 +42,7 @@ public:
 	void FUNCTION_CALL_MODE OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSend, IBizMessage* lpMsg);
 
 	std::string getResponse();
-	void SetCloseEvent(HANDLE& hCloseEvent);
+	void SetCloseEvent(HANDLE hCloseEvent);
+	void SetResponseEvent(HANDLE hResEvent);
 };
 #endif

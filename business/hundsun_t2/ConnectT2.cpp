@@ -84,6 +84,11 @@ bool ConnectT2::CreateConnect()
 	// 向回调类传递事件
 	callback.SetCloseEvent(hCloseEvent);
 
+	hResponseEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	// 向回调类传递事件
+	callback.SetResponseEvent(hResponseEvent);
+
+
 	lpConfig = NewConfig();
 	lpConfig->AddRef();
 
@@ -192,4 +197,19 @@ void ConnectT2::CloseConnect()
 		//delete lpConfig;
 		lpConfig = NULL;
 	}
+}
+
+void * ConnectT2::GetCounterConnect()
+{
+	return this->lpConnection;
+}
+
+HANDLE ConnectT2::GetResponseEvent()
+{
+	return hResponseEvent;
+}
+
+std::string ConnectT2::GetResponse()
+{
+	return callback.getResponse();
 }
