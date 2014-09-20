@@ -1,5 +1,5 @@
 #include "stdafx.h"
-//#include <windows.h>
+
 
 
 
@@ -102,16 +102,7 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	node = doc.select_single_node("/config/communication/ssl/enable");
 	m_nSslEnable = boost::lexical_cast<int>(node.node().child_value());
 
-	node = doc.select_single_node("/config/communication/http/port");
-	m_nHttpPort = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/communication/http/workerthreadpool");
-	m_nHttpWorkerThreadPool = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/communication/http/sendthreadpool");
-	m_nHttpSendThreadPool = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/communication/http/flashurlcontext");
-	m_sFlashUrlContext = node.node().child_value();
-	node = doc.select_single_node("/config/communication/http/enable");
-	m_nHttpEnable = boost::lexical_cast<int>(node.node().child_value());
+	
 
 	node = doc.select_single_node("/config/communication/tcp/port");
 	m_nTcpPort = boost::lexical_cast<int>(node.node().child_value());
@@ -161,10 +152,7 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	m_nConnectPoolIncrease = boost::lexical_cast<int>(node.node().child_value());
 
 
-	node = doc.select_single_node("/config/Counter_Common/wtfs_web");
-	m_sWtfsWeb = node.node().child_value();
-	node = doc.select_single_node("/config/Counter_Common/wtfs_mobile");
-	m_sWtfsMobile = node.node().child_value();
+	
 
 	node = doc.select_single_node("/config/Counter_Common/connect_retry");
 	m_nConnectRetry = boost::lexical_cast<int>(node.node().child_value());
@@ -349,22 +337,7 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	node = doc.select_single_node("/config/log/file/threadpool");
 	m_nLogFileThreadPool = boost::lexical_cast<int>(node.node().child_value());
 
-	node = doc.select_single_node("/config/log/db/enable");
-	m_nLogDbEnable = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/db/servicename");
-	m_sLogDbServiceName = node.node().child_value();
-	node = doc.select_single_node("/config/log/db/username");
-	m_sLogDbUserName = node.node().child_value();
-	node = doc.select_single_node("/config/log/db/password");
-	m_sLogDbPassword = node.node().child_value();
-	node = doc.select_single_node("/config/log/db/min");
-	m_nLogDbMin = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/db/max");
-	m_nLogDbMax = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/db/increase");
-	m_nLogDbIncrease = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/db/threadpool");
-	m_nLogDbThreadPool = boost::lexical_cast<int>(node.node().child_value());
+	
 
 	node = doc.select_single_node("/config/log/gui/enable");
 	m_nLogGuiEnable = boost::lexical_cast<int>(node.node().child_value());
@@ -400,88 +373,12 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	}
 
 
-	// ¼à¿Ø
-	node = doc.select_single_node("/config/monitor/tcp");
-	m_nMonitorTcpPort = boost::lexical_cast<int>(node.node().child_value());
-
-
-	// ±ÀÀ£
-	node = doc.select_single_node("/config/dump/path");
-	m_sDumpPath = node.node().child_value();
-
-
-
-	node = doc.select_single_node("/config/captcha_timeout");
-	captcha_timeout = boost::lexical_cast<int>(node.node().child_value());
-
-	// OCR
-	node = doc.select_single_node("/config/OCR/path");
-	OCRPath = node.node().child_value();
-
-	node = doc.select_single_node("/config/OCR/output");
-	OCROutput = node.node().child_value();
-
-	node = doc.select_single_node("/config/OCR/name/algorithm");
-	m_nNameAlgorithm = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/OCR/name/threshold");
-	m_nNameThreshold = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/OCR/address/algorithm");
-	m_nAddressAlgorithm = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/OCR/address/threshold");
-	m_nAddressThreshold = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/OCR/idno/algorithm");
-	m_nIDNoAlgorithm = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/OCR/idno/threshold");
-	m_nIDNoThreshold = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/OCR/expire/algorithm");
-	m_nExpireAlgorithm = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/OCR/expire/threshold");
-	m_nExpireThreshold = boost::lexical_cast<int>(node.node().child_value());
+	
 
 	return true;
 }
 
-void ConfigManager::LoadCrossDomain()
-{
-//	int length;
-//	char * buffer;
-
-	std::string sFileName = gConfigManager::instance().m_sPath + "\\crossdomain.xml";
-
-	std::ifstream is;
-	is.open(sFileName.c_str());
-	std::ostringstream tmp;
-	tmp << is.rdbuf();
-	
-	m_sFlashCrossDomain = tmp.str();
-
-	is.close();
 /*
-	is.open (sFileName.c_str(), std::ios::binary );
-
-	// get length of file:
-	is.seekg (0, std::ios::end);
-	length = is.tellg();
-	is.seekg (0, std::ios::beg);
-
-	// allocate memory:
-	buffer = new char [length];
-	memset(buffer, 0, length);
-
-	// read data as a block:
-	is.read (buffer,length);
-	is.close();
-
-	m_sFlashCrossDomain = buffer;
-
-	delete[] buffer;
-*/
-
-}
-
 int ConfigManager::ConvertIntToBusiType(int val)
 {
 	switch (val)
@@ -529,3 +426,4 @@ int ConfigManager::ConvertIntToCounterType(int val)
 		return COUNTER_TYPE_UNKNOWN;
 	}
 }
+*/

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+
+
+  <system>
+    <id>sywg_yht</id>
+    <desc>申银万国一户通</desc>
+
+
+    <BusinessType>
+      <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
+      <type>1</type>
+
+      <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.新意 8.核新同花顺统一认证 -->
+      <CounterType>6</CounterType>
+
+      <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
+      <recv_timeout>60</recv_timeout>
+
+      <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
+      <connect_timeout>10</connect_timeout>
+
+      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
+      <idle_timeout>540</idle_timeout>
+
+      <!-- 柜员代码 -->
+      <gydm>99995559</gydm>
+
+      <!--委托方式-->
+      <wtfs_web>32</wtfs_web>
+      <wtfs_mobile>256</wtfs_mobile>
+
+
+      <branch>
+		<enable>1</enable>
+		<!--"0000"代表所有营业部-->
+        <branch_list>0000</branch_list>
+        
+        <server>
+          <enable>1</enable>
+          <servername>KCBP01</servername>
+          <ip>192.168.24.36</ip>
+          <port>19997</port>
+          <username>KCXP00</username>
+          <password>888888</password>
+          <req>req_zb</req>
+          <res>ans_zb</res>
+        </server>
+      </branch>
+    </BusinessType>
+
+	
+    <BusinessType>
+      <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
+      <type>4</type>
+
+      <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.新意 8.核新同花顺统一认证 -->
+      <CounterType>7</CounterType>
+
+      <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
+      <recv_timeout>10</recv_timeout>
+
+      <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
+      <connect_timeout>1</connect_timeout>
+
+      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
+      <idle_timeout>540</idle_timeout>
+
+
+
+      <branch>
+	  <enable>1</enable>
+	  <!--"0000"代表所有营业部-->
+        <branch_list>0000</branch_list>
+        
+        <server>
+          <enable>1</enable>
+          <servername>KCBP01</servername>
+          <ip>127.0.0.1</ip>
+          <port>6000</port>
+          <username>KCXP00</username>
+          <password>888888</password>
+          <req>req_zb</req>
+          <res>ans_zb</res>
+        </server>
+      </branch>
+    </BusinessType>
+
+  </system>
+
+</config>

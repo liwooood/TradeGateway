@@ -2,14 +2,18 @@
 #define _COUNTER_H_
 
 #include <string>
+
 #include "common.h"
 
+//改用struct
 
 class Counter
 {
 public:
 	Counter(void);
 	~Counter(void);
+
+	int m_eCounterType; // 柜台类型
 
 	std::string m_sIP;
 	int m_nPort;
@@ -19,7 +23,7 @@ public:
 	std::string m_sReq;
 	std::string m_sRes;
 
-	int m_eCounterType; // 柜台类型
+	
 
 	int m_nConnectTimeout; // 柜台连接超时时间
 	int m_nIdleTimeout; // 柜台连接后，没有请求，自动中断连接时间

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+
+  <system>
+    <id>gtja_yht</id>
+    <desc>国泰君安一户通</desc>
+    
+    <BusinessType>
+      <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
+      <type>0</type>
+
+      <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
+      <CounterType>1</CounterType>
+
+      <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
+      <recv_timeout>10</recv_timeout>
+
+      <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
+      <connect_timeout>1</connect_timeout>
+
+      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
+      <idle_timeout>540</idle_timeout>
+
+      <branch>
+        <!-- 营业部列表 -->
+        <branch_list>0000</branch_list>
+        <enable>1</enable>
+        <server>
+          <enable>1</enable>
+          <servername>KCBP01</servername>
+          <ip>115.238.72.123</ip>
+          <port>4910</port>
+          <username>KCXP00</username>
+          <password>888888</password>
+          <req>req_zb</req>
+          <res>ans_zb</res>
+        </server>
+        <server>
+          <enable>0</enable>
+          <servername>KCBP01</servername>
+          <ip>10.103.2.177</ip>
+          <port>21000</port>
+          <username>KCXP00</username>
+          <password>888888</password>
+          <req>req_zb</req>
+          <res>ans_zb</res>
+        </server>
+      </branch>
+
+      <branch>
+        <branch_list>0001</branch_list>
+        <enable>0</enable>
+        <server>
+          <enable>0</enable>
+          <servername></servername>
+          <ip>10.103.2.224</ip>
+          <port>21000</port>
+          <username>KCXP00</username>
+          <password>888888</password>
+          <req>req_zb</req>
+          <res>ans_zb</res>
+        </server>
+        <server>
+          <enable>0</enable>
+          <servername></servername>
+          <ip>10.103.2.224</ip>
+          <port>21000</port>
+          <username>KCXP00</username>
+          <password>888888</password>
+          <req>req_zb</req>
+          <res>ans_zb</res>
+        </server>
+      </branch>
+    </BusinessType>
+  </system>
+
+  <system>
+    <id>gtja_yyz</id>
+    <desc>国泰君安易阳指</desc>
+    <BusinessType>
+      <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
+      <type>0</type>
+
+      <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
+      <CounterType>3</CounterType>
+
+      <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
+      <recv_timeout>10</recv_timeout>
+
+      <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
+      <connect_timeout>1</connect_timeout>
+
+      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
+      <idle_timeout>540</idle_timeout>
+
+      <branch>
+	  <!--"0000"代表所有营业部-->
+        <branch_list>0000</branch_list>
+        <enable>1</enable>
+        <server>
+          <enable>1</enable>
+          <servername>KCBP01</servername>
+          <ip>10.101.23.47</ip>
+          <port>21000</port>
+          <username>KCXP00</username>
+          <password>888888</password>
+          <req>req_zb</req>
+          <res>ans_zb</res>
+        </server>
+      </branch>
+    </BusinessType>
+  </system>
+
+</config>

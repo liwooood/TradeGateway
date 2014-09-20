@@ -134,7 +134,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\common\ThreadPool\worker.h" />
     <ClInclude Include="agc_encrypt.h" />
     <ClInclude Include="business\apexsoft\DingDian.h" />
     <ClInclude Include="business\apexsoft\TradeBusinessDingDian.h" />
@@ -217,6 +216,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="ThreadPool\worker.h" />
     <ClInclude Include="ThreadSafeQueue\job_queue.h" />
     <ClInclude Include="TradeGatewayGtja.h" />
     <ClInclude Include="TradeGatewayGtjaDlg.h" />
@@ -325,14 +325,20 @@
     </Xml>
     <Xml Include="bin_debug\apex_filterfield.xml" />
     <Xml Include="bin_debug\apex_filterfunc.xml" />
+    <Xml Include="bin_debug\gtja.xml" />
     <Xml Include="bin_debug\hundsun_t2_filterfield.xml" />
     <Xml Include="bin_debug\hundsun_t2_filterfunc.xml" />
     <Xml Include="bin_debug\kingdom_win_filterfield.xml" />
     <Xml Include="bin_debug\kingdom_win_filterfunc.xml" />
+    <Xml Include="bin_debug\njzq.xml" />
+    <Xml Include="bin_debug\sywg.xml" />
     <Xml Include="bin_debug\tradegateway.xml">
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="bin_release\agc.xml" />
+    <Xml Include="bin_release\gtja.xml" />
+    <Xml Include="bin_release\njzq.xml" />
+    <Xml Include="bin_release\sywg.xml" />
     <Xml Include="bin_release\tradegateway.xml">
       <SubType>Designer</SubType>
     </Xml>

@@ -24,7 +24,7 @@ bool CMyBotan::Base64Encoder(const unsigned char* src, int len, std::string& enc
 {
 	try
 	{
-		if (src == NULL)
+		if (src == NULL || len == 0)
 			return false;
 
 		Botan::Pipe pipeBase64Enc(new Botan::Base64_Encoder());

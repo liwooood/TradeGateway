@@ -30,16 +30,7 @@ public:
 	// 通信层
 	std::string m_sIp;
 
-	// 已经废弃
-	int m_nHttpPort;
-	int m_nHttpWorkerThreadPool;
-	int m_nHttpSendThreadPool;
-	int m_nHttpEnable;
-	std::string m_sFlashUrlContext;
-	int m_nFlashTradeURLContext;
-	std::string m_sFlashCrossDomain;
-	void LoadCrossDomain();
-
+	
 
 	// 准备废弃
 	int m_nSslPort;
@@ -79,14 +70,7 @@ public:
 	int m_nConnectPoolMin;
 	int m_nConnectPoolMax;
 	int m_nConnectPoolIncrease;
-
-
-	std::string m_sWtfsWeb;
-	std::string m_sWtfsMobile;
-
-
 	int m_nConnectRetry;
-	
 	int m_nBusinessRetry; // 业务失败重试
 
 
@@ -126,16 +110,6 @@ public:
 	int m_nLogFileThreadPool;
 
 
-	// 数据库日志
-	int m_nLogDbEnable;
-	std::string m_sLogDbServiceName;
-	std::string m_sLogDbUserName;
-	std::string m_sLogDbPassword;
-	int m_nLogDbMin;
-	int m_nLogDbMax;
-	int m_nLogDbIncrease;
-	std::string m_sDBInfo;
-	int m_nLogDbThreadPool;
 
 
 	// 界面日志
@@ -156,38 +130,6 @@ public:
 	std::vector<std::string> m_vLogMqServer;
 
 
-	// 监管
-	int m_nMonitorTcpPort;
-
-	// 崩溃处理
-	std::string m_sDumpPath;	
-
-
-	int captcha_timeout;
-
-	// OCR
-	// tesseract安装路径
-	std::string OCRPath;
-	std::string OCROutput;
-
-	int m_nNameAlgorithm;
-	int m_nNameThreshold;
-	
-	int m_nAddressAlgorithm;
-	int m_nAddressThreshold;
-
-	int m_nIDNoAlgorithm;
-	int m_nIDNoThreshold;
-
-	int m_nExpireAlgorithm;
-	int m_nExpireThreshold;
-	
-	//std::map<std::string, BusinessSystem> systems;
-	// 根据系统编号，业务类型，返回对应的柜台类型
-	
-
-	int ConvertIntToBusiType(int val);
-	int ConvertIntToCounterType(int val);
 	
 
 };

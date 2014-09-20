@@ -298,9 +298,6 @@
     <ClInclude Include="business\SunGuard\SywgConnect.h">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\ThreadPool\worker.h">
-      <Filter>线程池ThreadPool</Filter>
-    </ClInclude>
     <ClInclude Include="ConnectPool\Branch.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
@@ -402,6 +399,9 @@
     </ClInclude>
     <ClInclude Include="ConnectPool\Connect.h">
       <Filter>业务层\柜台系统</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool\worker.h">
+      <Filter>线程池ThreadPool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -637,6 +637,24 @@
     </Xml>
     <Xml Include="bin\OutputDomain.xml">
       <Filter>业务层\柜台系统\顶点</Filter>
+    </Xml>
+    <Xml Include="bin_release\sywg.xml">
+      <Filter>配置文件\release</Filter>
+    </Xml>
+    <Xml Include="bin_release\gtja.xml">
+      <Filter>配置文件\release</Filter>
+    </Xml>
+    <Xml Include="bin_release\njzq.xml">
+      <Filter>配置文件\release</Filter>
+    </Xml>
+    <Xml Include="bin_debug\sywg.xml">
+      <Filter>配置文件\debug</Filter>
+    </Xml>
+    <Xml Include="bin_debug\njzq.xml">
+      <Filter>配置文件\debug</Filter>
+    </Xml>
+    <Xml Include="bin_debug\gtja.xml">
+      <Filter>配置文件\debug</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>
