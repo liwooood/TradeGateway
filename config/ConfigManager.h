@@ -131,6 +131,8 @@ public:
 
 
 	
+private:
+	bool ReadSystemFromXML(std::string systemFile);
 
 };
 typedef boost::detail::thread::singleton<ConfigManager> gConfigManager;

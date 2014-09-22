@@ -47,13 +47,6 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 
-public:
-	afx_msg void OnBnClickedStartup();
-	afx_msg void OnBnClickedOpenLog();
-	afx_msg void OnDestroy();
-	afx_msg void OnClose();
-	afx_msg void OnBnClickedExit();
-	afx_msg void OnBnClickedClearCache();
 
 	
 
@@ -88,11 +81,7 @@ private:
 	CString m_sSslWorker;
 	CString m_sSslSend;
 
-	CString m_sHttpAddr;
-	CString m_sHttpStatus;
-	CString m_sHttpWorker;
-	CString m_sHttpSend;
-
+	
 	CString m_sTcpAddr;
 	CString m_sTcpStatus;
 	CString m_sTcpWorker;
@@ -107,20 +96,12 @@ private:
 	CString m_sBusiRetry;
 
 	CString m_sLogFilePath;
-	CString m_sLogDb;
-	CString m_sLogDbConnPoolMin;
-	CString m_sLogDbConnPoolIncrease;
-	CString m_sLogDbConnPoolMax;
 	CString m_sLogGuiShowcount;
 	CString m_sLogLevel;
-
 	int m_nLogFileEnable;
-	int m_nLogDBEnable;
 	int m_nLogMQEnable;
 	int m_nLogGUIEnable;
-
 	CString m_sLogFileThreadPool;
-	CString m_sLogDbThreadPool;
 	CString m_sLogMqThreadPool;
 	CString m_sLogShowThreadPool;
 
@@ -134,7 +115,6 @@ private:
 	io_service_pool * iospool_ssl_new;
 
 	// ÍøÂç²ã
-	//http_server * pHttpServer;
 	TcpServer * pTcpOldServer;
 	SSLServer * pSslOldServer;
 
@@ -143,23 +123,22 @@ private:
 	
 
 	// ÒµÎñ²ã
-	//trade_server_http * pTradeServerHttp;
 	TradeServer * pTradeServerTcpOld;
 	TradeServer * pTradeServerSslOld;
 	
 	TradeServer * pTradeServerTcpNew; // new ssl & tcp 
 	TradeServer * pTradeServerSslNew; // new ssl & tcp 
 
-	
-
-	
-
-	
-	
-
 public:
 	afx_msg void OnBnClickedTestCrash();
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedChangelog();
+	afx_msg void OnBnClickedStartup();
+	afx_msg void OnBnClickedOpenLog();
+	afx_msg void OnDestroy();
+	afx_msg void OnClose();
+	afx_msg void OnBnClickedExit();
+	afx_msg void OnBnClickedClearCache();
+
 };

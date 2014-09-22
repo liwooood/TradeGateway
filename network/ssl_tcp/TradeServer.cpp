@@ -304,7 +304,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	}
 	*/
 	
-	int serverCount = g_ConnectManager.GetServerCount(sysNo, gConfigManager::instance().ConvertIntToBusiType(nBusiType), "0000");
+	int serverCount = g_ConnectManager.GetServerCount(sysNo, nBusiType, "0000");
 	if (serverCount == 0)
 	{
 	}
@@ -354,7 +354,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
 
 				Counter * counter = NULL;
-				counter = g_ConnectManager.GetServer(sysNo, gConfigManager::instance().ConvertIntToBusiType(nBusiType), "0000");
+				counter = g_ConnectManager.GetServer(sysNo, nBusiType, "0000");
 				counterIp = counter->m_sIP;
 				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
 				counterType = GetCounterType(counter->m_eCounterType);

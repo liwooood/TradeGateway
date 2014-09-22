@@ -81,10 +81,8 @@ bool ConfigManager::LoadConfig(std::string sPath)
 		return false;
 
 	pugi::xpath_node node;
-	std::string node_path;
-
 	pugi::xpath_node_set nodes;
-
+	std::string node_path;
 	std::string node_value;
 
 	// 通信层
@@ -97,8 +95,6 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	m_nSslWorkerThreadPool = boost::lexical_cast<int>(node.node().child_value());
 	node = doc.select_single_node("/config/communication/ssl/sendthreadpool");
 	m_nSslSendThreadPool = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/communication/ssl/auth");
-	m_nAuth = boost::lexical_cast<int>(node.node().child_value());
 	node = doc.select_single_node("/config/communication/ssl/enable");
 	m_nSslEnable = boost::lexical_cast<int>(node.node().child_value());
 
@@ -120,8 +116,6 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	m_nSslNewWorkerThreadPool = boost::lexical_cast<int>(node.node().child_value());
 	node = doc.select_single_node("/config/communication/ssl_new/sendthreadpool");
 	m_nSslNewSendThreadPool = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/communication/ssl_new/auth");
-	m_nNewAuth = boost::lexical_cast<int>(node.node().child_value());
 	node = doc.select_single_node("/config/communication/ssl_new/enable");
 	m_nSslNewEnable = boost::lexical_cast<int>(node.node().child_value());
 
@@ -150,16 +144,93 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	m_nConnectPoolMax = boost::lexical_cast<int>(node.node().child_value());
 	node = doc.select_single_node("/config/Counter_Common/connectpool/increase");
 	m_nConnectPoolIncrease = boost::lexical_cast<int>(node.node().child_value());
-
-
-	
-
 	node = doc.select_single_node("/config/Counter_Common/connect_retry");
 	m_nConnectRetry = boost::lexical_cast<int>(node.node().child_value());
 	node = doc.select_single_node("/config/Counter_Common/business_retry");
 	m_nBusinessRetry = boost::lexical_cast<int>(node.node().child_value());
 
 
+
+
+
+
+
+	// 日志
+	node = doc.select_single_node("/config/log/loglevel");
+	m_nLogLevel = boost::lexical_cast<int>(node.node().child_value());
+	node = doc.select_single_node("/config/log/response_len");
+	m_nResponseLen = boost::lexical_cast<int>(node.node().child_value());
+
+	node = doc.select_single_node("/config/log/filterfuncid");
+	m_nFilterFuncId = boost::lexical_cast<int>(node.node().child_value());
+
+	node = doc.select_single_node("/config/log/filterfield");
+	m_nFilterField = boost::lexical_cast<int>(node.node().child_value());
+
+	node = doc.select_single_node("/config/log/filtercustid");
+	m_sFilterCustId = node.node().child_value();
+
+	node = doc.select_single_node("/config/log/file/enable");
+	m_nLogFileEnable = boost::lexical_cast<int>(node.node().child_value());
+	node = doc.select_single_node("/config/log/file/path");
+	m_sLogFilePath = node.node().child_value();
+	node = doc.select_single_node("/config/log/file/threadpool");
+	m_nLogFileThreadPool = boost::lexical_cast<int>(node.node().child_value());
+
+	
+
+	node = doc.select_single_node("/config/log/gui/enable");
+	m_nLogGuiEnable = boost::lexical_cast<int>(node.node().child_value());
+	node = doc.select_single_node("/config/log/gui/showcount");
+	m_nLogGuiShowCount = boost::lexical_cast<int>(node.node().child_value());
+	node = doc.select_single_node("/config/log/gui/threadpool");
+	m_nLogShowThreadPool = boost::lexical_cast<int>(node.node().child_value());
+
+	node = doc.select_single_node("/config/log/mq/enable");
+	m_nLogMqEnable = boost::lexical_cast<int>(node.node().child_value());
+	node = doc.select_single_node("/config/log/mq/threadpool");
+	m_nLogMqThreadPool = boost::lexical_cast<int>(node.node().child_value());
+	node = doc.select_single_node("/config/log/mq/min");
+	m_nLogMqMin = boost::lexical_cast<int>(node.node().child_value());
+	node = doc.select_single_node("/config/log/mq/max");
+	m_nLogMqMax = boost::lexical_cast<int>(node.node().child_value());
+	node = doc.select_single_node("/config/log/mq/increase");
+	m_nLogMqIncrease = boost::lexical_cast<int>(node.node().child_value());
+
+	pugi::xpath_node_set nodesMQServers = doc.select_nodes("/config/log/mq/mqserver");
+	pugi::xpath_node_set::const_iterator itMQServers;
+
+	for (itMQServers = nodesMQServers.begin(); itMQServers != nodesMQServers.end(); ++itMQServers)
+	{
+		pugi::xpath_node node = *itMQServers;
+
+
+
+		std::string mqserver = node.node().child_value();
+		
+		m_vLogMqServer.push_back(mqserver);
+		
+	}
+
+
+	node = doc.select_single_node("/config/system");
+	std::string systemFile = m_sPath + "\\" + node.node().child_value();
+	ReadSystemFromXML(systemFile);
+
+
+	return true;
+}
+
+bool ConfigManager::ReadSystemFromXML(std::string systemFile)
+{
+	pugi::xpath_node node;
+	pugi::xpath_node_set nodes;
+	std::string node_path;
+	std::string node_value;
+
+	pugi::xml_document doc;
+	if (!doc.load_file(systemFile.c_str()))
+		return false;
 
 	pugi::xpath_node_set system_nodes = doc.select_nodes("/config/system");
 	int i=0;
@@ -172,7 +243,6 @@ bool ConfigManager::LoadConfig(std::string sPath)
 		BusinessSystem system;
 
 		std::string sysid = node.node().child_value("id");
-
 		system.id = sysid;
 
 		TRACE("system id = %s\n", sysid.c_str());
@@ -256,7 +326,6 @@ bool ConfigManager::LoadConfig(std::string sPath)
 					Counter counter;
 
 					node_value = node.node().child_value("servername");
-					
 					counter.m_sServerName = node_value;
 					
 
@@ -279,7 +348,7 @@ bool ConfigManager::LoadConfig(std::string sPath)
 					node_value = node.node().child_value("res");
 					counter.m_sRes = node_value;
 
-					counter.m_eCounterType = ConvertIntToCounterType(CounterType);
+					counter.m_eCounterType = CounterType;
 					counter.m_nConnectTimeout = m_nConnectTimeout;
 					counter.m_nIdleTimeout = m_nIdleTimeout;
 					counter.m_nRecvTimeout = m_nRecvTimeout;
@@ -298,132 +367,21 @@ bool ConfigManager::LoadConfig(std::string sPath)
 
 			//	ConnectPool * pool = new ConnectPool(counters);
 				//busiType.connPool[branchList] = pool;//////////////////////
-				busiType.counterType = ConvertIntToCounterType(CounterType);
+				
 
 				Branch branch;
 				branch.servers = counters;
 
 				busiType.branches[branchList] = branch;
+				busiType.counterType = CounterType;
 			} // end for branch
 
 			
-			system.busis[ConvertIntToBusiType(BusiType)] = busiType;/////////////////////////////
+			system.busis[BusiType] = busiType;/////////////////////////////
 		} // end for business type
 
 		g_ConnectManager.systems[sysid] = system;
 	} // end for system
 
-
-
-	// 日志
-	node = doc.select_single_node("/config/log/loglevel");
-	m_nLogLevel = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/response_len");
-	m_nResponseLen = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/log/filterfuncid");
-	m_nFilterFuncId = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/log/filterfield");
-	m_nFilterField = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/log/filtercustid");
-	m_sFilterCustId = node.node().child_value();
-
-	node = doc.select_single_node("/config/log/file/enable");
-	m_nLogFileEnable = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/file/path");
-	m_sLogFilePath = node.node().child_value();
-	node = doc.select_single_node("/config/log/file/threadpool");
-	m_nLogFileThreadPool = boost::lexical_cast<int>(node.node().child_value());
-
-	
-
-	node = doc.select_single_node("/config/log/gui/enable");
-	m_nLogGuiEnable = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/gui/showcount");
-	m_nLogGuiShowCount = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/gui/threadpool");
-	m_nLogShowThreadPool = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/log/mq/enable");
-	m_nLogMqEnable = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/mq/threadpool");
-	m_nLogMqThreadPool = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/mq/min");
-	m_nLogMqMin = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/mq/max");
-	m_nLogMqMax = boost::lexical_cast<int>(node.node().child_value());
-	node = doc.select_single_node("/config/log/mq/increase");
-	m_nLogMqIncrease = boost::lexical_cast<int>(node.node().child_value());
-
-	pugi::xpath_node_set nodesMQServers = doc.select_nodes("/config/log/mq/mqserver");
-	pugi::xpath_node_set::const_iterator itMQServers;
-
-	for (itMQServers = nodesMQServers.begin(); itMQServers != nodesMQServers.end(); ++itMQServers)
-	{
-		pugi::xpath_node node = *itMQServers;
-
-
-
-		std::string mqserver = node.node().child_value();
-		
-		m_vLogMqServer.push_back(mqserver);
-		
-	}
-
-
-	
-
 	return true;
 }
-
-/*
-int ConfigManager::ConvertIntToBusiType(int val)
-{
-	switch (val)
-	{
-	case 1:
-		return BUSI_TYPE_STOCK;
-	case 2:
-		return BUSI_TYPE_CREDIT;
-	case 3:
-		return BUSI_TYPE_REGISTER;
-	case 4:
-		return BUSI_TYPE_ACCOUNT;
-	case 5:
-		return BUSI_TYPE_AUTH;
-	case 6:
-		return BUSI_TYPE_OPTION;
-	case 7:
-		return BUSI_TYPE_VERIFY;
-	case 0:
-	default:
-		return BUSI_TYPE_ALL;
-
-	}
-}
-
-int ConfigManager::ConvertIntToCounterType(int val)
-{
-	switch (val)
-	{
-	case 1:
-		return COUNTER_TYPE_HS_T2;
-	case 2:
-		return COUNTER_TYPE_HS_COM;
-	case 3:
-		return COUNTER_TYPE_JZ_WIN;
-	case 4:
-		return COUNTER_TYPE_JZ_LINUX;
-	case 5:
-		return COUNTER_TYPE_DINGDIAN;
-	case 6:
-		return COUNTER_TYPE_JSD;
-	case 7:
-		return COUNTER_TYPE_XINYI;
-	default:
-		return COUNTER_TYPE_UNKNOWN;
-	}
-}
-*/

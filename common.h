@@ -1,6 +1,8 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
+#define VERSION  "2.0.06"
+
 // πÒÃ®¿‡–Õ
 #define COUNTER_TYPE_UNKNOWN 0
 #define COUNTER_TYPE_HS_T2 1
