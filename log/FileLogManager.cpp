@@ -26,18 +26,21 @@ FileLogManager::~FileLogManager(void)
 }
 
 void FileLogManager::start()
-{
-	
+{	
 	file_worker_.start();
-	
 }
 
 void FileLogManager::stop()
 {
-	
 	file_worker_.stop();
-	
 }
+
+
+void FileLogManager::push(Trade::TradeLog logMsg)
+{
+	file_q_.push(logMsg);	
+}
+
 
 // 文件日志线程池处理函数
 bool FileLogManager::file_log(Trade::TradeLog log)
@@ -51,14 +54,18 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	// 心跳不记录
 	if (funcid == "999999")
 	{
-		
 		return true;
 	}
 
 	std::string countertype = log.countertype();
+	int counterType = COUNTER_TYPE_UNKNOWN;
+	if (!countertype.empty())
+	{
+		counterType = boost::lexical_cast<int>(countertype);
+	}
 
 	// 恒生t2
-	if (countertype == "1")
+	if (counterType == COUNTER_TYPE_HS_T2)
 	{
 		// 如果启用了过滤查询功能号
 		if (gConfigManager::instance().m_nFilterFuncId)
@@ -78,7 +85,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	}
 	
 	// 金证
-	if (countertype == "3")
+	if (counterType == COUNTER_TYPE_JZ_WIN)
 	{
 		// 如果启用了过滤查询功能号
 		if (gConfigManager::instance().m_nFilterFuncId)
@@ -98,7 +105,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	}
 
 	// 顶点
-	if (countertype == "5")
+	if (counterType == COUNTER_TYPE_DINGDIAN)
 	{
 		// 如果启用了过滤查询功能号
 		if (gConfigManager::instance().m_nFilterFuncId)
@@ -121,23 +128,23 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	std::map<std::string, std::string> reqmap;
 
 	// 过滤字段
-	if (countertype == "1")
+	if (counterType == COUNTER_TYPE_HS_T2)
 	{
 		GetFilterMap(request, m_mT2_FilterField, reqmap);
 	}
-	else if (countertype == "3")
+	else if (counterType == COUNTER_TYPE_JZ_WIN)
 	{
 		GetFilterMap(request, m_mKingdom_FilterField, reqmap);
 	}
-	else if (countertype == "5")
+	else if (counterType == COUNTER_TYPE_DINGDIAN)
 	{
 		GetFilterMap(request, m_mDingDian_FilterField, reqmap);
 	}
-	else if (countertype == "6") // agc
+	else if (counterType == COUNTER_TYPE_JSD) // agc
 	{
 		GetFilterMap(request, m_mAGC_FilterField, reqmap);
 	}
-	else if (countertype == "7") // xinyi
+	else if (counterType == COUNTER_TYPE_XINYI) // xinyi
 	{
 		GetFilterMap(request, m_mXinyi_FilterField, reqmap);
 	}
@@ -157,6 +164,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 		sFilterRequest = request;
 
 
+	// 日志目录
 	std::string sLogFileName = gConfigManager::instance().m_sLogFilePath;
 	sLogFileName += "\\";
 
@@ -193,13 +201,14 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 		boost::filesystem::create_directories(p);
 	}
 
-	// 账户和日志级别
+	// 账户
 	std::string account = log.account();
 	if (account.empty())
 		sLogFileName += "no_account";
 	else
 		sLogFileName += account;
 
+	//日志级别
 	switch (log.level())
 	{
 	case Trade::TradeLog::DEBUG_LEVEL:
@@ -219,7 +228,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	}
 
 
-
+	// 共享写
 	std::ofstream outfile(sLogFileName.c_str(), std::ios_base::app);
 	if (outfile.is_open())
 	{
@@ -267,12 +276,6 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	return true;
 }
 
-void FileLogManager::push(Trade::TradeLog logMsg)
-{
-
-		file_q_.push(logMsg);
-	
-}
 
 /*
 根据过滤字段定义mapFieldFilter，过滤请求request，返回过滤后结果reqmap
@@ -280,38 +283,44 @@ void FileLogManager::push(Trade::TradeLog logMsg)
 void FileLogManager::GetFilterMap(std::string& request, std::map<std::string, std::string>& mapFieldFilter, std::map<std::string, std::string>& reqmap)
 {
 	std::string SOH = "\x01";
-
 	std::vector<std::string> keyvalues;
+	std::string keyvalue;
+	std::string key = "";
+	std::string value = "";
+
 	boost::split(keyvalues, request, boost::is_any_of(SOH)); // 注意需要通过配置文件配置
 
 	
 	for (std::vector<std::string>::iterator it = keyvalues.begin(); it != keyvalues.end(); it++)
 	{
-		std::string keyvalue = *it;
+		keyvalue = *it;
 		
 
 		if (keyvalue.empty())
 			break;
 
-		std::vector<std::string> kv;
-		boost::split(kv, keyvalue, boost::is_any_of("="));
+		std::size_t found = keyvalue.find_first_of("=");
+		
 
-		std::string key = "";
-		if (!kv[0].empty())
-			key = kv[0];
+		if (found != std::string::npos)
+		{
+			key = keyvalue.substr(0, found);
+			value = keyvalue.substr(found + 1);
+		
+		}
+
+
 
 		// 如果启用了过滤关键字段
 		if (gConfigManager::instance().m_nFilterField)
 		{
+			// 过滤
 			if (mapFieldFilter.find(key) != mapFieldFilter.end())
 				continue;
 		}
 
 
 
-		std::string value = "";
-		if (!kv[1].empty())
-			value = kv[1];
 
 		reqmap[key] = value;
 	}
@@ -354,7 +363,7 @@ void FileLogManager::LoadFuncFilter()
 	LoadFuncFilter(xmlfile, m_mKingdom_FilterFunc);
 }
 
-// 过滤敏感字段
+// 从xml定义文件中读取需要过滤的敏感字段
 void FileLogManager::LoadFieldFilter(std::string& sFieldFilterXML, std::map<std::string, std::string>& mapFieldFilter)
 {
 	rapidxml::file<> f(sFieldFilterXML.c_str());
@@ -396,7 +405,7 @@ void FileLogManager::LoadFieldFilter(std::string& sFieldFilterXML, std::map<std:
 	} // end while
 }
 
-// 过滤查询类功能号
+// 从xml定义文件中读取需要过滤的功能号
 void FileLogManager::LoadFuncFilter(std::string& sFuncFilterXML, std::map<std::string, FUNCTION_DESC>& mapFuncFilter)
 {
 	rapidxml::file<> f(sFuncFilterXML.c_str());

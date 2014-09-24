@@ -25,7 +25,7 @@
 #define BUSI_TYPE_OPTION 6
 #define BUSI_TYPE_VERIFY 7
 
-
+// 日志过滤功能定义
 typedef struct func
 {
 	bool isQuery;

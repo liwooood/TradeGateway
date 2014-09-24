@@ -173,6 +173,7 @@
     <ClInclude Include="MiniDump.h" />
     <ClInclude Include="network\IMessage.h" />
     <ClInclude Include="network\http\http_message.h" />
+    <Text Include="log\日志开发说明.txt" />
     <Text Include="network\http\http_server.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
@@ -328,7 +329,9 @@
     <Xml Include="bin_debug\gtja.xml" />
     <Xml Include="bin_debug\hundsun_t2_filterfield.xml" />
     <Xml Include="bin_debug\hundsun_t2_filterfunc.xml" />
-    <Xml Include="bin_debug\kingdom_win_filterfield.xml" />
+    <Xml Include="bin_debug\kingdom_win_filterfield.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="bin_debug\kingdom_win_filterfunc.xml" />
     <Xml Include="bin_debug\njzq.xml" />
     <Xml Include="bin_debug\sywg.xml" />
@@ -344,7 +347,6 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\common\log\日志开发说明.txt" />
     <Text Include="business\szkingdom\业务加解密.txt" />
     <Text Include="lib\Boost\Boost.txt" />
     <Text Include="lib\Botan\botan.txt" />

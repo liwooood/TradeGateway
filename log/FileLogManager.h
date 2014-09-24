@@ -22,10 +22,7 @@
 
 class FileLogManager
 {
-public:
-	FileLogManager(void);
-	~FileLogManager(void);
-
+private:
 	typedef job_queue<Trade::TradeLog> file_queue_type;
 	typedef worker<file_queue_type> file_worker_type;
 
@@ -34,30 +31,39 @@ public:
 
 	bool file_log(Trade::TradeLog log);
 
-	void push(Trade::TradeLog log);
-
-	void start();
-	void stop();
-
 	// 过滤字段
 	std::map<std::string, std::string> m_mDingDian_FilterField;
 	std::map<std::string, std::string> m_mT2_FilterField;
 	std::map<std::string, std::string> m_mKingdom_FilterField;
 	std::map<std::string, std::string> m_mAGC_FilterField;
 	std::map<std::string, std::string> m_mXinyi_FilterField;
-	void LoadFieldFilter();
-	void LoadFieldFilter(std::string& sFieldFilterXML, std::map<std::string, std::string>& mapFieldFilter);
 	void GetFilterMap(std::string& request, std::map<std::string, std::string>& mapFieldFilter, std::map<std::string, std::string>& reqmap);
+	void LoadFieldFilter(std::string& sFieldFilterXML, std::map<std::string, std::string>& mapFieldFilter);
 
 	// 过滤功能号
 	std::map<std::string, FUNCTION_DESC> m_mDingDian_FilterFunc;
-	std::map<std::string, FUNCTION_DESC> m_mT2_FilterFunc;
+	
 	std::map<std::string, FUNCTION_DESC> m_mKingdom_FilterFunc;
 	std::map<std::string, FUNCTION_DESC> m_mAGC_FilterFunc;
 	std::map<std::string, FUNCTION_DESC> m_mXinyi_FilterFunc;
-	void LoadFuncFilter();
 	void LoadFuncFilter(std::string& sFuncFilterXML, std::map<std::string, FUNCTION_DESC>& mapFuncFilter);
+
+public:
+	FileLogManager(void);
+	~FileLogManager(void);
+
 	
+
+	void push(Trade::TradeLog log);
+	void start();
+	void stop();
+
+	
+	void LoadFieldFilter();
+	void LoadFuncFilter();
+	
+	// business t2会用到， 临时
+	std::map<std::string, FUNCTION_DESC> m_mT2_FilterFunc;
 };
 typedef boost::detail::thread::singleton<FileLogManager> gFileLogManager;
 
