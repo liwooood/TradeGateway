@@ -1,6 +1,7 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
+// 版本信息
 #define VERSION  "2.0.06"
 
 // 柜台类型

@@ -78,7 +78,7 @@ IDR_MAINFRAME           ICON                    "res\\TradeGatewayGtja.ico"
 IDD_TRADEGATEWAYGTJA_DIALOG DIALOGEX 0, 0, 701, 392
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "中软万维交易网关（版本：2.0.04)"
+CAPTION "中软万维证券网关"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "桌面和移动平台交易网关",IDC_SSL_ADDR,7,7,159,8
@@ -146,12 +146,12 @@ BEGIN
         BLOCK "080403a8"
         BEGIN
             VALUE "CompanyName", "中软万维"
-            VALUE "FileDescription", "交易网关"
+            VALUE "FileDescription", "证券网关"
             VALUE "FileVersion", "2.0.0.0"
             VALUE "InternalName", "TradeGateway.exe"
             VALUE "LegalCopyright", "中软万维保留所有权利。"
             VALUE "OriginalFilename", "TradeGateway.exe"
-            VALUE "ProductName", "交易网关"
+            VALUE "ProductName", "证券网关"
             VALUE "ProductVersion", "2.0.0.0"
         END
     END
