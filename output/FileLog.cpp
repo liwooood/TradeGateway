@@ -46,8 +46,8 @@ void FileLog::Log(std::string log, int outputLevel, std::string file)
 	sLogFileName += to_iso_extended_string(day);
 	sLogFileName += ".log";
 
-
-	std::ofstream outfile(sLogFileName.c_str(), std::ios_base::app);
+	/*
+	//std::ofstream outfile(sLogFileName.c_str(), std::ios_base::app);
 	if (outfile.is_open())
 	{
 		boost::posix_time::ptime beginTime =  boost::posix_time::microsec_clock::local_time();
@@ -61,5 +61,27 @@ void FileLog::Log(std::string log, int outputLevel, std::string file)
 
 		outfile.close();
 	}
+	*/
+	HANDLE hFile = CreateFile(sLogFileName.c_str(), FILE_APPEND_DATA, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		return;
+	}
+
+	boost::posix_time::ptime beginTime =  boost::posix_time::microsec_clock::local_time();
+	std::string sBeginTime = boost::gregorian::to_iso_extended_string(beginTime.date()) + " " + boost::posix_time::to_simple_string(beginTime.time_of_day());
+	
+	std::stringstream ss;
+	ss << "Ê±¼ä£º" <<  sBeginTime  << "\n";
+	ss << "ÄÚÈÝ£º" << log << "\n";
+
+	DWORD dwBytesWritten = 0;
+
+	std::string s = ss.str();
+	WriteFile(hFile, s.c_str(), s.length(), &dwBytesWritten, NULL);
+
+	
+
+	CloseHandle(hFile);
 
 }

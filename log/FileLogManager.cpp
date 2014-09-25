@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "FileLogManager.h"
 
 #include <boost/range/iterator_range.hpp>
@@ -228,7 +230,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 		sLogFileName += "_nolevel.log";
 	}
 
-
+	/*
 	// 共享写
 	std::ofstream outfile(sLogFileName.c_str(), std::ios_base::app);
 	if (outfile.is_open())
@@ -269,6 +271,53 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 		std::string sLog = "打开日志文件" + sLogFileName + "失败.";
 		gFileLog::instance().Log(sLog);
 	}
+	*/
+
+	HANDLE hFile = CreateFile(sLogFileName.c_str(), FILE_APPEND_DATA, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		return true;
+	}
+
+	std::stringstream outfile;
+
+	outfile << "功能号: " << funcid << "\n";
+		outfile << "客户端IP：" << log.ip() << "\n";
+
+		outfile << "请求接收时间: " << log.recvtime() << "\n";
+		outfile << "应答发送时间：" << log.sendtime() << "\n";
+
+		outfile << "请求开始处理时间：" << log.begintime() << "\n";
+		outfile << "执行时间(毫秒)：" << log.runtime()/1000 << "\n";
+		
+		outfile << "柜台地址：" << log.gtip()<< "\n";
+		outfile << "柜台端口：" << log.gtport()<< "\n";
+		
+
+		outfile << "请求密文：" << log.enc_request() << "\n";
+		// 需要过滤敏感字段
+		outfile << "请求过滤后明文：" <<  sFilterRequest << "\n";
+
+
+		outfile << "执行结果：" << log.status() << "\n";
+		outfile << "柜台返回码：" << log.retcode() << "\n";
+		outfile << "柜台返回消息：" << log.retmsg() << "\n";
+
+		// 需要过滤敏感字段
+		outfile << "应答明文：" << log.response() << "\n";
+		outfile << "应答密文：" << log.enc_response() << "\n";
+			
+		// 隔一行
+		outfile << "\n";
+
+	DWORD dwBytesWritten = 0;
+
+	std::string s = outfile.str();
+	WriteFile(hFile, s.c_str(), s.length(), &dwBytesWritten, NULL);
+
+	
+
+	CloseHandle(hFile);
 
 	// 释放
 	//log.destroy();
