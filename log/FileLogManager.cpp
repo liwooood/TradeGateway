@@ -38,7 +38,8 @@ void FileLogManager::stop()
 
 void FileLogManager::push(Trade::TradeLog logMsg)
 {
-	file_q_.push(logMsg);	
+	if (gConfigManager::instance().m_nLogFileEnable)
+		file_q_.push(logMsg);	
 }
 
 

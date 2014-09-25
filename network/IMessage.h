@@ -33,6 +33,36 @@ public:
 	Trade::TradeLog log;
 	void Log(Trade::TradeLog::LogLevel logLevel, std::string sysNo, std::string sysVer, std::string busiType, std::string funcId, std::string account, std::string clientIp, std::string request, std::string response, int status, std::string errCode, std::string errMsg, std::string beginTime, int runtime, std::string gatewayIp, std::string gatewayPort, std::string counterIp, std::string counterPort, std::string counterType);
 
+	
+
+
+	
+	size_t m_MsgHeaderSize;
+	std::vector<char> m_MsgHeader;
+	size_t GetMsgHeaderSize();
+	std::vector<char>& GetMsgHeader();
+	void SetMsgHeader(std::vector<char> header);
+	virtual bool DecoderMsgHeader()=0;
+
+
+	std::vector<char> m_MsgContent;
+	size_t GetMsgContentSize();
+	std::vector<char>& GetMsgContent();
+	std::string GetMsgContentString();
+	void SetMsgContent(std::string content);
+	void SetMsgContent(std::vector<char> content);
+	
+
+
+	int m_msgType;
+	
+	
+
+	// 删除消息指针
+	void destroy();	
+
+
+	// 以下信息需要重构
 	TcpSessionPtr tcpSession;
 	void SetTcpSession(TcpSessionPtr session);
 	TcpSessionPtr GetTcpSession();
@@ -40,35 +70,6 @@ public:
 	SSLSessionPtr sslSession;
 	void SetSslSession(SSLSessionPtr session);
 	SSLSessionPtr GetSslSession();
-
-
-	size_t m_MsgHeaderSize;
-	std::vector<char> m_MsgHeader;
-	size_t GetMsgHeaderSize();
-	std::vector<char>& GetMsgHeader();
-	
-
-	std::vector<char> m_MsgContent;
-	size_t GetMsgContentSize();
-	std::vector<char>& GetMsgContent();
-	
-
-	int m_msgType;
-	
-	
-
-	// 删除消息指针
-	void destroy();
-
-	// 发送消息
-	void SetMsgContent(std::string content);
-	void SetMsgContent(std::vector<char> content);
-
-	void SetMsgHeader(std::vector<char> header);
-
-	// 接收消息
-	virtual bool DecoderMsgHeader()=0;
-	std::string GetMsgContentString();
 };
 
 #endif

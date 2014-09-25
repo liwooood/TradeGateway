@@ -44,19 +44,30 @@ size_t IMessage::GetMsgHeaderSize()
 	return m_MsgHeader.size();
 }
 
+void IMessage::SetMsgHeader(std::vector<char> header)
+{
+	m_MsgHeader = header;
+}
+
+
+
+
 std::vector<char>& IMessage::GetMsgContent()
 {
 	return m_MsgContent;
 }
 
+
+std::string IMessage::GetMsgContentString()
+{
+	std::string str(m_MsgContent.begin(), m_MsgContent.end());
+	return str;
+
+}
+
 size_t IMessage::GetMsgContentSize()
 {
 	return m_MsgContent.size();
-}
-
-void IMessage::destroy()
-{
-	boost::checked_delete(this);
 }
 
 void IMessage::SetMsgContent(std::string content)
@@ -87,6 +98,7 @@ void IMessage::SetMsgContent(std::vector<char> content)
 	
 }
 
+
 void IMessage::Log(Trade::TradeLog::LogLevel logLevel, std::string sysNo, std::string sysVer, std::string busiType, std::string funcId, std::string account, std::string clientIp, std::string request, std::string response, int status, std::string errCode, std::string errMsg, std::string beginTime, int runtime, std::string gatewayIp, std::string gatewayPort, std::string counterIp, std::string counterPort, std::string counterType)
 {
 	log.set_level(logLevel);
@@ -103,7 +115,7 @@ void IMessage::Log(Trade::TradeLog::LogLevel logLevel, std::string sysNo, std::s
 
 
 	
-	log.set_request(""); // flash
+	log.set_enc_request(""); // flash
 	log.set_request(request);
 	log.set_status(status);
 	log.set_retcode(errCode);
@@ -133,15 +145,7 @@ void IMessage::SetSendTime()
 	log.set_sendtime(sSendTime);
 }
 
-
-std::string IMessage::GetMsgContentString()
+void IMessage::destroy()
 {
-	std::string str(m_MsgContent.begin(), m_MsgContent.end());
-	return str;
-
-}
-
-void IMessage::SetMsgHeader(std::vector<char> header)
-{
-	m_MsgHeader = header;
+	boost::checked_delete(this);
 }

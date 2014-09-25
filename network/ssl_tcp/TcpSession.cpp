@@ -146,6 +146,7 @@ IMessage* TcpSession::create_request()
 	}
 
 	req->SetTcpSession(shared_from_this());
+
 	return req;
 
 	// ÄÚ´æ³Ø

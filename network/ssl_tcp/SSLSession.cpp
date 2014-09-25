@@ -35,6 +35,7 @@
 // 新意
 #include "business/xinyi/TCPClientSync.h"
 
+
 SSLSession::SSLSession(ios_type& ios, queue_type& q, int msgType, boost::asio::ssl::context& context)
 	:socket_(ios, context), 
 	strand_(ios), 
@@ -171,6 +172,7 @@ IMessage* SSLSession::create_request()
 	}
 			
 	req->SetSslSession(shared_from_this());
+
 	return req;
 	/*
 	ssl_session_ptr sess = shared_from_this();
@@ -346,6 +348,7 @@ void SSLSession::handle_write_msg(const boost::system::error_code& error, size_t
 	// 存入日志队列
 	resp->SetSendTime();
 
+	// 写日志
 	gFileLogManager::instance().push(resp->log);
 	gDistributedLogManager::instance().push(resp->log);
 

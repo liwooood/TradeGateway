@@ -119,20 +119,11 @@
     <Filter Include="网络层\网络消息">
       <UniqueIdentifier>{0f35af1c-396e-43f7-a3be-5a6dfd2cbe44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="网络层\网络消息\HTTP">
-      <UniqueIdentifier>{e8e7c469-29a5-4132-8ab6-973ffa1603c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="网络层\网络消息\Tcp Old">
       <UniqueIdentifier>{c0b69dde-ff86-4abd-aed0-cf2c45510637}</UniqueIdentifier>
     </Filter>
     <Filter Include="网络层\网络消息\Tcp  &amp; SSL">
       <UniqueIdentifier>{8ac242f4-61f4-483b-8368-541a5d525685}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络消息\SSL old">
-      <UniqueIdentifier>{060612fd-4e12-4651-809d-43c7e0069baa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络消息\SSL old\protobuf">
-      <UniqueIdentifier>{dc0f81dd-291e-44f8-9a46-44c19b051098}</UniqueIdentifier>
     </Filter>
     <Filter Include="网络层\网络服务">
       <UniqueIdentifier>{1bf9b355-b3ab-48cf-975e-e5a85b6a2a77}</UniqueIdentifier>
@@ -169,9 +160,6 @@
     </Filter>
     <Filter Include="网络层\会话层\需要删除">
       <UniqueIdentifier>{8e34f7e6-5421-4f99-8440-6e53bb5b5b15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\会话层\需要删除\http old">
-      <UniqueIdentifier>{79c6674e-cf73-4fa5-ab26-04580abed794}</UniqueIdentifier>
     </Filter>
     <Filter Include="网络层\会话层\需要删除\ssl old">
       <UniqueIdentifier>{e5ee458d-bb4a-404b-b54e-663ca82e3e55}</UniqueIdentifier>
@@ -226,6 +214,12 @@
     </Filter>
     <Filter Include="错误信息">
       <UniqueIdentifier>{5c289177-ec8b-4508-8411-9e5b5abe3e98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="网络层\网络消息\SSL PB">
+      <UniqueIdentifier>{060612fd-4e12-4651-809d-43c7e0069baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="网络层\网络消息\SSL PB\protobuf">
+      <UniqueIdentifier>{dc0f81dd-291e-44f8-9a46-44c19b051098}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -304,11 +298,8 @@
     <ClInclude Include="ConnectPool\Branch.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
-    <ClInclude Include="network\http\http_message.h">
-      <Filter>网络层\网络消息\HTTP</Filter>
-    </ClInclude>
     <ClInclude Include="network\ssl\ssl_message.h">
-      <Filter>网络层\网络消息\SSL old</Filter>
+      <Filter>网络层\网络消息\SSL PB</Filter>
     </ClInclude>
     <ClInclude Include="network\tcp\tcp_message_old.h">
       <Filter>网络层\网络消息\Tcp Old</Filter>
@@ -335,7 +326,7 @@
       <Filter>日志\日志消息</Filter>
     </ClInclude>
     <ClInclude Include="network\ssl\pkgheader.pb.h">
-      <Filter>网络层\网络消息\SSL old\protobuf</Filter>
+      <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
     </ClInclude>
     <ClInclude Include="network\ssl_tcp\CustomMessage.h">
       <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
@@ -405,6 +396,9 @@
     </ClInclude>
     <ClInclude Include="errcode.h">
       <Filter>错误信息</Filter>
+    </ClInclude>
+    <ClInclude Include="network\ISession.h">
+      <Filter>网络层\会话层</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -484,7 +478,7 @@
       <Filter>日志\日志消息</Filter>
     </ClCompile>
     <ClCompile Include="network\ssl\pkgheader.pb.cc">
-      <Filter>网络层\网络消息\SSL old\protobuf</Filter>
+      <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\CustomMessage.cpp">
       <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
@@ -540,6 +534,9 @@
     <ClCompile Include="ConnectPool\Connect.cpp">
       <Filter>业务层\柜台系统</Filter>
     </ClCompile>
+    <ClCompile Include="network\ISession.cpp">
+      <Filter>网络层\会话层</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\TradeGatewayGtja.ico">
@@ -577,10 +574,10 @@
       <Filter>日志\日志消息</Filter>
     </None>
     <None Include="network\ssl\pkgheader.proto">
-      <Filter>网络层\网络消息\SSL old\protobuf</Filter>
+      <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
     </None>
     <None Include="network\ssl\proto2cpp.bat">
-      <Filter>网络层\网络消息\SSL old\protobuf</Filter>
+      <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
     </None>
     <None Include="bin_release\wer.reg">
       <Filter>CrashDump</Filter>
@@ -726,18 +723,6 @@
     </Text>
     <Text Include="network\ssl\ssl_session.h.txt">
       <Filter>网络层\会话层\需要删除\ssl old</Filter>
-    </Text>
-    <Text Include="network\http\http_session.cpp.txt">
-      <Filter>网络层\会话层\需要删除\http old</Filter>
-    </Text>
-    <Text Include="network\http\http_session.h.txt">
-      <Filter>网络层\会话层\需要删除\http old</Filter>
-    </Text>
-    <Text Include="network\ISession.h.txt">
-      <Filter>网络层\会话层</Filter>
-    </Text>
-    <Text Include="network\ISession.cpp.txt">
-      <Filter>网络层\会话层</Filter>
     </Text>
     <Text Include="bin_release\ChangeLog.txt">
       <Filter>配置文件\release</Filter>
