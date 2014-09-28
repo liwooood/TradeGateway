@@ -11,7 +11,7 @@ Branch::~Branch(void)
 {
 }
 
-Counter* Branch::GetCounter()
+Counter* Branch::GetNextCounter()
 {
 	currentServerId++;
 
@@ -23,7 +23,7 @@ Counter* Branch::GetCounter()
 	return &counter;
 }
 
-int Branch::GetServerCount()
+int Branch::GetCounterCount()
 {
 	return servers.size();
 }

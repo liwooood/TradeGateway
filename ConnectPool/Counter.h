@@ -13,7 +13,7 @@ public:
 	Counter(void);
 	~Counter(void);
 
-	int m_eCounterType; // 柜台类型
+	int m_nCounterType; // 柜台类型
 
 	std::string m_sIP;
 	int m_nPort;

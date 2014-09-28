@@ -601,8 +601,10 @@ bool CSywgConnect::Login(std::string& response, int& status, std::string& errCod
 		lFlag = boost::lexical_cast<long>(flag);
 		request.flag = lFlag;
 	}
-	catch(boost::exception& exp)
+	catch(std::exception& exp)
 	{
+		exp.what();
+
 		GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
 
 		bRet = true;
@@ -651,8 +653,10 @@ bool CSywgConnect::Login(std::string& response, int& status, std::string& errCod
 	{
 		request.head.dest_dpt = boost::lexical_cast<WORD>(branchNo);
 	}
-	catch(boost::exception& exp)
+	catch(std::exception& exp)
 	{
+		exp.what();
+
 		GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
 
 		bRet = true;

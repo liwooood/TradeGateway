@@ -71,14 +71,9 @@
 TradeServer::TradeServer(int msgType)
 	:req_worker_(recvq_, boost::bind(&TradeServer::ProcessRequest, this, _1), gConfigManager::instance().m_nTcpWorkerThreadPool)
 	,resp_worker_(sendq_, boost::bind(&TradeServer::ProcessResponse, this, _1), gConfigManager::instance().m_nTcpSendThreadPool)
-	
 {
 	m_MsgType = msgType;
 }
-
-
-
-
 
 void TradeServer::start()
 {
@@ -114,10 +109,12 @@ bool TradeServer::ProcessRequest(IMessage* req)
 {
 	std::string SOH = "\x01";
 
+
+	// 以下都是日志所需的信息
+	IMessage * resp = NULL;
+
 	Trade::TradeLog::LogLevel logLevel = Trade::TradeLog::INFO_LEVEL;
 
-//	MSG_HEADER binMsgHeader;
-//	memcpy(&binMsgHeader, req->GetMsgHeader().data(), req->GetMsgHeaderSize());
 
 	std::string sysNo = "";
 	std::string busiType = "";
@@ -145,8 +142,6 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 	// utf8
 	std::string request_utf8 = req->GetMsgContentString();
-
-	
 	std::string request = request_utf8;
 	
 
@@ -158,81 +153,43 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	if (m_MsgType == MSG_TYPE_TCP_OLD)
 	{
 		gatewayIp = gConfigManager::instance().m_sIp;
-
 		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nTcpPort);
 	}
+
 	if (m_MsgType == MSG_TYPE_SSL_PB)
 	{
 		// 只有移动端需要转换字符集
 		UErrorCode errcode = U_ZERO_ERROR;
 		char dest[8192];
 		memset(dest, 0x00, sizeof(dest));
+		// 从utf8转成gbk
 		int ret = ucnv_convert("gbk", "utf8", dest, sizeof(dest), request_utf8.c_str(), -1, &errcode);
 		request = dest;
 
 		gatewayIp = gConfigManager::instance().m_sIp;
-
 		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nSslPort);
 
-		quote::PkgHeader pbHeader;
-		
-		pbHeader.ParseFromArray(req->GetMsgHeader().data(), req->GetMsgHeaderSize());
-		
-
+		//quote::PkgHeader pbHeader;
+		//pbHeader.ParseFromArray(req->GetMsgHeader().data(), req->GetMsgHeaderSize());
 	}
+
 	if (m_MsgType == MSG_TYPE_TCP_NEW)
 	{
 		gatewayIp = gConfigManager::instance().m_sIp;
-
 		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nTcpNewPort);
 	}
+
 	if (m_MsgType == MSG_TYPE_SSL_NEW)
 	{
 		gatewayIp = gConfigManager::instance().m_sIp;
-
 		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nSslNewPort);
 	}
+
 	gatewayServer = gatewayIp + ":" + gatewayPort;
-			
+	// 定义结束
 							
 			
-			
-	/*
-
-	// 如果消息类型不是请求类型
-	if (binMsgHeader.MsgType != MSG_TYPE_REQUEST)
-	{
-		logLevel = Trade::TradeLog::ERROR_LEVEL;
-
-		errCode = boost::lexical_cast<std::string>(MSG_HEADER_ERROR);
-		errMsg = gError::instance().GetErrMsg(MSG_HEADER_ERROR);
-
-		response = "1" + SOH + "2" + SOH;
-		response += "cssweb_code";
-		response += SOH;
-		response += "cssweb_msg";
-		response += SOH;
-		response += errCode;
-		response += SOH;
-		response += errMsg;
-		response += SOH;
-
-		
-		goto finish;
-	}
-	*/
-
-	// 客户端心跳功能
-	if (nFuncId == FUNCTION_HEARTBEAT)
-	{
-		response = "heartbeat";
-
-		goto finish;
-	}
-
-	
-
-	
+	// 分析请求
 	if (!GetSysNoAndBusiType(request, sysNo, busiType, sysVer, account, funcId, clientIp))
 	{
 		logLevel = Trade::TradeLog::ERROR_LEVEL;
@@ -254,6 +211,18 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	}
 
 	nBusiType = boost::lexical_cast<int>(busiType);
+
+	
+	// 客户端心跳功能
+	if (nFuncId == FUNCTION_HEARTBEAT)
+	{
+		response = "heartbeat";
+
+		goto finish;
+	}
+
+	
+
 
 	// 得到柜台类型
 	nCounterType = g_ConnectManager.GetCounterType(sysNo, busiType);
@@ -304,7 +273,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	}
 	*/
 	
-	int serverCount = g_ConnectManager.GetServerCount(sysNo, nBusiType, "0000");
+	int serverCount = g_ConnectManager.GetCounterCount(sysNo, nBusiType, "0000");
 	if (serverCount == 0)
 	{
 	}
@@ -334,6 +303,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		for (int i=0; i<serverCount; i++)
 		{
 			bool bCounterConnected = false;
+
 			if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
 				bCounterConnected = req->GetTcpSession()->GetCounterConnect(nCounterType)->IsConnected();
 
@@ -342,8 +312,6 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			
 			if (bCounterConnected)
 			{
-				
-
 				// 已建立连接，跳出循环
 				bConnect = true;
 				break;
@@ -354,10 +322,10 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
 
 				Counter * counter = NULL;
-				counter = g_ConnectManager.GetServer(sysNo, nBusiType, "0000");
+				counter = g_ConnectManager.GetNextCounter(sysNo, nBusiType, "0000");
 				counterIp = counter->m_sIP;
 				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-				counterType = GetCounterType(counter->m_eCounterType);
+				counterType = counter->m_nCounterType;
 				
 				bool bRet = false;
 
@@ -431,24 +399,25 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		// 每次请求都需要记录柜台的ip和port
 				
 		
-		// 处理业务，业务失败或成功都算成功的，只有通信失败才需要重试
+		// 处理业务，业务处理失败或成功都算成功的，只有通信失败才需要重试
 		bool bNetwork = false;
 		if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
 		{
 			Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType)->GetCounter();
 			counterIp = counter->m_sIP;
 			counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-			counterType = GetCounterType(counter->m_eCounterType);
+			counterType = counter->m_nCounterType;
 			counterServer = counterIp + ":"+ counterPort;
 
 			bNetwork = req->GetTcpSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
 		}
+
 		if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
 		{
 			Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType)->GetCounter();
 			counterIp = counter->m_sIP;
 			counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-			counterType = GetCounterType(counter->m_eCounterType);
+			counterType = counter->m_nCounterType;
 			counterServer = counterIp + ":"+ counterPort;
 
 			bNetwork = req->GetSslSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
@@ -457,6 +426,8 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		if (bNetwork)
 		{
 			// 业务失败，重构response
+			// 因为业务层，业务处理失败为了返回柜台和网关信息，没有处理，所以这里需要重构
+			// status =1，代表处理成功, response已有格式
 			if (status == 0)
 			{
 				response = "1";
@@ -488,60 +459,43 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
 			runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
 
-
-
 			break;
 		}
 		else
 		{
-			continue;
 			// 通信失败,开始重试
 			// 处理一次，写一次日志
 			// fileLog.push(req->log)
 			//req->Log(Trade::TradeLog::, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
+			continue;
 		}// end if
+
 	} // end for retry
 	
 
 
 
 finish:
-
-	std::vector<char> compressedMsgContent;
-	
-
-	
-
-	IMessage * resp = NULL;
-	
-	
-
-	switch(req->m_msgType)
+	if (req->m_msgType == MSG_TYPE_TCP_OLD)
 	{
-	case MSG_TYPE_TCP_OLD:
-		{
-			if (req->GetTcpSession()->m_msgType != MSG_TYPE_TCP_OLD)
-				AfxMessageBox("消息类型错误");
-
 		resp = new tcp_message_old();
+
 		// 设置会话
 		resp->SetTcpSession(req->GetTcpSession());
 
+		// 设置消息头
 		int msgHeaderSize = response.size();
 		msgHeaderSize = htonl(msgHeaderSize);
 		memcpy(&(resp->m_MsgHeader.front()), &msgHeaderSize, 4);
+
 		// 设置消息内容
 		resp->SetMsgContent(response);
-
-		}
-		break;
-	case MSG_TYPE_SSL_PB:
-		{
-			
-
-			if (req->GetSslSession()->m_msgType != MSG_TYPE_SSL_PB)
-				AfxMessageBox("消息类型错误");
+	}
+		
+	if (req->m_msgType ==  MSG_TYPE_SSL_PB)
+	{
 		resp = new ssl_message();
+
 		// 设置会话
 		resp->SetSslSession(req->GetSslSession());
 
@@ -549,18 +503,20 @@ finish:
 
 		if (response.size() > gConfigManager::instance().zlib)
 		{
+			std::vector<char> compressedMsgContent;
 			boost::iostreams::filtering_streambuf<boost::iostreams::output> compress_out;
 			compress_out.push(boost::iostreams::zlib_compressor());
 			compress_out.push(boost::iostreams::back_inserter(compressedMsgContent));
+
 			boost::iostreams::copy(boost::make_iterator_range(response), compress_out);
 
 			pbHeader.set_zip(true);
+
 			int compressedMsgContentSize = compressedMsgContent.size();
 			pbHeader.set_bodysize(compressedMsgContentSize);
+
 			// 设置消息内容
 			resp->SetMsgContent(compressedMsgContent);
-
-			
 		}
 		else
 		{
@@ -578,16 +534,14 @@ finish:
 		pbHeader.set_msgtype(quote::PkgHeader::RES_TRADE);
 		pbHeader.set_errcode(0);
 		
-		
-		bool bTmp = pbHeader.SerializeToArray(&(resp->m_MsgHeader.front()), pbHeader.ByteSize());
-			
-		}
-		break;
-	case MSG_TYPE_TCP_NEW:
-		{
-			if (req->GetTcpSession()->m_msgType != MSG_TYPE_TCP_NEW)
-				AfxMessageBox("消息类型错误");
+		// 设置消息头
+		bool bTmp = pbHeader.SerializeToArray(&(resp->m_MsgHeader.front()), pbHeader.ByteSize());		
+	}
+	
+	if (req->m_msgType == MSG_TYPE_TCP_NEW)
+	{
 		resp = new CustomMessage(MSG_TYPE_TCP_NEW);
+
 		// 设置会话
 		resp->SetTcpSession(req->GetTcpSession());
 
@@ -599,6 +553,7 @@ finish:
 
 		if (response.size() > gConfigManager::instance().zlib)
 		{
+			std::vector<char> compressedMsgContent;
 			boost::iostreams::filtering_streambuf<boost::iostreams::output> compress_out;
 			compress_out.push(boost::iostreams::zlib_compressor());
 			compress_out.push(boost::iostreams::back_inserter(compressedMsgContent));
@@ -607,9 +562,9 @@ finish:
 			binRespMsgHeader.zip = 1;
 			int compressedMsgContentSize = compressedMsgContent.size();
 			binRespMsgHeader.MsgContentSize = compressedMsgContentSize;
+
 			// 设置消息内容
 			resp->SetMsgContent(compressedMsgContent);
-
 		}
 		else
 		{
@@ -617,22 +572,16 @@ finish:
 			binRespMsgHeader.MsgContentSize = response.size();
 			// 设置消息内容
 			resp->SetMsgContent(response);
-
 		}
 
-		//msgHeader.resize(sizeof(MSG_HEADER));
-
+		// 设置消息头
 		memcpy(&(resp->m_MsgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
-		}
-		break;
-	case MSG_TYPE_SSL_NEW:
-		{
-			
-
-			if (req->GetSslSession()->m_msgType != MSG_TYPE_SSL_NEW)
-				AfxMessageBox("消息类型错误");
-
+	}
+	
+	if (req->m_msgType ==  MSG_TYPE_SSL_NEW)
+	{
 		resp = new CustomMessage(MSG_TYPE_SSL_NEW);
+
 		// 设置会话
 		resp->SetSslSession(req->GetSslSession());
 
@@ -644,6 +593,7 @@ finish:
 
 		if (response.size() > gConfigManager::instance().zlib)
 		{
+			std::vector<char> compressedMsgContent;
 			boost::iostreams::filtering_streambuf<boost::iostreams::output> compress_out;
 			compress_out.push(boost::iostreams::zlib_compressor());
 			compress_out.push(boost::iostreams::back_inserter(compressedMsgContent));
@@ -668,24 +618,18 @@ finish:
 		//msgHeader.resize(sizeof(MSG_HEADER));
 
 		memcpy(&(resp->m_MsgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
-		}
-		break;
 	}
+
 
 	// 拷贝日志消息
 	req->Log(logLevel, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
 	resp->log = req->log; 
 
 
-	// 设置消息头
-	//resp->SetMsgHeader(msgHeader);
-
-	
-	
-
-	// 释放请求
+	// 删除请求消息
 	req->destroy();
 
+	// 把应答消息推入应答队列
 	sendq_.push(resp);
 
 	
@@ -752,27 +696,4 @@ bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, 
 		return false;
 
 	return true;
-}
-
-std::string TradeServer::GetCounterType(int counterType)
-{
-	switch (counterType)
-	{
-	case COUNTER_TYPE_HS_T2:
-		return "1";
-	case COUNTER_TYPE_HS_COM:
-		return "2";
-	case COUNTER_TYPE_JZ_WIN:
-		return "3";
-	case COUNTER_TYPE_JZ_LINUX:
-		return "4";
-	case COUNTER_TYPE_DINGDIAN:
-		return "5";
-	case COUNTER_TYPE_JSD:
-		return "6";
-	case COUNTER_TYPE_XINYI:
-		return "7";
-	default:
-		return "0";
-	}
 }

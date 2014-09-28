@@ -18,7 +18,6 @@ CConnectManager::CConnectManager(void)
 
 CConnectManager::~CConnectManager(void)
 {
-	//CloseConnPool();
 }
 
 
@@ -188,7 +187,8 @@ void CConnectManager::CloseConnPool()
 }
 */
 
-Counter* CConnectManager::GetServer(std::string sysNo, int busiType, std::string sBranchId)
+// 根据系统编号、业务类型、营业部，找到下一个柜台信息
+Counter* CConnectManager::GetNextCounter(std::string sysNo, int busiType, std::string sBranchId)
 {
 	// 此函数需要加同步mutex
 
@@ -239,12 +239,12 @@ Counter* CConnectManager::GetServer(std::string sysNo, int busiType, std::string
 
 	
 	Branch& branch = itBranch->second;
-	return branch.GetCounter();
-	
-	
+
+	return branch.GetNextCounter();
 }
 
-int CConnectManager::GetServerCount(std::string sysNo, int busiType, std::string sBranchId)
+// 根据系统编号，业务类型，营业部，找到对应的配置的柜台服务器数量
+int CConnectManager::GetCounterCount(std::string sysNo, int busiType, std::string sBranchId)
 {
 		// 此函数需要加同步mutex
 
@@ -295,23 +295,30 @@ int CConnectManager::GetServerCount(std::string sysNo, int busiType, std::string
 
 	
 	Branch& branch = itBranch->second;
-	return branch.GetServerCount();
+
+	return branch.GetCounterCount();
 }
 
+
+// 根据系统编号和业务类型，找到对应的柜台类型
 int CConnectManager::GetCounterType(std::string SystemNo, std::string busiType)
 {
+	int bt = boost::lexical_cast<int>(busiType);
+
 	std::map<std::string, BusinessSystem>::iterator it;
 	it = systems.find(SystemNo);
-	if (it == g_ConnectManager.systems.end())
+	if (it == systems.end())
 	{
 		return COUNTER_TYPE_UNKNOWN;
 	}
 
 	BusinessSystem& bs = it->second;
 
-	int bt = boost::lexical_cast<int>(busiType);
+	
 
-	std::map<int, BusinessType >::iterator it2;
+	std::map<int, BusinessType>::iterator it2;
+
+	
 	it2 = bs.busis.find(bt);
 	if (it2 == bs.busis.end())
 	{

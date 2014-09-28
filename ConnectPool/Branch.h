@@ -22,9 +22,9 @@ public:
 	int currentServerId;
 	std::vector<Counter> servers;
 	
-	Counter* GetCounter();
+	Counter* GetNextCounter();
 
-	int GetServerCount();
+	int GetCounterCount();
 
 
 };

@@ -15,7 +15,7 @@ IMessage::~IMessage(void)
 {
 }
 
-TcpSessionPtr IMessage::GetTcpSession()
+TcpSessionPtr& IMessage::GetTcpSession()
 {
 	return tcpSession;
 }
@@ -24,7 +24,7 @@ void IMessage::SetTcpSession(TcpSessionPtr sess)
 	tcpSession = sess;
 }
 
-SSLSessionPtr IMessage::GetSslSession()
+SSLSessionPtr& IMessage::GetSslSession()
 {
 	return sslSession;
 }

@@ -16,9 +16,16 @@
 class CConnectManager
 {
 public:
+	std::map<std::string/*系统编号*/, BusinessSystem> systems;
+
+
+public:
 	CConnectManager(void);
 	~CConnectManager(void);
 
+	Counter* GetNextCounter(std::string system, int business, std::string branch);
+	int GetCounterCount(std::string system, int business, std::string branch);
+	int GetCounterType(std::string SystemNo, std::string busiType);
 
 
 	//保证线程安全?
@@ -26,18 +33,17 @@ public:
 	//void PushConnect(Connect * pConn, std::string sysNo, int busiType, std::string sBranchId);
 	//void CloseConnPool();
 
-	Counter* GetServer(std::string system, int business, std::string branch);
-	int GetServerCount(std::string system, int business, std::string branch);
+	
 	
 
 	// configmanager不需要定义std::map<std::string, BusinessSystem> systems;
-	std::map<std::string/*系统编号*/, BusinessSystem> systems;
+	
 
 	//            系统编号         业务类型        营业部列表   连接池
 	//std::map<std::string, std::map<enum, std::map<std::string, ConnectPool>> >
 	// connectpool --> queue --> connect
 
-	int GetCounterType(std::string SystemNo, std::string busiType);
+	
 };
 
 extern CConnectManager g_ConnectManager;

@@ -65,11 +65,11 @@ public:
 	// 以下信息需要重构
 	TcpSessionPtr tcpSession;
 	void SetTcpSession(TcpSessionPtr session);
-	TcpSessionPtr GetTcpSession();
+	TcpSessionPtr& GetTcpSession();
 
 	SSLSessionPtr sslSession;
 	void SetSslSession(SSLSessionPtr session);
-	SSLSessionPtr GetSslSession();
+	SSLSessionPtr& GetSslSession();
 };
 
 #endif

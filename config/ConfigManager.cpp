@@ -348,7 +348,7 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 					node_value = node.node().child_value("res");
 					counter.m_sRes = node_value;
 
-					counter.m_eCounterType = CounterType;
+					counter.m_nCounterType = CounterType;
 					counter.m_nConnectTimeout = m_nConnectTimeout;
 					counter.m_nIdleTimeout = m_nIdleTimeout;
 					counter.m_nRecvTimeout = m_nRecvTimeout;
