@@ -11,6 +11,10 @@
 
 class TradeBusinessT2 : public IBusiness
 {
+private:
+	CConfigInterface * lpConfig;
+	CConnectionInterface * lpConnection;
+
 public:
 	TradeBusinessT2();
 	~TradeBusinessT2(void);
@@ -18,12 +22,4 @@ public:
 	virtual bool CreateConnect();
 	virtual void CloseConnect();
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg);
-
-
-	
-
-	// ∫„…˙T2
-	CConfigInterface * lpConfig;
-	CConnectionInterface * lpConnection;
-	
 };

@@ -108,11 +108,12 @@ void TradeBusinessT2::CloseConnect()
 	}
 }
 
-
+/*
+只有网络通信错误才返回false
+业务错误也返回true
+*/
 bool TradeBusinessT2::Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg)
 {
-	
-
 	bool bRet = true;
 	int nRet = 0;
 	
@@ -155,17 +156,6 @@ bool TradeBusinessT2::Send(std::string& request, std::string& response, int& sta
 	}
 
 
-	/*
-	if (sysVer == "windows" && funcid == "331100")
-	{
-		 
-		if (!captcha::instance().VerifyCaptcha(captcha))
-		{
-			RetErrRes(Trade::TradeLog::ERROR_LEVEL, response, "1002", "验证码错误或失效");
-			goto FINISH;
-		}
-	}
-	*/
 
 	IF2Packer* pack = NewPacker(2);
 	pack->AddRef();
@@ -277,6 +267,7 @@ bool TradeBusinessT2::Send(std::string& request, std::string& response, int& sta
 		if (nRows == 0)
 		{
 			RetNoRecordRes(response, status);
+
 			bRet = true;
 			status = 1;
 			

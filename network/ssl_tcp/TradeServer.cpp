@@ -363,13 +363,13 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 				if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
 				{
-					req->GetTcpSession()->GetCounterConnect(nCounterType)->SetCounterServer(counter);
+					req->GetTcpSession()->GetCounterConnect(nCounterType)->SetCounter(counter);
 					bRet = req->GetTcpSession()->GetCounterConnect(nCounterType)->CreateConnect();
 				}
 
 				if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
 				{
-					req->GetSslSession()->GetCounterConnect(nCounterType)->SetCounterServer(counter);
+					req->GetSslSession()->GetCounterConnect(nCounterType)->SetCounter(counter);
 					bRet = req->GetSslSession()->GetCounterConnect(nCounterType)->CreateConnect();
 				}
 
@@ -435,7 +435,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		bool bNetwork = false;
 		if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
 		{
-			Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType)->m_Counter;
+			Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType)->GetCounter();
 			counterIp = counter->m_sIP;
 			counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
 			counterType = GetCounterType(counter->m_eCounterType);
@@ -445,7 +445,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		}
 		if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
 		{
-			Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType)->m_Counter;
+			Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType)->GetCounter();
 			counterIp = counter->m_sIP;
 			counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
 			counterType = GetCounterType(counter->m_eCounterType);
@@ -514,7 +514,7 @@ finish:
 
 	IMessage * resp = NULL;
 	
-	//std::vector<char> msgHeader;
+	
 
 	switch(req->m_msgType)
 	{
@@ -676,16 +676,6 @@ finish:
 	req->Log(logLevel, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
 	resp->log = req->log; 
 
-
-	
-
-	
-	
-
-	
-
-	
-		
 
 	// 设置消息头
 	//resp->SetMsgHeader(msgHeader);

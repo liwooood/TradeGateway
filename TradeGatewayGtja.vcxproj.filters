@@ -224,6 +224,12 @@
     <Filter Include="注册表">
       <UniqueIdentifier>{5140f9ba-0a49-496d-8c2c-5b29e7daa878}</UniqueIdentifier>
     </Filter>
+    <Filter Include="业务层\柜台系统\恒生T2\同步">
+      <UniqueIdentifier>{829bcd0e-0b38-4aa3-a424-b2d15422954a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\柜台系统\恒生T2\异步">
+      <UniqueIdentifier>{dd02e4d4-6220-4f5f-b408-a428b9dadafc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -267,9 +273,6 @@
     </ClInclude>
     <ClInclude Include="output\FileLog.h">
       <Filter>调试输出</Filter>
-    </ClInclude>
-    <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClInclude>
     <ClInclude Include="business\apexsoft\TradeBusinessDingDian.h">
       <Filter>业务层\柜台系统\顶点</Filter>
@@ -388,12 +391,6 @@
     <ClInclude Include="business\hundsun_t2\ConnectT2.h">
       <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectPool\ConnectPool.h">
-      <Filter>业务层\柜台系统</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectPool\Connect.h">
-      <Filter>业务层\柜台系统</Filter>
-    </ClInclude>
     <ClInclude Include="ThreadPool\worker.h">
       <Filter>线程池ThreadPool</Filter>
     </ClInclude>
@@ -402,6 +399,15 @@
     </ClInclude>
     <ClInclude Include="network\ISession.h">
       <Filter>网络层\会话层</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectPool\ConnectPool.h">
+      <Filter>业务层\柜台连接池</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectPool\Connect.h">
+      <Filter>业务层\柜台连接池</Filter>
+    </ClInclude>
+    <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h">
+      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -428,9 +434,6 @@
     </ClCompile>
     <ClCompile Include="output\FileLog.cpp">
       <Filter>调试输出</Filter>
-    </ClCompile>
-    <ClCompile Include="business\hundsun_t2\TradeBusinessT2.cpp">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClCompile>
     <ClCompile Include="business\apexsoft\TradeBusinessDingDian.cpp">
       <Filter>业务层\柜台系统\顶点</Filter>
@@ -531,14 +534,17 @@
     <ClCompile Include="business\hundsun_t2\ConnectT2.cpp">
       <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectPool\ConnectPool.cpp">
-      <Filter>业务层\柜台系统</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectPool\Connect.cpp">
-      <Filter>业务层\柜台系统</Filter>
-    </ClCompile>
     <ClCompile Include="network\ISession.cpp">
       <Filter>网络层\会话层</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\ConnectPool.cpp">
+      <Filter>业务层\柜台连接池</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\Connect.cpp">
+      <Filter>业务层\柜台连接池</Filter>
+    </ClCompile>
+    <ClCompile Include="business\hundsun_t2\TradeBusinessT2.cpp">
+      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 
 // 版本信息
 #define VERSION  "2.0.06"
+#define MY_BOOST_VERSION "1.55"
 
 // 柜台类型
 #define COUNTER_TYPE_UNKNOWN 0
