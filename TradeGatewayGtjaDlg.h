@@ -130,15 +130,18 @@ private:
 	TradeServer * pTradeServerSslNew; // new ssl & tcp 
 
 public:
+	afx_msg void OnDestroy();
+	afx_msg void OnClose();
+
+	afx_msg void OnBnClickedClearCache();
+	afx_msg void OnBnClickedSetupReg();
+	afx_msg void OnBnClickedChangelog();
+	afx_msg void OnBnClickedExit();
+
+	afx_msg void OnBnClickedOpenLog();
+
 	afx_msg void OnBnClickedTestCrash();
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton1();
-	afx_msg void OnBnClickedChangelog();
-	afx_msg void OnBnClickedStartup();
-	afx_msg void OnBnClickedOpenLog();
-	afx_msg void OnDestroy();
-	afx_msg void OnClose();
-	afx_msg void OnBnClickedExit();
-	afx_msg void OnBnClickedClearCache();
-
+	//afx_msg void OnBnClickedStartup();
 };

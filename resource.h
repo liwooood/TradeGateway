@@ -14,6 +14,7 @@
 #define IDC_TCPPB_ADDR                  1011
 #define IDC_TCP_ADDR                    1012
 #define IDC_HTTP_ADDR                   1013
+#define IDC_TCPPB_ADDR2                 1013
 #define IDC_SSL_STATUS                  1014
 #define IDC_TCP_STATUS                  1015
 #define IDC_HTTP_STATUS                 1016
@@ -22,9 +23,11 @@
 #define IDC_SSL_WORKER2                 1019
 #define IDC_TCP_WORKER                  1020
 #define IDC_HTTP_WORKER                 1021
+#define IDC_SSL_WORKER3                 1021
 #define IDC_TCPPB_SEND                  1022
 #define IDC_TCP_SEND                    1023
 #define IDC_HTTP_SEND                   1024
+#define IDC_TCPPB_SEND2                 1024
 #define IDC_SSL_ONLINE                  1025
 #define IDC_TCP_ONLINE                  1026
 #define IDC_HTTP_ONLINE                 1027
@@ -59,6 +62,7 @@
 #define IDC_BUTTON3                     1055
 #define IDC_CHANGELOG                   1058
 #define IDC_BUTTON1                     1059
+#define IDC_SETUP_REG                   1059
 
 // Next default values for new objects
 // 

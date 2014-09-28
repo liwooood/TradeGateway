@@ -221,6 +221,9 @@
     <Filter Include="网络层\网络消息\SSL PB\protobuf">
       <UniqueIdentifier>{dc0f81dd-291e-44f8-9a46-44c19b051098}</UniqueIdentifier>
     </Filter>
+    <Filter Include="注册表">
+      <UniqueIdentifier>{5140f9ba-0a49-496d-8c2c-5b29e7daa878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -579,9 +582,6 @@
     <None Include="network\ssl\proto2cpp.bat">
       <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
     </None>
-    <None Include="bin_release\wer.reg">
-      <Filter>CrashDump</Filter>
-    </None>
     <None Include="文档\系统设计文档\恒生T2异步模式.vsdx">
       <Filter>文档</Filter>
     </None>
@@ -602,6 +602,9 @@
     </None>
     <None Include="bin\tradeparam.map">
       <Filter>业务层\柜台系统\顶点</Filter>
+    </None>
+    <None Include="bin_release\wer.reg">
+      <Filter>注册表</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

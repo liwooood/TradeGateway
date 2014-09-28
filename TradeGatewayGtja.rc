@@ -81,15 +81,15 @@ EXSTYLE WS_EX_APPWINDOW
 CAPTION "中软万维证券网关"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    LTEXT           "桌面和移动平台交易网关",IDC_SSL_ADDR,7,7,159,8
+    LTEXT           "ssl网关",IDC_SSL_ADDR,7,7,159,8
     LTEXT           "运行状态",IDC_SSL_STATUS,171,7,70,8
     LTEXT           "在线连接数",IDC_SSL_ONLINE,436,7,66,8
-    LTEXT           "新页面交易网关",IDC_TCPPB_ADDR,7,29,158,8
-    LTEXT           "运行状态",IDC_STATIC,171,29,73,8
-    LTEXT           "在线连接数",IDC_STATIC,436,29,75,8
-    LTEXT           "老页面交易网关",IDC_TCP_ADDR,7,49,152,8
-    LTEXT           "运行状态",IDC_TCP_STATUS,171,49,73,8
-    LTEXT           "在线连接数",IDC_TCP_ONLINE,436,49,68,8
+    LTEXT           "新web网关",IDC_TCPPB_ADDR,7,49,158,8
+    LTEXT           "运行状态",IDC_STATIC,171,49,73,8
+    LTEXT           "在线连接数",IDC_STATIC,436,49,75,8
+    LTEXT           "web网关",IDC_TCP_ADDR,7,29,152,8
+    LTEXT           "运行状态",IDC_TCP_STATUS,171,29,73,8
+    LTEXT           "在线连接数",IDC_TCP_ONLINE,436,29,68,8
     LTEXT           "柜台连接池最小值",IDC_CONNPOOL_MIN,7,93,80,8
     LTEXT           "柜台连接池增长值",IDC_CONNPOOL_INCREASE,89,93,76,8
     LTEXT           "连接超时时间",IDC_CONN_TIMEOUT,171,93,63,8
@@ -103,10 +103,10 @@ BEGIN
     EDITTEXT        IDC_LOG_GUI,7,192,687,193,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL
     LTEXT           "请求队列工作线程数",IDC_SSL_WORKER,251,7,84,8
     LTEXT           "响应队列工作线程数",IDC_SSL_SEND,345,7,91,8
-    LTEXT           "请求队列工作线程数",IDC_SSL_WORKER2,251,29,84,8
-    LTEXT           "请求队列工作线程数",IDC_TCP_WORKER,251,49,85,8
-    LTEXT           "响应队列工作线程数",IDC_TCPPB_SEND,345,29,91,8
-    LTEXT           "响应队列工作线程数",IDC_TCP_SEND,345,49,91,8
+    LTEXT           "请求队列工作线程数",IDC_SSL_WORKER2,251,49,84,8
+    LTEXT           "请求队列工作线程数",IDC_TCP_WORKER,251,29,85,8
+    LTEXT           "响应队列工作线程数",IDC_TCPPB_SEND,345,49,91,8
+    LTEXT           "响应队列工作线程数",IDC_TCP_SEND,345,29,91,8
     CONTROL         "文件日志",IDC_LOG_FILE_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,110,43,10
     CONTROL         "分布式日志系统",IDC_LOG_MQ_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,141,64,10
     CONTROL         "界面日志",IDC_LOG_GUI_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,157,43,10
@@ -114,12 +114,19 @@ BEGIN
     LTEXT           "文件日志系统线程池大小",IDC_LOG_FILE_WORKER,511,110,105,8
     LTEXT           "界面日志系统线程池大小",IDC_LOG_SHOW_WORKER,511,157,105,8
     LTEXT           "最高连接数",IDC_SSL_ONLINE2,511,7,66,8
-    LTEXT           "最高连接数",IDC_SSL_ONLINE3,511,29,66,8
-    LTEXT           "最高连接数",IDC_SSL_ONLINE4,511,49,66,8
+    LTEXT           "最高连接数",IDC_SSL_ONLINE3,511,49,66,8
+    LTEXT           "最高连接数",IDC_SSL_ONLINE4,511,29,66,8
     LTEXT           "日志级别",IDC_LOG_LEVEL,7,174,101,8
-    PUSHBUTTON      "退出",IDC_EXIT,644,29,50,14
-    PUSHBUTTON      "清除缓存",IDC_CLEAR_CACHE,644,7,50,14
-    PUSHBUTTON      "版本信息",IDC_CHANGELOG,644,71,50,14
+    PUSHBUTTON      "退出",IDC_EXIT,644,71,50,14
+    PUSHBUTTON      "清除缓存",IDC_CLEAR_CACHE,644,29,50,14
+    PUSHBUTTON      "版本信息",IDC_CHANGELOG,644,49,50,14
+    PUSHBUTTON      "配置注册表",IDC_SETUP_REG,644,7,50,14
+    LTEXT           "新ssl网关",IDC_TCPPB_ADDR2,7,71,158,8
+    LTEXT           "运行状态",IDC_STATIC,171,71,73,8
+    LTEXT           "请求队列工作线程数",IDC_SSL_WORKER3,251,71,84,8
+    LTEXT           "响应队列工作线程数",IDC_TCPPB_SEND2,345,71,91,8
+    LTEXT           "在线连接数",IDC_STATIC,436,71,75,8
+    LTEXT           "最高连接数",IDC_SSL_ONLINE5,511,71,66,8
 END
 
 
