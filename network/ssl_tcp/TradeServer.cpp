@@ -225,54 +225,16 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 
 	// 得到柜台类型
+	// 一个session，可能连接多种柜台，所以每个请求都要根据业务类型来区分
 	nCounterType = g_ConnectManager.GetCounterType(sysNo, busiType);
 	if (nCounterType == COUNTER_TYPE_UNKNOWN)
 	{
 	}
+	//可以用以下语句代替冗长的写法
+	IBusiness * business = req->GetTcpSession()->GetCounterConnect(nCounterType);
 
-	/*
-	// 初始化柜台连接
-	if (req->GetSession()->GetCounterConnect() == NULL)
-	{
-		Counter * counter = NULL;
-		counter = g_ConnectManager.GetServer(sysNo, gConfigManager::instance().ConvertIntToBusiType(nBusiType), "0000");
-		if (counter == NULL)
-		{
-			logLevel = Trade::TradeLog::ERROR_LEVEL;
-
-			errCode = boost::lexical_cast<std::string>(CONFIG_ERROR);
-			errMsg = gError::instance().GetErrMsg(CONFIG_ERROR);
-
-			response = "1" + SOH + "2" + SOH;
-			response += "cssweb_code";
-			response += SOH;
-			response += "cssweb_msg";
-			response += SOH;
-			response += errCode;
-			response += SOH;
-			response += errMsg;
-			response += SOH;
-
-
-			goto finish;
-		}
-				
-		
-
-		req->GetSession()->GetCounterConnect()->SetCounterServer(counter);
-
-		counterIp = counter->m_sIP;
-		counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-		counterType = GetCounterType(counter->m_eCounterType);
-	}
-	else
-	{
-		counterIp = req->GetSession()->GetCounterConnect(nCounterType)->m_Counter->m_sIP;
-		counterPort = boost::lexical_cast<std::string>(req->GetSession()->GetCounterConnect(nCounterType)->m_Counter->m_nPort);
-		counterType = GetCounterType(req->GetSession()->GetCounterConnect(nCounterType)->m_Counter->m_eCounterType);
-	}
-	*/
 	
+	// 得到配置的柜台服务器数
 	int serverCount = g_ConnectManager.GetCounterCount(sysNo, nBusiType, "0000");
 	if (serverCount == 0)
 	{
@@ -310,6 +272,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
 				bCounterConnected = req->GetSslSession()->GetCounterConnect(nCounterType)->IsConnected();
 			
+			// 是否已建立连接
 			if (bCounterConnected)
 			{
 				// 已建立连接，跳出循环
@@ -318,10 +281,13 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			}
 			else
 			{
+				// 准备建立到柜台的连接
 				ptBeginTime = boost::posix_time::microsec_clock::local_time();
 				beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
 
+				
 				Counter * counter = NULL;
+				// 得到下一个服务器
 				counter = g_ConnectManager.GetNextCounter(sysNo, nBusiType, "0000");
 				counterIp = counter->m_sIP;
 				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
@@ -374,6 +340,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			} // end if
 		} // end for (int i=0; i<serverCount; i++)
 
+
 		// 所有服务器连接不上
 		if (!bConnect)
 		{
@@ -423,8 +390,18 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			bNetwork = req->GetSslSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
 		}
 
-		if (bNetwork)
+		if (!bNetwork)
 		{
+			// 通信失败,开始重试
+			// 处理一次，写一次日志
+			// fileLog.push(req->log)
+			//req->Log(Trade::TradeLog::, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
+			continue;
+
+		}
+		else
+		{
+			
 			// 业务失败，重构response
 			// 因为业务层，业务处理失败为了返回柜台和网关信息，没有处理，所以这里需要重构
 			// status =1，代表处理成功, response已有格式
@@ -460,14 +437,6 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
 
 			break;
-		}
-		else
-		{
-			// 通信失败,开始重试
-			// 处理一次，写一次日志
-			// fileLog.push(req->log)
-			//req->Log(Trade::TradeLog::, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
-			continue;
 		}// end if
 
 	} // end for retry

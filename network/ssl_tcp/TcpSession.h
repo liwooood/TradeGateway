@@ -100,6 +100,14 @@ public:
 	void CloseCounterConnect();
 	// 得到柜台连接
 	IBusiness * GetCounterConnect(int counterType);
+
+	/*
+
+	 以下变量可以通过TcpServer或SSLServer引入
+	 业务层TradeServer的ProcessRequest的部分逻辑，可以放在会话层sslsession处理，因为sslsession是唯一的，每个session有connectmanager, 可以减少并发争用，并且不会有并发的问题
+	
+	ConnectManager cm;
+	 */
 	
 };
 

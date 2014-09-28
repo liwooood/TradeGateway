@@ -376,9 +376,6 @@
     <ClInclude Include="common.h">
       <Filter>公共类型</Filter>
     </ClInclude>
-    <ClInclude Include="business\hundsun_t2\CallbackImpl.h">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
-    </ClInclude>
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h">
       <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClInclude>
@@ -387,9 +384,6 @@
     </ClInclude>
     <ClInclude Include="ThreadSafeQueue\job_queue.h">
       <Filter>线程安全Queue</Filter>
-    </ClInclude>
-    <ClInclude Include="business\hundsun_t2\ConnectT2.h">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClInclude>
     <ClInclude Include="ThreadPool\worker.h">
       <Filter>线程池ThreadPool</Filter>
@@ -408,6 +402,12 @@
     </ClInclude>
     <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h">
       <Filter>业务层\柜台系统\恒生T2\同步</Filter>
+    </ClInclude>
+    <ClInclude Include="business\hundsun_t2\CallbackImpl.h">
+      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+    </ClInclude>
+    <ClInclude Include="business\hundsun_t2\ConnectT2.h">
+      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -525,14 +525,8 @@
     <ClCompile Include="business\SunGuard\Crc.cpp">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
     </ClCompile>
-    <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
-    </ClCompile>
     <ClCompile Include="business\apexsoft\DingDian.cpp">
       <Filter>业务层\柜台系统\顶点</Filter>
-    </ClCompile>
-    <ClCompile Include="business\hundsun_t2\ConnectT2.cpp">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClCompile>
     <ClCompile Include="network\ISession.cpp">
       <Filter>网络层\会话层</Filter>
@@ -545,6 +539,12 @@
     </ClCompile>
     <ClCompile Include="business\hundsun_t2\TradeBusinessT2.cpp">
       <Filter>业务层\柜台系统\恒生T2\同步</Filter>
+    </ClCompile>
+    <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp">
+      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+    </ClCompile>
+    <ClCompile Include="business\hundsun_t2\ConnectT2.cpp">
+      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
