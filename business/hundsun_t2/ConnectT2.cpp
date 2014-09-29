@@ -108,7 +108,7 @@ bool ConnectT2::CreateConnect()
 	lpConnection = NewConnection(lpConfig);
 	lpConnection->AddRef();
 
-	
+	// 创建判断连接是否断开的线程
 	HANDLE hThread = CreateThread(NULL, 0, ConnectT2::AutoConnect, this, 0, NULL);
 	CloseHandle(hThread);
 
@@ -199,20 +199,6 @@ void ConnectT2::CloseConnect()
 	}
 }
 
-HANDLE ConnectT2::GetResponseEvent()
-{
-	return hResponseEvent;
-}
-
-std::string ConnectT2::GetResponse()
-{
-	return callback.getResponse();
-}
-
-
-void ConnectT2::WaitResponseEvent()
-{
-}
 
 bool ConnectT2::Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg)
 {
@@ -221,6 +207,9 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	
 
 	ParseRequest(request);
+
+	// 传递funcid
+	callback.SetFuncId(funcid);
 
 	if (route.empty())
 	{
@@ -238,7 +227,7 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 
 			GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
 
-			bRet = true;	
+			bRet = false;	
 			goto FINISH;
 		}
 	}
@@ -253,7 +242,7 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 		e.what();
 
 		GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
-		bRet = true;	
+		bRet = false;	
 		goto FINISH;
 	}
 
@@ -332,7 +321,7 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 
 		
 		GenResponse(nRet, lpConnection->GetErrorMsg(nRet), response, status, errCode, errMsg);
-		bRet = true;
+		bRet = false;
 		goto FINISH;
 	}
 
@@ -345,4 +334,20 @@ FINISH:
 	
 
 	return bRet;
+}
+
+
+
+void ConnectT2::WaitResponseEvent()
+{
+	WaitForSingleObject(hResponseEvent, INFINITE);
+}
+
+
+void ConnectT2::GetResponse(std::string& response, int& status, std::string& errCode, std::string& errMsg)
+{
+	response = callback.getResponse();
+	status = callback.getStatus();
+	errCode = callback.getErrCode();
+	errMsg = callback.getErrMsg();
 }

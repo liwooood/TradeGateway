@@ -17,8 +17,8 @@ public:
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg) = 0;
 
 	virtual void WaitResponseEvent() = 0;
-	virtual HANDLE GetResponseEvent() = 0;
+	
 
-	virtual std::string GetResponse() = 0;
+	virtual void GetResponse(std::string& response, int& status, std::string& errCode, std::string& errMsg) = 0;
 };
 

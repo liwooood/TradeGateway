@@ -546,9 +546,6 @@
     <ClCompile Include="business\hundsun_t2\ConnectT2.cpp">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectPool\IConnect.cpp">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\TradeGatewayGtja.ico">

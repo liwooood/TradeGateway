@@ -13,9 +13,18 @@ CCallbackImpl::CCallbackImpl()
 	SOH = "\x01";
 }
 
+void CCallbackImpl::SetFuncId(std::string funcid)
+{
+	funcId = funcid;
+}
 
 void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend, const void *Pointer, int nResult)
 {
+	status = 0;
+	errCode = "";
+	errMsg = "";
+	response = "";
+
 	if (nResult == 0)
 	{
 		IF2UnPacker *lpUnPacker = (IF2UnPacker *)Pointer;
@@ -32,13 +41,13 @@ void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend,
 		}
 		
 		
-		std::map<std::string, FUNCTION_DESC>::iterator it = gFileLogManager::instance().m_mT2_FilterFunc.find(funcid);
+		std::map<std::string, FUNCTION_DESC>::iterator it = gFileLogManager::instance().m_mT2_FilterFunc.find(funcId);
 		if (it != gFileLogManager::instance().m_mT2_FilterFunc.end())
 		{
 			// 不应该有结果集返回
 			if (!it->second.hasResultRet)
 			{
-				gFileLog::instance().Log(funcid + "不应该返回结果集");
+				gFileLog::instance().Log(funcId + "不应该返回结果集");
 
 				RetNoRecordRes();
 				
@@ -76,7 +85,7 @@ void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend,
 					std::string temp = lpUnPacker->GetStrByIndex(c);
 
 					// 国泰君安一户通特殊处理
-					if (funcid == "337014")
+					if (funcId == "337014")
 						boost::algorithm::replace_all(temp, SOH, "");
 					
 					response += temp;
@@ -129,6 +138,7 @@ void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend,
 
 
 FINISH:
+	// 应答处理完成，触发事件，让业务层继续处理
 	SetEvent(hResEvent);
 
 }
@@ -137,6 +147,10 @@ FINISH:
 // 生成请求成功，无数据返回信息
 void CCallbackImpl::RetNoRecordRes()
 {
+	status = 1;
+	errCode = "1";
+	errMsg = "请求执行成功，柜台系统没有数据返回。";
+
 	response = "1";
 	response += SOH;
 	response += "2";
@@ -147,9 +161,9 @@ void CCallbackImpl::RetNoRecordRes()
 	response += "cssweb_msg";
 	response += SOH;
 
-	response += "1";
+	response += errCode;
 	response += SOH;
-	response += "请求执行成功，柜台系统没有数据返回。";
+	response += errMsg;
 	response += SOH;
 
 }
@@ -162,6 +176,21 @@ void CCallbackImpl::GenResponse(int nErrCode, std::string sErrMsg)
 
 	errCode = boost::lexical_cast<std::string>(nErrCode);
 	errMsg = sErrMsg;
+
+	response = "1";
+	response += SOH;
+	response += "2";
+	response += SOH;
+
+	response += "cssweb_code";
+	response += SOH;
+	response += "cssweb_msg";
+	response += SOH;
+
+	response += errCode;
+	response += SOH;
+	response += errMsg;
+	response += SOH;
 }
 
 
@@ -188,6 +217,21 @@ void CCallbackImpl::SetResponseEvent(HANDLE responseEvent)
 std::string CCallbackImpl::getResponse()
 {
 	return response;
+}
+
+int CCallbackImpl::getStatus()
+{
+	return status;
+}
+
+std::string CCallbackImpl::getErrCode()
+{
+	return errCode;
+}
+
+std::string CCallbackImpl::getErrMsg()
+{
+	return errMsg;
 }
 
 

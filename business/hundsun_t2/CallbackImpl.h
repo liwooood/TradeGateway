@@ -21,7 +21,7 @@ private:
 	HANDLE hCloseEvent;
 
 	// 日志和结果所需定义的变量
-	std::string funcid; // 需要发送层传入
+	std::string funcId; // 需要发送层传入
 	int status;
 	std::string errMsg;
 	std::string errCode;
@@ -62,6 +62,12 @@ public:
 
 	void SetCloseEvent(HANDLE hCloseEvent);
 	void SetResponseEvent(HANDLE hResEvent);
+	void SetFuncId(std::string funcid);
+
 	std::string getResponse();
+	int getStatus();
+	std::string getErrCode();
+	std::string getErrMsg();
+	
 };
 #endif

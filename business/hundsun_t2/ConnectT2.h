@@ -46,17 +46,16 @@ public:
 	virtual bool CreateConnect();
 	virtual void CloseConnect();
 
-	//virtual void * GetCounterConnect();
-	//virtual void SendRequest(std::string request);
-	virtual HANDLE GetResponseEvent();
-	virtual void WaitResponseEvent();
-	virtual std::string GetResponse();
-
-	//bool ReConnect();
+	
+	
+	
 	
 
-	//CCallbackImpl * get();
+	
 	// ¼Ì³Ð×ÔIBusiness
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg);
+	virtual void WaitResponseEvent();
+	virtual void GetResponse(std::string& response, int& status, std::string& errCode, std::string& errMsg);
+
 };
 #endif

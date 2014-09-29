@@ -457,15 +457,35 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		//if (pConn == NULL)
 
 		// 发送请求
-		pConn->Send(request, response, status, errCode, errMsg);
+		// 注意返回值和同步模式不同，同步模式返回false代表网络错误需要重试， 异步模式返回false只代表业务处理错误
+		if (!pConn->Send(request, response, status, errCode, errMsg))
+		{
+					response = "1";
+					response += SOH;
+					response += "2";
+					response += SOH;
 
-		// 阻塞， 等待业务层处理完成，并触发完成事件信号
-		pConn->WaitResponseEvent();
+					response += "cssweb_code";
+					response += SOH;
+					response += "cssweb_msg";
+					response += SOH;
+					
+					response += errCode;
+					response += SOH;
+					response += errMsg;
+					response += SOH;
+					
+		}
+		else
+		{
+			// 阻塞， 等待业务层处理完成，并触发完成事件信号
+			pConn->WaitResponseEvent();
 
-		// 得到应答数据
-		response = pConn->GetResponse();
+			// 得到应答数据
+			pConn->GetResponse(response, status, errCode, errMsg);
 
-		gConnectPool.PushConnect(pConn);
+			gConnectPool.PushConnect(pConn);
+		}
 	}
 
 

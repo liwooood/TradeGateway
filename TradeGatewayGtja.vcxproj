@@ -240,7 +240,6 @@
     <ClCompile Include="ConnectPool\Branch.cpp" />
     <ClCompile Include="ConnectPool\BusinessSystem.cpp" />
     <ClCompile Include="ConnectPool\BusinessType.cpp" />
-    <ClCompile Include="ConnectPool\IConnect.cpp" />
     <ClCompile Include="ConnectPool\ConnectManager.cpp" />
     <ClCompile Include="ConnectPool\ConnectPool.cpp" />
     <ClCompile Include="ConnectPool\Counter.cpp" />
