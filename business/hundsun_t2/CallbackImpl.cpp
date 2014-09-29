@@ -1,5 +1,196 @@
 #include "callbackimpl.h"
 
+#include <boost/lexical_cast.hpp>
+#include <boost/range/iterator_range.hpp>
+#include <boost/algorithm/string.hpp>
+
+#include "log/FileLogManager.h"
+#include "./output/FileLog.h"
+
+
+CCallbackImpl::CCallbackImpl()
+{
+	SOH = "\x01";
+}
+
+
+void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend, const void *Pointer, int nResult)
+{
+	if (nResult == 0)
+	{
+		IF2UnPacker *lpUnPacker = (IF2UnPacker *)Pointer;
+
+		
+
+		int nRows = lpUnPacker->GetRowCount();
+		int nCols = lpUnPacker->GetColCount();
+
+		if (nRows == 0)
+		{
+			RetNoRecordRes();
+			goto FINISH;
+		}
+		
+		
+		std::map<std::string, FUNCTION_DESC>::iterator it = gFileLogManager::instance().m_mT2_FilterFunc.find(funcid);
+		if (it != gFileLogManager::instance().m_mT2_FilterFunc.end())
+		{
+			// 不应该有结果集返回
+			if (!it->second.hasResultRet)
+			{
+				gFileLog::instance().Log(funcid + "不应该返回结果集");
+
+				RetNoRecordRes();
+				
+				
+				goto FINISH;
+			}
+		}
+		
+
+		response = boost::lexical_cast<std::string>(nRows);
+		response += SOH;
+		response += boost::lexical_cast<std::string>(nCols);
+		response += SOH;
+	
+		for (int i = 0; i < lpUnPacker->GetDatasetCount(); ++i)
+		{
+			// 设置当前结果集
+			lpUnPacker->SetCurrentDatasetByIndex(i);
+
+			for (int c = 0; c < nCols; c++)
+			{
+				std::string sColName = lpUnPacker->GetColName(c);
+					
+				response += sColName;
+					
+				response += SOH;
+			} // end all column
+
+			// 打印所有记录
+			for (int r = 0; r < nRows; r++)
+			{
+				// 打印每条记录
+				for (int c = 0; c < nCols; c++)
+				{
+					std::string temp = lpUnPacker->GetStrByIndex(c);
+
+					// 国泰君安一户通特殊处理
+					if (funcid == "337014")
+						boost::algorithm::replace_all(temp, SOH, "");
+					
+					response += temp;
+					
+					response += SOH;
+				} // end all column
+
+				lpUnPacker->Next();
+			} // end for all row
+
+		} // end for GetDatasetCount()
+
+		status = 1;
+		errCode = "";
+		errMsg = "";
+		
+		//logLevel = Trade::TradeLog::INFO_LEVEL;
+
+	}
+	else if(nResult == 1)
+	{
+		IF2UnPacker *lpUnPacker = (IF2UnPacker *)Pointer;
+		errMsg = lpUnPacker->GetStr("error_info");
+		GenResponse(boost::lexical_cast<int>(lpUnPacker->GetStr("error_no")), errMsg);
+		
+		
+		goto FINISH;
+	}
+	else if(nResult == 2)
+	{
+		errMsg = (char*)Pointer;
+		
+		GenResponse(nResult, errMsg);
+		
+		goto FINISH;
+	}
+	else if (nResult == 3)
+	{
+		GenResponse(nResult, "业务包解包失败");
+		
+		goto FINISH;
+	}
+	else
+	{
+		
+		GenResponse(nResult, lpConnection->GetErrorMsg(nResult));
+	
+		goto FINISH;
+	}
+
+
+FINISH:
+	SetEvent(hResEvent);
+
+}
+
+
+// 生成请求成功，无数据返回信息
+void CCallbackImpl::RetNoRecordRes()
+{
+	response = "1";
+	response += SOH;
+	response += "2";
+	response += SOH;
+
+	response += "cssweb_code";
+	response += SOH;
+	response += "cssweb_msg";
+	response += SOH;
+
+	response += "1";
+	response += SOH;
+	response += "请求执行成功，柜台系统没有数据返回。";
+	response += SOH;
+
+}
+
+
+// 生成错误信息
+void CCallbackImpl::GenResponse(int nErrCode, std::string sErrMsg)
+{
+	status = 0;
+
+	errCode = boost::lexical_cast<std::string>(nErrCode);
+	errMsg = sErrMsg;
+}
+
+
+void CCallbackImpl::OnClose(CConnectionInterface *lpConnection)
+{
+    
+
+    // 在OnClose回调函数中激活事件，表示连接已经断开
+	// ConnectT2::AutoConnect会重连
+    SetEvent(hCloseEvent);
+}
+
+
+void CCallbackImpl::SetCloseEvent(HANDLE closeEvent)
+{
+	this->hCloseEvent = closeEvent;
+}
+
+void CCallbackImpl::SetResponseEvent(HANDLE responseEvent)
+{
+	this->hResEvent = responseEvent;
+}
+
+std::string CCallbackImpl::getResponse()
+{
+	return response;
+}
+
+
 unsigned long CCallbackImpl::QueryInterface(const char *iid, IKnown **ppv)
 {
     return 0;
@@ -50,58 +241,6 @@ void CCallbackImpl::OnReceivedBizEx(CConnectionInterface *lpConnection, int hSen
 	
 }
 
-void CCallbackImpl::OnClose(CConnectionInterface *lpConnection)
-{
-    
-
-    // 在OnClose回调函数中激活事件，表示连接已经断开
-	// ConnectT2::AutoConnect会重连
-    SetEvent(hCloseEvent);
-}
-
-void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend, const void *lpUnPackerOrStr, int nResult)
-{
-	
-
-	/*
-    switch (nResult)
-    {
-    case 0:
-        {
-            puts("业务操作成功。");
-            ShowPacket((IF2UnPacker *)lpUnPackerOrStr);
-            break;
-        }
-
-    case 1:
-        {
-            puts("业务操作失败。");
-            ShowPacket((IF2UnPacker *)lpUnPackerOrStr);
-            break;
-        }
-
-    case 2:
-        {
-            puts((char *)lpUnPackerOrStr);
-            break;
-        }
-
-    default:
-        {
-            puts("业务包解包失败。");
-            break;
-        }
-    }
-	*/
-
-	SetEvent(hResEvent);
-
-}
-
-std::string CCallbackImpl::getResponse()
-{
-	return response;
-}
 
 int CCallbackImpl::Reserved3()
 {
@@ -126,14 +265,4 @@ void CCallbackImpl::Reserved7()
 
 void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSend, IBizMessage* lpMsg)
 {
-}
-
-void CCallbackImpl::SetCloseEvent(HANDLE closeEvent)
-{
-	this->hCloseEvent = closeEvent;
-}
-
-void CCallbackImpl::SetResponseEvent(HANDLE responseEvent)
-{
-	this->hResEvent = responseEvent;
 }

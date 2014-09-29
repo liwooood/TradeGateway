@@ -245,6 +245,10 @@ bool TradeBusinessT2::Send(std::string& request, std::string& response, int& sta
 	pack->FreeMem(pack->GetPackBuf());
 	pack->Release();
 
+
+
+
+
 	// 接收数据
 	void *Pointer = NULL;
 

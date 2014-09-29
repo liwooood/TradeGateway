@@ -13,9 +13,10 @@
 #include "connectpool/Counter.h"
 #include "CallbackImpl.h"
 #include "connectpool/IConnect.h"
+#include "./business/IBusiness.h"
 
 
-class ConnectT2 : public IConnect
+class ConnectT2 : public IConnect, public IBusiness
 {
 private:
 	int m_nID;
@@ -45,13 +46,17 @@ public:
 	virtual bool CreateConnect();
 	virtual void CloseConnect();
 
-	virtual void * GetCounterConnect();
+	//virtual void * GetCounterConnect();
+	//virtual void SendRequest(std::string request);
 	virtual HANDLE GetResponseEvent();
+	virtual void WaitResponseEvent();
 	virtual std::string GetResponse();
 
 	//bool ReConnect();
 	
 
 	//CCallbackImpl * get();
+	// ¼Ì³Ð×ÔIBusiness
+	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg);
 };
 #endif

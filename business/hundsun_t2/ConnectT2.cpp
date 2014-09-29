@@ -9,7 +9,7 @@
 #include "./config/ConfigManager.h"
 #include "common.h"
 #include "./output/FileLog.h"
-
+#include "errcode.h"
 
 
 ConnectT2::ConnectT2(int ConnectNo, Counter counter)
@@ -199,11 +199,6 @@ void ConnectT2::CloseConnect()
 	}
 }
 
-void * ConnectT2::GetCounterConnect()
-{
-	return this->lpConnection;
-}
-
 HANDLE ConnectT2::GetResponseEvent()
 {
 	return hResponseEvent;
@@ -212,4 +207,142 @@ HANDLE ConnectT2::GetResponseEvent()
 std::string ConnectT2::GetResponse()
 {
 	return callback.getResponse();
+}
+
+
+void ConnectT2::WaitResponseEvent()
+{
+}
+
+bool ConnectT2::Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg)
+{
+	bool bRet = true;
+	int nRet = 0;
+	
+
+	ParseRequest(request);
+
+	if (route.empty())
+	{
+		nRoute = -1;
+	}
+	else
+	{
+		try
+		{
+			nRoute = boost::lexical_cast<int>(route);
+		}
+		catch(std::exception& e)
+		{
+			e.what();
+
+			GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
+
+			bRet = true;	
+			goto FINISH;
+		}
+	}
+
+	
+	try
+	{
+		lFuncId = boost::lexical_cast<long>(funcid);
+	}
+	catch(std::exception& e)
+	{
+		e.what();
+
+		GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
+		bRet = true;	
+		goto FINISH;
+	}
+
+
+
+	IF2Packer* pack = NewPacker(2);
+	pack->AddRef();
+
+	pack->BeginPack();
+	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
+	{
+		std::string key = it->first;
+
+		if (FilterRequestField(key))
+		{
+			continue;
+		}		
+
+
+		//pack->AddField(key.c_str());
+		pack->AddField(key.c_str(), 'S', 8000);
+
+	}
+
+	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
+	{
+		std::string key = it->first;
+		std::string value = it->second;
+
+		if (FilterRequestField(key))
+		{
+			continue;
+		}		
+
+		if (key.compare("auth_key") == 0)
+		{
+			boost::algorithm::replace_all(value, "^", "=");
+			//std::string temp;
+			//temp = "auth_key=";
+			//temp += value;
+			//gFileLog::instance().Log(temp);
+		}
+
+		if (key.compare("usbkey_request_info") == 0)
+		{
+			boost::algorithm::replace_all(value, "^", "=");
+			//std::string temp;
+			//temp = "auth_key=";
+			//temp += value;
+			//gFileLog::instance().Log(temp);
+		}
+
+		// 如果是南京证券
+		if (sysNo.find("njzq") != std::string::npos)
+		{
+			if (key == "op_station")
+			{
+				value = note;
+			}
+		}
+
+		pack->AddStr(value.c_str());
+
+	} // end for
+
+	pack->EndPack();
+
+	if (nRoute == -1)
+		nRet = lpConnection->SendBiz(lFuncId, pack, 1); //  1代表异步
+	else
+		nRet = lpConnection->SendBiz(lFuncId, pack, 1, nRoute); //  1代表异步
+
+	if (nRet < 0)
+	{
+		pack->Release();
+
+		
+		GenResponse(nRet, lpConnection->GetErrorMsg(nRet), response, status, errCode, errMsg);
+		bRet = true;
+		goto FINISH;
+	}
+
+
+	pack->FreeMem(pack->GetPackBuf());
+	pack->Release();
+
+	
+FINISH:
+	
+
+	return bRet;
 }

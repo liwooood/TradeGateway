@@ -301,7 +301,7 @@ int CConnectManager::GetCounterCount(std::string sysNo, int busiType, std::strin
 
 
 // 根据系统编号和业务类型，找到对应的柜台类型
-int CConnectManager::GetCounterType(std::string SystemNo, std::string busiType)
+bool CConnectManager::GetCounterTypeAndAsyncMode(std::string& SystemNo, std::string& busiType, int& counterType, int& asyncMode)
 {
 	int bt = boost::lexical_cast<int>(busiType);
 
@@ -309,7 +309,7 @@ int CConnectManager::GetCounterType(std::string SystemNo, std::string busiType)
 	it = systems.find(SystemNo);
 	if (it == systems.end())
 	{
-		return COUNTER_TYPE_UNKNOWN;
+		return false;
 	}
 
 	BusinessSystem& bs = it->second;
@@ -322,9 +322,12 @@ int CConnectManager::GetCounterType(std::string SystemNo, std::string busiType)
 	it2 = bs.busis.find(bt);
 	if (it2 == bs.busis.end())
 	{
-		return COUNTER_TYPE_UNKNOWN;
+		return false;
 	}
 
-	int ct = it2->second.counterType;
-	return ct;
+	counterType = it2->second.counterType;
+	
+	asyncMode = it2->second.asyncMode;
+
+	return true;
 }

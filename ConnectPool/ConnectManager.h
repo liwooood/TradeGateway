@@ -25,7 +25,7 @@ public:
 
 	Counter* GetNextCounter(std::string system, int business, std::string branch);
 	int GetCounterCount(std::string system, int business, std::string branch);
-	int GetCounterType(std::string SystemNo, std::string busiType);
+	bool GetCounterTypeAndAsyncMode(std::string& SystemNo, std::string& busiType, int& counterType, int& asyncMode);
 
 
 	//保证线程安全?

@@ -4,12 +4,15 @@
 #include "stdafx.h"
 
 #include <string>
+#include <map>
+
 #include "t2sdk_interface.h"
 
 class CCallbackImpl : public CCallbackInterface
 {
 private:
-	std::string response;
+	std::string SOH;
+	
 
 	// 应答事件
 	HANDLE hResEvent;
@@ -17,7 +20,21 @@ private:
 	// 连接中断事件
 	HANDLE hCloseEvent;
 
+	// 日志和结果所需定义的变量
+	std::string funcid; // 需要发送层传入
+	int status;
+	std::string errMsg;
+	std::string errCode;
+	std::string response;
+
+private:
+	
+	void RetNoRecordRes();
+	void GenResponse(int nErrCode, std::string sErrMsg);
+
 public:
+	CCallbackImpl();
+
 	// 因为CCallbackInterface的最终纯虚基类是IKnown，所以需要实现一下这3个方法
     unsigned long  FUNCTION_CALL_MODE QueryInterface(const char *iid, IKnown **ppv);
     unsigned long  FUNCTION_CALL_MODE AddRef();
@@ -41,8 +58,10 @@ public:
 	void FUNCTION_CALL_MODE OnReceivedBizEx(CConnectionInterface *lpConnection, int hSend, LPRET_DATA lpRetData, const void *lpUnpackerOrStr, int nResult);
 	void FUNCTION_CALL_MODE OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSend, IBizMessage* lpMsg);
 
-	std::string getResponse();
+	
+
 	void SetCloseEvent(HANDLE hCloseEvent);
 	void SetResponseEvent(HANDLE hResEvent);
+	std::string getResponse();
 };
 #endif

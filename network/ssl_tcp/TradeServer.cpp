@@ -67,6 +67,9 @@
 #include <unicode/putil.h>
 #include <unicode/ucnv.h>
 
+#include "ConnectPool/ConnectPool.h"
+
+
 
 TradeServer::TradeServer(int msgType)
 	:req_worker_(recvq_, boost::bind(&TradeServer::ProcessRequest, this, _1), gConfigManager::instance().m_nTcpWorkerThreadPool)
@@ -132,8 +135,10 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	std::string counterIp = "";
 	std::string counterPort = "";
 	std::string counterType = "";
-	int nCounterType;
+	int nCounterType = COUNTER_TYPE_UNKNOWN;
+	
 	std::string counterServer = "";
+	int asyncMode = 0;
 
 	
 	boost::posix_time::ptime ptBeginTime;
@@ -226,222 +231,242 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 	// 得到柜台类型
 	// 一个session，可能连接多种柜台，所以每个请求都要根据业务类型来区分
-	nCounterType = g_ConnectManager.GetCounterType(sysNo, busiType);
-	if (nCounterType == COUNTER_TYPE_UNKNOWN)
-	{
-	}
-	//可以用以下语句代替冗长的写法
-	IBusiness * business = req->GetTcpSession()->GetCounterConnect(nCounterType);
-
 	
-	// 得到配置的柜台服务器数
-	int serverCount = g_ConnectManager.GetCounterCount(sysNo, nBusiType, "0000");
-	if (serverCount == 0)
+	if (!g_ConnectManager.GetCounterTypeAndAsyncMode(sysNo, busiType, nCounterType, asyncMode))
 	{
 	}
 
 
-
-	// 连接需要处理负载均衡和故障切换
-	// 业务重试还需要考虑吗？
-	/*
-	* 如果没有连接，建立连接，处理请求
-	* 如果建立连接失败，轮询每一个服务器，如果所有服务器连接失败，返回错误
-	* 当前连接失效，send调用失败，重试
-	*/
-
-
-	
-	
-	// 业务重试
-	ptBeginTime = boost::posix_time::microsec_clock::local_time();
-	beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
-
-	for (int retry=0; retry<1; retry++)
+	if (asyncMode == 0)
 	{
-		bool bConnect = false;
+		//可以用以下语句代替冗长的写法
+		IBusiness * business = req->GetTcpSession()->GetCounterConnect(nCounterType);
+
 	
-		// 轮询每一个服务器
-		for (int i=0; i<serverCount; i++)
+		// 得到配置的柜台服务器数
+		int serverCount = g_ConnectManager.GetCounterCount(sysNo, nBusiType, "0000");
+		if (serverCount == 0)
 		{
-			bool bCounterConnected = false;
+		}
 
-			if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
-				bCounterConnected = req->GetTcpSession()->GetCounterConnect(nCounterType)->IsConnected();
 
-			if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
-				bCounterConnected = req->GetSslSession()->GetCounterConnect(nCounterType)->IsConnected();
-			
-			// 是否已建立连接
-			if (bCounterConnected)
+
+		// 连接需要处理负载均衡和故障切换
+		// 业务重试还需要考虑吗？
+		/*
+		* 如果没有连接，建立连接，处理请求
+		* 如果建立连接失败，轮询每一个服务器，如果所有服务器连接失败，返回错误
+		* 当前连接失效，send调用失败，重试
+		*/
+
+
+	
+	
+		// 业务重试
+		ptBeginTime = boost::posix_time::microsec_clock::local_time();
+		beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
+
+		for (int retry=0; retry<1; retry++)
+		{
+			bool bConnect = false;
+	
+			// 轮询每一个服务器
+			for (int i=0; i<serverCount; i++)
 			{
-				// 已建立连接，跳出循环
-				bConnect = true;
-				break;
-			}
-			else
-			{
-				// 准备建立到柜台的连接
-				ptBeginTime = boost::posix_time::microsec_clock::local_time();
-				beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
-
-				
-				Counter * counter = NULL;
-				// 得到下一个服务器
-				counter = g_ConnectManager.GetNextCounter(sysNo, nBusiType, "0000");
-				counterIp = counter->m_sIP;
-				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-				counterType = counter->m_nCounterType;
-				
-				bool bRet = false;
+				bool bCounterConnected = false;
 
 				if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
-				{
-					req->GetTcpSession()->GetCounterConnect(nCounterType)->SetCounter(counter);
-					bRet = req->GetTcpSession()->GetCounterConnect(nCounterType)->CreateConnect();
-				}
+					bCounterConnected = req->GetTcpSession()->GetCounterConnect(nCounterType)->IsConnected();
 
 				if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
+					bCounterConnected = req->GetSslSession()->GetCounterConnect(nCounterType)->IsConnected();
+			
+				// 是否已建立连接
+				if (bCounterConnected)
 				{
-					req->GetSslSession()->GetCounterConnect(nCounterType)->SetCounter(counter);
-					bRet = req->GetSslSession()->GetCounterConnect(nCounterType)->CreateConnect();
-				}
-
-				
-				if (bRet)
-				{
-					// 建立连接成功，跳出循环
+					// 已建立连接，跳出循环
 					bConnect = true;
 					break;
 				}
 				else
 				{
-					// 建立连接失败
-					// 轮询算法：返回下一个服务器
-					bConnect = false;
+					// 准备建立到柜台的连接
+					ptBeginTime = boost::posix_time::microsec_clock::local_time();
+					beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
 
-					//Counter * counter = NULL;
-					//counter = g_ConnectManager.GetServer(sysNo, gConfigManager::instance().ConvertIntToBusiType(nBusiType), "0000");
-					//req->GetSession()->GetCounterConnect(nCounterType)->SetCounterServer(counter);
-
-					
-					
-					logLevel = Trade::TradeLog::ERROR_LEVEL;
-
-					errCode = boost::lexical_cast<std::string>(CONNECT_COUNTER_ERROR);
-					errMsg = gError::instance().GetErrMsg(CONNECT_COUNTER_ERROR);
-
-					boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
-					runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
-
-					req->Log(Trade::TradeLog::ERROR_LEVEL, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
-					gFileLogManager::instance().push(req->log);
-				} // end if
-			} // end if
-		} // end for (int i=0; i<serverCount; i++)
-
-
-		// 所有服务器连接不上
-		if (!bConnect)
-		{
-			logLevel = Trade::TradeLog::ERROR_LEVEL;
-
-			errCode = boost::lexical_cast<std::string>(CONNECT_ALL_COUNTER_ERROR);
-			errMsg = gError::instance().GetErrMsg(CONNECT_ALL_COUNTER_ERROR);
-
-			response = "1" + SOH + "2" + SOH;
-			response += "cssweb_code";
-			response += SOH;
-			response += "cssweb_msg";
-			response += SOH;
-			response += errCode;
-			response += SOH;
-			response += errMsg;
-			response += SOH;
-
-			
-			goto finish;
-		}
-
-		// 每次请求都需要记录柜台的ip和port
 				
-		
-		// 处理业务，业务处理失败或成功都算成功的，只有通信失败才需要重试
-		bool bNetwork = false;
-		if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
-		{
-			Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType)->GetCounter();
-			counterIp = counter->m_sIP;
-			counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-			counterType = counter->m_nCounterType;
-			counterServer = counterIp + ":"+ counterPort;
+					Counter * counter = NULL;
+					// 得到下一个服务器
+					counter = g_ConnectManager.GetNextCounter(sysNo, nBusiType, "0000");
+					counterIp = counter->m_sIP;
+					counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
+					counterType = counter->m_nCounterType;
+				
+					bool bRet = false;
 
-			bNetwork = req->GetTcpSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
-		}
+					if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
+					{
+						req->GetTcpSession()->GetCounterConnect(nCounterType)->SetCounter(counter);
+						bRet = req->GetTcpSession()->GetCounterConnect(nCounterType)->CreateConnect();
+					}
 
-		if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
-		{
-			Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType)->GetCounter();
-			counterIp = counter->m_sIP;
-			counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-			counterType = counter->m_nCounterType;
-			counterServer = counterIp + ":"+ counterPort;
+					if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
+					{
+						req->GetSslSession()->GetCounterConnect(nCounterType)->SetCounter(counter);
+						bRet = req->GetSslSession()->GetCounterConnect(nCounterType)->CreateConnect();
+					}
 
-			bNetwork = req->GetSslSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
-		}
+				
+					if (bRet)
+					{
+						// 建立连接成功，跳出循环
+						bConnect = true;
+						break;
+					}
+					else
+					{
+						// 建立连接失败
+						// 轮询算法：返回下一个服务器
+						bConnect = false;
 
-		if (!bNetwork)
-		{
-			// 通信失败,开始重试
-			// 处理一次，写一次日志
-			// fileLog.push(req->log)
-			//req->Log(Trade::TradeLog::, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
-			continue;
+						//Counter * counter = NULL;
+						//counter = g_ConnectManager.GetServer(sysNo, gConfigManager::instance().ConvertIntToBusiType(nBusiType), "0000");
+						//req->GetSession()->GetCounterConnect(nCounterType)->SetCounterServer(counter);
 
-		}
-		else
-		{
-			
-			// 业务失败，重构response
-			// 因为业务层，业务处理失败为了返回柜台和网关信息，没有处理，所以这里需要重构
-			// status =1，代表处理成功, response已有格式
-			if (status == 0)
+					
+					
+						logLevel = Trade::TradeLog::ERROR_LEVEL;
+
+						errCode = boost::lexical_cast<std::string>(CONNECT_COUNTER_ERROR);
+						errMsg = gError::instance().GetErrMsg(CONNECT_COUNTER_ERROR);
+
+						boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
+						runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
+
+						req->Log(Trade::TradeLog::ERROR_LEVEL, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
+						gFileLogManager::instance().push(req->log);
+					} // end if
+				} // end if
+			} // end for (int i=0; i<serverCount; i++)
+
+
+			// 所有服务器连接不上
+			if (!bConnect)
 			{
-				response = "1";
-				response += SOH;
-				response += "4";
-				response += SOH;
+				logLevel = Trade::TradeLog::ERROR_LEVEL;
 
+				errCode = boost::lexical_cast<std::string>(CONNECT_ALL_COUNTER_ERROR);
+				errMsg = gError::instance().GetErrMsg(CONNECT_ALL_COUNTER_ERROR);
+
+				response = "1" + SOH + "2" + SOH;
 				response += "cssweb_code";
 				response += SOH;
 				response += "cssweb_msg";
 				response += SOH;
-				response += "cssweb_gwInfo";
-				response += SOH;
-				response += "cssweb_counter";
-				response += SOH;
-
 				response += errCode;
 				response += SOH;
 				response += errMsg;
 				response += SOH;
-				response += gatewayServer;
-				response += SOH;
-				response += counterServer;
-				response += SOH;
+
+			
+				goto finish;
 			}
 
-			logLevel = Trade::TradeLog::INFO_LEVEL;
+			// 每次请求都需要记录柜台的ip和port
+				
+		
+			// 处理业务，业务处理失败或成功都算成功的，只有通信失败才需要重试
+			bool bNetwork = false;
+			if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
+			{
+				Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType)->GetCounter();
+				counterIp = counter->m_sIP;
+				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
+				counterType = counter->m_nCounterType;
+				counterServer = counterIp + ":"+ counterPort;
 
-			boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
-			runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
+				bNetwork = req->GetTcpSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
+			}
 
-			break;
-		}// end if
+			if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
+			{
+				Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType)->GetCounter();
+				counterIp = counter->m_sIP;
+				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
+				counterType = counter->m_nCounterType;
+				counterServer = counterIp + ":"+ counterPort;
 
-	} // end for retry
-	
+				bNetwork = req->GetSslSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
+			}
 
+			if (!bNetwork)
+			{
+				// 通信失败,开始重试
+				// 处理一次，写一次日志
+				// fileLog.push(req->log)
+				//req->Log(Trade::TradeLog::, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
+				continue;
+
+			}
+			else
+			{
+			
+				// 业务失败，重构response
+				// 因为业务层，业务处理失败为了返回柜台和网关信息，没有处理，所以这里需要重构
+				// status =1，代表处理成功, response已有格式
+				if (status == 0)
+				{
+					response = "1";
+					response += SOH;
+					response += "4";
+					response += SOH;
+
+					response += "cssweb_code";
+					response += SOH;
+					response += "cssweb_msg";
+					response += SOH;
+					response += "cssweb_gwInfo";
+					response += SOH;
+					response += "cssweb_counter";
+					response += SOH;
+
+					response += errCode;
+					response += SOH;
+					response += errMsg;
+					response += SOH;
+					response += gatewayServer;
+					response += SOH;
+					response += counterServer;
+					response += SOH;
+				}
+
+				logLevel = Trade::TradeLog::INFO_LEVEL;
+
+				boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
+				runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
+
+				break;
+			}// end if
+
+		} // end for retry
+	}
+	else
+	{
+		// 恒生T2异步模式
+		IConnect * pConn = gConnectPool.GetConnect();
+		//if (pConn == NULL)
+
+		// 发送请求
+		pConn->Send(request, response, status, errCode, errMsg);
+
+		// 阻塞， 等待业务层处理完成，并触发完成事件信号
+		pConn->WaitResponseEvent();
+
+		// 得到应答数据
+		response = pConn->GetResponse();
+
+		gConnectPool.PushConnect(pConn);
+	}
 
 
 finish:
