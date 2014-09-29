@@ -3,7 +3,7 @@
 
 #include <string>
 
-class CConnect
+class IConnect
 {
 public:
 	virtual bool CreateConnect() = 0;

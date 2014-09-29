@@ -230,6 +230,9 @@
     <Filter Include="业务层\柜台系统\恒生T2\异步">
       <UniqueIdentifier>{dd02e4d4-6220-4f5f-b408-a428b9dadafc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="内存泄漏vld">
+      <UniqueIdentifier>{f2585c0a-32a4-4a51-82c2-127918099a17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -397,9 +400,6 @@
     <ClInclude Include="ConnectPool\ConnectPool.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectPool\Connect.h">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClInclude>
     <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h">
       <Filter>业务层\柜台系统\恒生T2\同步</Filter>
     </ClInclude>
@@ -408,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="business\hundsun_t2\ConnectT2.h">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectPool\IConnect.h">
+      <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -534,9 +537,6 @@
     <ClCompile Include="ConnectPool\ConnectPool.cpp">
       <Filter>业务层\柜台连接池</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectPool\Connect.cpp">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClCompile>
     <ClCompile Include="business\hundsun_t2\TradeBusinessT2.cpp">
       <Filter>业务层\柜台系统\恒生T2\同步</Filter>
     </ClCompile>
@@ -545,6 +545,9 @@
     </ClCompile>
     <ClCompile Include="business\hundsun_t2\ConnectT2.cpp">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\IConnect.cpp">
+      <Filter>业务层\柜台连接池</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

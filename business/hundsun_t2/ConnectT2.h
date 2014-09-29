@@ -12,10 +12,10 @@
 #include "t2sdk_interface.h"
 #include "connectpool/Counter.h"
 #include "CallbackImpl.h"
-#include "connectpool/connect.h"
+#include "connectpool/IConnect.h"
 
 
-class ConnectT2 : public CConnect
+class ConnectT2 : public IConnect
 {
 private:
 	int m_nID;

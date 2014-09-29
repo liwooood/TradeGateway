@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "ThreadSafeQueue/job_queue.h"
-#include "Connect.h"
+#include "IConnect.h"
 
 #include "common.h"
 #include "Counter.h"
@@ -14,7 +14,7 @@ class ConnectPool
 {
 private:
 	// 直接整合std::deque比较好
-	typedef job_queue<CConnect*> conn_queue_type;
+	typedef job_queue<IConnect*> conn_queue_type;
 	conn_queue_type m_pool;
 	//std::vector<conn_queue_type> pool;
 
@@ -23,19 +23,24 @@ private:
 	bool m_bCreatePool;
 
 public:
-	ConnectPool(std::vector<Counter> vCounter);
+	ConnectPool();
 	~ConnectPool(void);
+
+	void SetCounterServer(std::vector<Counter> vCounter);
 
 	bool CreateConnPool();
 	bool IncreaseConnPool();
 	void CloseConnPool();
 
-	CConnect* GetConnect();
-	void PushConnect(CConnect * pConn);
+	IConnect* GetConnect();
+	void PushConnect(IConnect * pConn);
 
 
 	
 	bool IsCreatePoolSuccess();
 
 };
+
+extern ConnectPool gConnectPool;
+
 #endif

@@ -23,12 +23,10 @@ public:
 	std::string m_sReq;
 	std::string m_sRes;
 
-	
-
 	int m_nConnectTimeout; // 柜台连接超时时间
-	int m_nIdleTimeout; // 柜台连接后，没有请求，自动中断连接时间
 	int m_nRecvTimeout; // 请求处理超时时间
 
+	int m_nIdleTimeout; // 柜台连接后，没有请求，自动中断连接时间
 	std::string m_sGydm; // 顶点柜台，柜员代码
 	std::string m_sWtfs_mobile;
 	std::string m_sWtfs_web;

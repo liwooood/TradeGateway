@@ -11,6 +11,9 @@
 
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>1</CounterType>
+      
+      <!--是否采用恒生T2异步模式-->
+      <t2_async_mode>1</t2_async_mode>
 
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
       <recv_timeout>10</recv_timeout>
@@ -83,6 +86,7 @@
 
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>3</CounterType>
+      
 
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
       <recv_timeout>10</recv_timeout>

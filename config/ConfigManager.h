@@ -67,6 +67,10 @@ public:
 	int nRunMode;
 
 	// ¹ñÌ¨
+	int m_nConnectPoolEnable;
+	int m_nConnectPoolConnectTimeout;
+	int m_nConnectPoolReadWriteTimeout;
+	std::vector<Counter> m_ConnectPoolCounters;
 	int m_nConnectPoolMin;
 	int m_nConnectPoolMax;
 	int m_nConnectPoolIncrease;

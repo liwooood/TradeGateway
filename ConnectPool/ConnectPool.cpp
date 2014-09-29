@@ -4,12 +4,13 @@
 #include "business/hundsun_t2/ConnectT2.h"
 
 
+ConnectPool gConnectPool;
 
-ConnectPool::ConnectPool(std::vector<Counter> vCounter)
+ConnectPool::ConnectPool()
 {
 	m_nID = 0;
 
-	m_vCounter = vCounter;
+	
 
 	m_bCreatePool = false;
 }
@@ -19,6 +20,10 @@ ConnectPool::~ConnectPool(void)
 	CloseConnPool();
 }
 
+void ConnectPool::SetCounterServer(std::vector<Counter> vCounter)
+{
+	m_vCounter = vCounter;
+}
 
 bool ConnectPool::CreateConnPool()
 {
@@ -35,7 +40,7 @@ bool ConnectPool::CreateConnPool()
 		for (std::vector<Counter>::iterator pos = m_vCounter.begin(); pos != m_vCounter.end(); pos++)
 		{
 			
-			CConnect * pConn = new ConnectT2(m_nID, *pos);
+			IConnect * pConn = new ConnectT2(m_nID, *pos);
 			if (pConn->CreateConnect())
 			{
 				m_pool.push(pConn);
@@ -127,10 +132,10 @@ bool ConnectPool::IncreaseConnPool()
 
 
 // 获取连接的遍历采用循环方法，不采用随机方法
- CConnect* ConnectPool::GetConnect()
+ IConnect* ConnectPool::GetConnect()
 {
 	std::string msg;
-	CConnect * pConn = NULL;
+	IConnect * pConn = NULL;
 
 	/*
 	if (m_pool.queue_.empty())
@@ -168,7 +173,7 @@ bool ConnectPool::IncreaseConnPool()
 	return pConn;
 }
 
-void ConnectPool::PushConnect(CConnect* pConn)
+void ConnectPool::PushConnect(IConnect* pConn)
 {
 	if (pConn == NULL)
 		return;
@@ -187,23 +192,26 @@ void ConnectPool::PushConnect(CConnect* pConn)
 
 void ConnectPool::CloseConnPool()
 {
-	std::string msg = "关闭连接池";
-	gFileLog::instance().Log(msg);
+	if (m_bCreatePool)
+	{
+		std::string msg = "关闭连接池";
+		gFileLog::instance().Log(msg);
 
-	m_bCreatePool = false;
+		m_bCreatePool = false;
 
-	m_pool.stop();
+		m_pool.stop();
 
 	
-	for (std::deque<CConnect*>::iterator pos = m_pool.queue_.begin(); pos != m_pool.queue_.end(); pos++)
-	{
-		CConnect * pConn = *pos;
-
-		if (pConn != NULL)
+		for (std::deque<IConnect*>::iterator pos = m_pool.queue_.begin(); pos != m_pool.queue_.end(); pos++)
 		{
-			pConn->CloseConnect();
-			delete pConn;
-			pConn = NULL;
+			IConnect * pConn = *pos;
+
+			if (pConn != NULL)
+			{
+				pConn->CloseConnect();
+				delete pConn;
+				pConn = NULL;
+			}
 		}
 	}
 	

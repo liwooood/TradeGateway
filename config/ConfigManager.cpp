@@ -21,6 +21,7 @@
 #include "ConfigManager.h"
 #include "./connectpool/counter.h"
 #include "./connectpool/ConnectManager.h"
+#include "connectpool/ConnectPool.h"
 
 
 
@@ -138,6 +139,63 @@ bool ConfigManager::LoadConfig(std::string sPath)
 
 
 	// 柜台共用
+	node = doc.select_single_node("/config/Counter_Common/connectpool/enable");
+	m_nConnectPoolEnable = boost::lexical_cast<int>(node.node().child_value());
+
+	node = doc.select_single_node("/config/Counter_Common/connectpool/connect_timeout");
+	m_nConnectPoolConnectTimeout = boost::lexical_cast<int>(node.node().child_value());
+
+	node = doc.select_single_node("/config/Counter_Common/connectpool/readwrite_timeout");
+	m_nConnectPoolReadWriteTimeout = boost::lexical_cast<int>(node.node().child_value());
+
+	
+				
+				
+				pugi::xpath_node_set counter_nodes = doc.select_nodes("/config/Counter_Common/connectpool/server");
+				pugi::xpath_node_set::const_iterator it_counter;
+				for (it_counter = counter_nodes.begin(); it_counter != counter_nodes.end(); ++it_counter)
+				{
+					pugi::xpath_node node = *it_counter;
+
+					node_value = node.node().child_value("enable");
+					int enable = boost::lexical_cast<int>(node_value);
+					if (enable == 0)
+						continue;
+
+					Counter counter;
+
+					node_value = node.node().child_value("servername");
+					counter.m_sServerName = node_value;
+					
+
+					node_value = node.node().child_value("ip");
+					TRACE("柜台 = %s\n", node_value.c_str());
+					counter.m_sIP = node_value;
+
+					node_value = node.node().child_value("port");
+					counter.m_nPort = boost::lexical_cast<int>(node_value);
+
+					node_value = node.node().child_value("username");
+					counter.m_sUserName = node_value;
+
+					node_value = node.node().child_value("password");
+					counter.m_sPassword = node_value;
+
+					node_value = node.node().child_value("req");
+					counter.m_sReq = node_value;
+
+					node_value = node.node().child_value("res");
+					counter.m_sRes = node_value;
+
+					counter.m_nConnectTimeout = m_nConnectPoolConnectTimeout;
+					counter.m_nRecvTimeout = m_nConnectPoolReadWriteTimeout;
+					counter.m_nCounterType = COUNTER_TYPE_HS_T2;
+
+					m_ConnectPoolCounters.push_back(counter);///////////////////////////
+				} // end for counter
+
+				gConnectPool.SetCounterServer(m_ConnectPoolCounters);
+
 	node = doc.select_single_node("/config/Counter_Common/connectpool/min");
 	m_nConnectPoolMin = boost::lexical_cast<int>(node.node().child_value());
 	node = doc.select_single_node("/config/Counter_Common/connectpool/max");
@@ -270,8 +328,15 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 			int BusiType = boost::lexical_cast<int>(type);
 			TRACE("业务类型 id = %d\n", BusiType);
 
+			
 			int CounterType = boost::lexical_cast<int>(node.node().child_value("CounterType"));
 			TRACE("柜台类型 id = %d\n", CounterType);
+
+			std::string tmp = node.node().child_value("t2_async_mode");
+			int asyncMode = 0;
+			if (!tmp.empty())
+				asyncMode = boost::lexical_cast<int>(tmp);
+			
 
 			int m_nConnectTimeout = boost::lexical_cast<int>(node.node().child_value("connect_timeout"));
 	
@@ -374,6 +439,7 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 
 				busiType.branches[branchList] = branch;
 				busiType.counterType = CounterType;
+				busiType.asyncMode = asyncMode;
 			} // end for branch
 
 			

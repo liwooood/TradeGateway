@@ -154,7 +154,7 @@
     <ClInclude Include="ConnectPool\BusinessSystem.h" />
     <ClInclude Include="ConnectPool\BusinessType.h" />
     <Text Include="bin_release\ChangeLog.txt" />
-    <ClInclude Include="ConnectPool\Connect.h" />
+    <ClInclude Include="ConnectPool\IConnect.h" />
     <ClInclude Include="ConnectPool\ConnectManager.h" />
     <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
@@ -240,7 +240,7 @@
     <ClCompile Include="ConnectPool\Branch.cpp" />
     <ClCompile Include="ConnectPool\BusinessSystem.cpp" />
     <ClCompile Include="ConnectPool\BusinessType.cpp" />
-    <ClCompile Include="ConnectPool\Connect.cpp" />
+    <ClCompile Include="ConnectPool\IConnect.cpp" />
     <ClCompile Include="ConnectPool\ConnectManager.cpp" />
     <ClCompile Include="ConnectPool\ConnectPool.cpp" />
     <ClCompile Include="ConnectPool\Counter.cpp" />

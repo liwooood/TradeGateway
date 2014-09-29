@@ -17,6 +17,7 @@ public:
 
 	
 	int counterType;
+	int asyncMode;
 
 	//std::map<std::string, ConnectPool*> connPool;
 
