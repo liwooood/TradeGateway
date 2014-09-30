@@ -1,17 +1,19 @@
 #include "StdAfx.h"
 
-#include "TradeBusinessDingDian.h"
-//#include "LogManager.h"
-#include "./connectpool/ConnectManager.h"
-
-
-
 #include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string.hpp>
 
+
+#include "TradeBusinessDingDian.h"
+//#include "LogManager.h"
+#include "ConnectManager.h"
+
+
+
+
 //#include "aes.h"
 
-#include "./config/ConfigManager.h"
+#include "ConfigManager.h"
 
 
 
@@ -21,22 +23,17 @@
 //#include <unicode/putil.h>
 //#include <unicode/ucnv.h>
 
-#include "./encrypt/mybotan.h"
-
-
-
-
-
-#include "./output/FileLog.h"
+#include "mybotan.h"
+#include "FileLog.h"
 
 #include "TradeGatewayGtja.h"
 
 
-#include "business/apexsoft/fiddef.h"
-#include "business/apexsoft/fixapi.h"
-#include "business/apexsoft/DingDian.h"
+#include "fiddef.h"
+#include "fixapi.h"
+#include "DingDian.h"
 
-#include "./cache/CacheData.h"
+#include "CacheData.h"
 
 
 TradeBusinessDingDian::TradeBusinessDingDian()

@@ -4,17 +4,17 @@
 
 
 // 金证
-#include "business/szkingdom_win/tradebusiness.h"
-#include "business/hundsun_com/TradeBusinessComm.h"
+#include "tradebusiness.h"
+
 // 恒生
-#include "business/hundsun_t2/tradebusinesst2.h"
+#include "tradebusinesst2.h"
 // 顶点
-#include "business/apexsoft/TradeBusinessDingDian.h"
-#include "business/apexsoft/DingDian.h"
+#include "TradeBusinessDingDian.h"
+#include "DingDian.h"
 // AGC
-#include "business/SunGuard/SywgConnect.h"
+#include "SywgConnect.h"
 // 新意
-#include "business/xinyi/TCPClientSync.h"
+#include "TCPClientSync.h"
 
 
 ISession::ISession(void)

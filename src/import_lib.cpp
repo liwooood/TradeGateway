@@ -34,7 +34,7 @@
 
 #pragma comment(lib, "botan.lib")
 
-#pragma comment(lib, "ociliba.lib")
+
 
 
 

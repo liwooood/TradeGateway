@@ -2,24 +2,20 @@
 
 #include <strstream>
 
-#include "boost/format.hpp"
-#include "boost/algorithm/string.hpp"
-#include "boost/lexical_cast.hpp"
+#include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+
+
+#include "xml\rapidxml.hpp"
+#include "xml\rapidxml_utils.hpp"
+
+#include "fiddef.h"
+#include "fixapi.h"
 
 #include "DingDian.h"
-
-
-
-#include "./lib/xml/rapidxml.hpp"
-#include "./lib/xml/rapidxml_utils.hpp"
-#include "./config/ConfigManager.h"
-
-
-#include "business/apexsoft/fiddef.h"
-#include "business/apexsoft/fixapi.h"
-
-
-#include "./output/FileLog.h"
+#include "ConfigManager.h"
+#include "FileLog.h"
 
 
 CDingDian g_DingDian;

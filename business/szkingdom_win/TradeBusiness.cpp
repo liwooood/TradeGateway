@@ -1,30 +1,23 @@
 #include "StdAfx.h"
 
-#include "TradeBusiness.h"
-//#include "LogManager.h"
-#include "./connectpool/ConnectManager.h"
-
-
 
 #include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string.hpp>
 
-//#include "aes.h"
+#include "KDEncodeCli.h"
+#include "kcbpcli.h"
 
-#include "./config/ConfigManager.h"
-#include "business/szkingdom_win/KDEncodeCli.h"
-#include "business/szkingdom_win/kcbpcli.h"
-
-
-
-//#include "CacheData.h"
+#include "TradeBusiness.h"
+//#include "LogManager.h"
+#include "ConnectManager.h"
+#include "ConfigManager.h"
 #include "encrypt.h"
 //ICU
 //#include <unicode/putil.h>
 //#include <unicode/ucnv.h>
-#include "./encrypt/mybotan.h"
+#include "mybotan.h"
 
-#include "./output/FileLog.h"
+#include "FileLog.h"
 
 
 TradeBusiness::TradeBusiness()

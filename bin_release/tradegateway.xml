@@ -49,10 +49,39 @@
   </communication>
 
   <Counter_Common>
+    <!--恒生T2异步模式特殊处理-->
     <connectpool>
-      <min>8</min>
+      <!--是否启用-->
+      <enable>0</enable>
+      
+      <min>1</min>
       <increase>1</increase>
-      <max>8</max>
+      <max>1</max>
+
+      <!--单位为秒-->
+      <connect_timeout>1</connect_timeout>
+      <readwrite_timeout>10</readwrite_timeout>
+      
+      <server>
+        <enable>1</enable>
+        <servername></servername>
+        <ip>10.103.2.224</ip>
+        <port>21000</port>
+        <username>KCXP00</username>
+        <password>888888</password>
+        <req>req_zb</req>
+        <res>ans_zb</res>
+      </server>
+      <server>
+        <enable>1</enable>
+        <servername></servername>
+        <ip>10.103.2.225</ip>
+        <port>21000</port>
+        <username>KCXP00</username>
+        <password>888888</password>
+        <req>req_zb</req>
+        <res>ans_zb</res>
+      </server>
     </connectpool>
 
     <!-- 连接柜台重试次数 -->

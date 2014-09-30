@@ -6,9 +6,9 @@
 #include <boost/format.hpp>
 
 #include "ConnectT2.h"
-#include "./config/ConfigManager.h"
+#include "ConfigManager.h"
 #include "common.h"
-#include "./output/FileLog.h"
+#include "FileLog.h"
 #include "errcode.h"
 
 

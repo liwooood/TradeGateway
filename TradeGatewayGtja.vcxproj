@@ -61,7 +61,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\;e:\common;D:\boost\1.55\include\boost-1_55\;D:\protobuf\protobuf-2.4.1\src;d:\openssl\include;d:\botan\debug\include;d:\crashrpt\include;d:\icu\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;.\include;D:\boost\1.55\include\boost-1_55\;D:\protobuf\protobuf-2.4.1\src;d:\openssl\include;d:\botan\debug\include;d:\crashrpt\include;d:\icu\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -103,7 +103,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>.\;e:\common;D:\boost\1.55\include\boost-1_55\;D:\protobuf\protobuf-2.4.1\src;d:\openssl\include;d:\ocilib\ocilib\include;d:\botan\release\include;D:\ImageMagick\ImageMagick-6.8.7-Q16\include;D:\Visual Leak Detector\include;d:\crashrpt\include;d:\icu\icu\include;D:\OpenCV\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;.\include;D:\boost\1.55\include\boost-1_55\;D:\protobuf\protobuf-2.4.1\src;d:\openssl\include;d:\botan\release\include;d:\crashrpt\include;d:\icu\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -159,18 +159,19 @@
     <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
     <ClInclude Include="encrypt\MyBotan.h" />
-    <ClInclude Include="lib\XML\pugiconfig.hpp" />
-    <ClInclude Include="lib\XML\pugixml.hpp" />
-    <ClInclude Include="lib\XML\rapidxml.hpp" />
-    <ClInclude Include="lib\XML\rapidxml_iterators.hpp" />
-    <ClInclude Include="lib\XML\rapidxml_print.hpp" />
-    <ClInclude Include="lib\XML\rapidxml_utils.hpp" />
+    <ClInclude Include="include\MiniDump.h" />
+    <ClInclude Include="include\resource.h" />
+    <ClInclude Include="include\XML\pugiconfig.hpp" />
+    <ClInclude Include="include\XML\pugixml.hpp" />
+    <ClInclude Include="include\XML\rapidxml.hpp" />
+    <ClInclude Include="include\XML\rapidxml_iterators.hpp" />
+    <ClInclude Include="include\XML\rapidxml_print.hpp" />
+    <ClInclude Include="include\XML\rapidxml_utils.hpp" />
     <ClInclude Include="log\DistributedLogManager.h" />
     <ClInclude Include="log\FileLogManager.h" />
     <ClInclude Include="log\mq\LogConnect.h" />
     <ClInclude Include="log\mq\LogConnectPool.h" />
     <ClInclude Include="log\tradelog.pb.h" />
-    <ClInclude Include="MiniDump.h" />
     <ClInclude Include="network\IMessage.h" />
     <Text Include="log\日志开发说明.txt" />
     <Text Include="network\http\http_server.h.txt">
@@ -210,7 +211,6 @@
       <FileType>CppHeader</FileType>
     </Text>
     <ClInclude Include="output\FileLog.h" />
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadPool\worker.h" />
@@ -245,14 +245,12 @@
     <ClCompile Include="ConnectPool\Counter.cpp" />
     <ClCompile Include="encrypt\MyBotan.cpp" />
     <ClCompile Include="encrypt\testbotan.cpp" />
-    <ClCompile Include="import_lib.cpp" />
-    <ClCompile Include="lib\XML\pugixml.cpp" />
+    <ClCompile Include="include\XML\pugixml.cpp" />
     <ClCompile Include="log\DistributedLogManager.cpp" />
     <ClCompile Include="log\FileLogManager.cpp" />
     <ClCompile Include="log\mq\LogConnect.cpp" />
     <ClCompile Include="log\mq\LogConnectPool.cpp" />
     <ClCompile Include="log\tradelog.pb.cc" />
-    <ClCompile Include="MiniDump.cpp" />
     <ClCompile Include="network\IMessage.cpp" />
     <Text Include="network\http\trade_server_http.cpp.txt">
       <FileType>CppCode</FileType>
@@ -278,6 +276,8 @@
       <FileType>CppCode</FileType>
     </Text>
     <ClCompile Include="output\FileLog.cpp" />
+    <ClCompile Include="src\import_lib.cpp" />
+    <ClCompile Include="src\MiniDump.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

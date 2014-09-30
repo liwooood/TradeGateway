@@ -1,8 +1,8 @@
 #include "stdafx.h"
 
-#include "network/ssl_tcp/SSLServer.h"
+#include "SSLServer.h"
 
-#include "./output/FileLog.h"
+#include "FileLog.h"
 
 
 SSLServer::SSLServer(unsigned short port, queue_type& q, int msgType, int n)

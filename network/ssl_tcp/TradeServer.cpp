@@ -22,52 +22,49 @@
 #include <boost/iostreams/filter/zlib.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>
 
-
-#include "TradeServer.h"
-
-#include "common.h"
-#include "./config/configmanager.h"
-
-// 金证
-#include "./business/szkingdom_win/tradebusiness.h"
-#include "./business/hundsun_com/TradeBusinessComm.h"
-// 恒生
-#include "./business/hundsun_t2/tradebusinesst2.h"
-// 顶点
-#include "./business/apexsoft/TradeBusinessDingDian.h"
-#include "./business/apexsoft/DingDian.h"
-// AGC
-#include "business/SunGuard/SywgConnect.h"
-// 新意
-#include "business/xinyi/TCPClientSync.h"
-
-
-
-
-#include "./output/FileLog.h"
-
-#include "connectpool/connectmanager.h"
-
-
-
-
-#include "log/FileLogManager.h"
-#include "errcode.h"
-
-#include "network/ssl_tcp/TcpSession.h"
-#include "network/ssl_tcp/SSLSession.h"
-
-#include "network/http/http_message.h"
-#include "network/tcp/tcp_message_old.h"
-#include "network/ssl/ssl_message.h"
-#include "network/ssl_tcp/custommessage.h"
-
-
 // ICU
 #include <unicode/putil.h>
 #include <unicode/ucnv.h>
 
-#include "ConnectPool/ConnectPool.h"
+
+#include "TradeServer.h"
+
+#include "common.h"
+#include "configmanager.h"
+
+// 金证
+#include "tradebusiness.h"
+
+// 恒生
+#include "tradebusinesst2.h"
+// 顶点
+#include "TradeBusinessDingDian.h"
+#include "DingDian.h"
+// AGC
+#include "SywgConnect.h"
+// 新意
+#include "TCPClientSync.h"
+
+
+
+
+#include "FileLog.h"
+
+#include "connectmanager.h"
+
+
+
+
+#include "FileLogManager.h"
+#include "errcode.h"
+
+#include "TcpSession.h"
+#include "SSLSession.h"
+#include "tcp_message_old.h"
+#include "ssl_message.h"
+#include "custommessage.h"
+
+#include "ConnectPool.h"
 
 
 

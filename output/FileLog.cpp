@@ -4,7 +4,7 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 
 #include "FileLog.h"
-#include "./config/configmanager.h"
+#include "configmanager.h"
 
 
 FileLog::FileLog(void)

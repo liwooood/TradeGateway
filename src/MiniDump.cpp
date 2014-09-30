@@ -3,7 +3,7 @@
 #include "MiniDump.h"
 
 #include <string>
-#include "config\ConfigManager.h"
+#include "ConfigManager.h"
 
 #pragma comment(lib, "Dbghelp.lib")
 

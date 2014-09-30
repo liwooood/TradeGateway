@@ -6,10 +6,10 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "./config/ConfigManager.h"
-#include "./output/FileLog.h"
-#include "./connectpool/ConnectManager.h"
-#include "./encrypt/MyBotan.h"
+#include "ConfigManager.h"
+#include "FileLog.h"
+#include "ConnectManager.h"
+#include "MyBotan.h"
 
 
 IBusiness::IBusiness(void)

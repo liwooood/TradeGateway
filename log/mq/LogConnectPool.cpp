@@ -3,8 +3,8 @@
 #include "LogConnectPool.h"
 #include "LogConnect.h"
 
-#include "./config/ConfigManager.h"
-#include "./output/FileLog.h"
+#include "ConfigManager.h"
+#include "FileLog.h"
 
 
 LogConnectPool::LogConnectPool(void)

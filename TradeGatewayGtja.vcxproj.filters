@@ -235,9 +235,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Resource.h">
-      <Filter>主框架</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>主框架</Filter>
     </ClInclude>
@@ -249,24 +246,6 @@
     </ClInclude>
     <ClInclude Include="TradeGatewayGtjaDlg.h">
       <Filter>主框架</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\XML\pugiconfig.hpp">
-      <Filter>第三方库\XML\pugixml</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\XML\pugixml.hpp">
-      <Filter>第三方库\XML\pugixml</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\XML\rapidxml.hpp">
-      <Filter>第三方库\XML\RapidXML</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\XML\rapidxml_iterators.hpp">
-      <Filter>第三方库\XML\RapidXML</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\XML\rapidxml_print.hpp">
-      <Filter>第三方库\XML\RapidXML</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\XML\rapidxml_utils.hpp">
-      <Filter>第三方库\XML\RapidXML</Filter>
     </ClInclude>
     <ClInclude Include="cache\CacheData.h">
       <Filter>缓存</Filter>
@@ -361,9 +340,6 @@
     <ClInclude Include="business\szkingdom_win\TradeBusiness.h">
       <Filter>业务层\柜台系统\金证windows</Filter>
     </ClInclude>
-    <ClInclude Include="MiniDump.h">
-      <Filter>CrashDump</Filter>
-    </ClInclude>
     <ClInclude Include="network\ssl_tcp\TradeServer.h">
       <Filter>业务层</Filter>
     </ClInclude>
@@ -412,6 +388,30 @@
     <ClInclude Include="ConnectPool\IConnect.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
+    <ClInclude Include="include\MiniDump.h">
+      <Filter>CrashDump</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XML\pugiconfig.hpp">
+      <Filter>第三方库\XML\pugixml</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XML\pugixml.hpp">
+      <Filter>第三方库\XML\pugixml</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XML\rapidxml_utils.hpp">
+      <Filter>第三方库\XML\RapidXML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XML\rapidxml_print.hpp">
+      <Filter>第三方库\XML\RapidXML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XML\rapidxml_iterators.hpp">
+      <Filter>第三方库\XML\RapidXML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XML\rapidxml.hpp">
+      <Filter>第三方库\XML\RapidXML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resource.h">
+      <Filter>主框架</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -422,9 +422,6 @@
     </ClCompile>
     <ClCompile Include="TradeGatewayGtjaDlg.cpp">
       <Filter>主框架</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\XML\pugixml.cpp">
-      <Filter>第三方库\XML\pugixml</Filter>
     </ClCompile>
     <ClCompile Include="cache\CacheData.cpp">
       <Filter>缓存</Filter>
@@ -504,14 +501,8 @@
     <ClCompile Include="network\ssl_tcp\TcpServer.cpp">
       <Filter>网络层\网络服务\TCP</Filter>
     </ClCompile>
-    <ClCompile Include="import_lib.cpp">
-      <Filter>第三方库</Filter>
-    </ClCompile>
     <ClCompile Include="business\szkingdom_win\TradeBusiness.cpp">
       <Filter>业务层\柜台系统\金证windows</Filter>
-    </ClCompile>
-    <ClCompile Include="MiniDump.cpp">
-      <Filter>CrashDump</Filter>
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\TradeServer.cpp">
       <Filter>业务层</Filter>
@@ -545,6 +536,15 @@
     </ClCompile>
     <ClCompile Include="business\hundsun_t2\ConnectT2.cpp">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniDump.cpp">
+      <Filter>CrashDump</Filter>
+    </ClCompile>
+    <ClCompile Include="src\import_lib.cpp">
+      <Filter>第三方库</Filter>
+    </ClCompile>
+    <ClCompile Include="include\XML\pugixml.cpp">
+      <Filter>第三方库\XML\pugixml</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

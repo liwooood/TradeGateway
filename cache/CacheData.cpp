@@ -3,8 +3,10 @@
 #include "CacheData.h"
 
 #include <process.h>
+
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include "./output/FileLog.h"
+
+#include "FileLog.h"
 
 
 CCacheData g_CacheData;

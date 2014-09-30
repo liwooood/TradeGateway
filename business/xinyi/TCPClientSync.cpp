@@ -18,9 +18,9 @@
 
 #include "TCPClientSync.h"
 
-#include "./output/FileLog.h"
-#include "ConnectPool/counter.h"
-#include "config/ConfigManager.h"
+#include "FileLog.h"
+#include "counter.h"
+#include "ConfigManager.h"
 
 
 CTCPClientSync::CTCPClientSync(void)

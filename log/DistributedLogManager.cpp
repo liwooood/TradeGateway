@@ -1,17 +1,13 @@
-#include "DistributedLogManager.h"
-
-#include "./config/ConfigManager.h"
-
-#include "./output/FileLog.h"
-
 // xml
-#include "./lib/xml/rapidxml.hpp"
-#include "./lib/xml/rapidxml_utils.hpp"
+#include "xml\rapidxml.hpp"
+#include "xml\rapidxml_utils.hpp"
 
-#include "log/mq/LogConnect.h"
-#include "log/mq/LogConnectPool.h"
-
-#include "encrypt/mybotan.h"
+#include "DistributedLogManager.h"
+#include "ConfigManager.h"
+#include "FileLog.h"
+#include "LogConnect.h"
+#include "LogConnectPool.h"
+#include "mybotan.h"
 
 
 DistributedLogManager::DistributedLogManager(void)

@@ -7,33 +7,29 @@
 #include <boost/bind.hpp>
 #include <boost/functional/factory.hpp>
 
-#include "./output/FileLog.h"
-#include "log/FileLogManager.h"
-#include "log/DistributedLogManager.h"
+#include "FileLog.h"
+#include "FileLogManager.h"
+#include "DistributedLogManager.h"
 
 
+#include "imessage.h"
 
-
-
-
-#include "network/imessage.h"
-#include "network/http/http_message.h"
-#include "network/tcp/tcp_message_old.h"
-#include "network/ssl/ssl_message.h"
-#include "network/ssl_tcp/custommessage.h" 
+#include "tcp_message_old.h"
+#include "ssl_message.h"
+#include "custommessage.h" 
 
 // 金证
-#include "business/szkingdom_win/tradebusiness.h"
-#include "business/hundsun_com/TradeBusinessComm.h"
+#include "tradebusiness.h"
+
 // 恒生
-#include "business/hundsun_t2/tradebusinesst2.h"
+#include "tradebusinesst2.h"
 // 顶点
-#include "business/apexsoft/TradeBusinessDingDian.h"
-#include "business/apexsoft/DingDian.h"
+#include "TradeBusinessDingDian.h"
+#include "DingDian.h"
 // AGC
-#include "business/SunGuard/SywgConnect.h"
+#include "SywgConnect.h"
 // 新意
-#include "business/xinyi/TCPClientSync.h"
+#include "TCPClientSync.h"
 
 
 SSLSession::SSLSession(ios_type& ios, queue_type& q, int msgType, boost::asio::ssl::context& context)
@@ -154,9 +150,6 @@ IMessage* SSLSession::create_request()
 	
 	switch (m_msgType)
 	{
-	case MSG_TYPE_HTTP:
-		req = new http_message();
-		break;
 	case MSG_TYPE_TCP_OLD:
 		req = new tcp_message_old();
 		break;

@@ -16,12 +16,12 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "./lib/xml/pugixml.hpp"
+#include "xml\pugixml.hpp"
 
 #include "ConfigManager.h"
-#include "./connectpool/counter.h"
-#include "./connectpool/ConnectManager.h"
-#include "connectpool/ConnectPool.h"
+#include "counter.h"
+#include "ConnectManager.h"
+#include "ConnectPool.h"
 
 
 

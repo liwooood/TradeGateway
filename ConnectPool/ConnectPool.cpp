@@ -1,7 +1,7 @@
 #include "ConnectPool.h"
-#include "./config/ConfigManager.h"
-#include "./output/FileLog.h"
-#include "business/hundsun_t2/ConnectT2.h"
+#include "ConfigManager.h"
+#include "FileLog.h"
+#include "ConnectT2.h"
 
 
 ConnectPool gConnectPool;

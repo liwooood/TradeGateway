@@ -14,15 +14,15 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/pool/object_pool.hpp>
 
-#include "Network/ssl_tcp/MsgHeader.h"
+#include "MsgHeader.h"
 //#include "network/CustomMessage.h"
-#include "ThreadSafeQueue/job_queue.h"
+#include "job_queue.h"
 
 
 
 
-#include "network/ssl_tcp/TcpSession.h"
-#include "business/IBusiness.h"
+#include "TcpSession.h"
+#include "IBusiness.h"
 
 
 /*

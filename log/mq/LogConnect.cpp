@@ -6,7 +6,7 @@
 //#include <boost/format.hpp>
 
 #include "LogConnect.h"
-#include "./output/FileLog.h"
+#include "FileLog.h"
 
 
 

@@ -8,11 +8,11 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 
 // xml
-#include "./lib/xml/rapidxml.hpp"
-#include "./lib/xml/rapidxml_utils.hpp"
+#include "xml/rapidxml.hpp"
+#include "xml/rapidxml_utils.hpp"
 
-#include "./config/ConfigManager.h"
-#include "./output/FileLog.h"
+#include "ConfigManager.h"
+#include "FileLog.h"
 
 
 

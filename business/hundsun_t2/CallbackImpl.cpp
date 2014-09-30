@@ -4,8 +4,8 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "log/FileLogManager.h"
-#include "./output/FileLog.h"
+#include "FileLogManager.h"
+#include "FileLog.h"
 
 
 CCallbackImpl::CCallbackImpl()

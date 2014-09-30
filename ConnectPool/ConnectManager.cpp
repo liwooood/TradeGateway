@@ -3,8 +3,8 @@
 #include <boost/lexical_cast.hpp>
 
 #include "ConnectManager.h"
-#include "./config/ConfigManager.h"
-#include "./output/FileLog.h"
+#include "ConfigManager.h"
+#include "FileLog.h"
 //#include ".\dingdian\fixapi.h"
 
 

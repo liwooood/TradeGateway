@@ -1,36 +1,27 @@
 #include "StdAfx.h"
 
-#include "TradeBusinessT2.h"
-//#include "LogManager.h"
-#include "./connectpool/ConnectManager.h"
 
 
 
 #include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string.hpp>
 
-//#include "aes.h"
 
-#include "./config/ConfigManager.h"
+#include "TradeBusinessT2.h"
 
+#include "ConnectManager.h"
 
-
-//#include "CacheData.h"
+#include "ConfigManager.h"
 
 
 // ICU
 //#include <unicode/putil.h>
 //#include <unicode/ucnv.h>
 
-#include "./encrypt/mybotan.h"
-
-
-
-
-
-#include "./output/FileLog.h"
+#include "mybotan.h"
+#include "FileLog.h"
 #include "errcode.h"
-#include "log/FileLogManager.h"
+#include "FileLogManager.h"
 
 
 

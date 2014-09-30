@@ -18,7 +18,7 @@
 #include "AGC.h"
 #include "agc_encrypt.h"
 
-#include "./output/FileLog.h"
+#include "FileLog.h"
 #include "errcode.h"
 
 

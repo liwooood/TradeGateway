@@ -1,16 +1,15 @@
 #include "stdafx.h"
 
+
+#include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+
+#include "xml/pugixml.hpp"
+#include "xml/rapidxml.hpp"
+
 #include "AGC.h"
-#include "./config/ConfigManager.h"
-
-#include "boost/format.hpp"
-#include "boost/algorithm/string.hpp"
-#include "boost/lexical_cast.hpp"
-
-
-#include "./lib/xml/pugixml.hpp"
-#include "./lib/xml/rapidxml.hpp"
-
+#include "ConfigManager.h"
 #include "sywg.h"
 
 
