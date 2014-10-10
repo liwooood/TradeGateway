@@ -14,6 +14,8 @@
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>5</CounterType>
 
+      
+      
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
       <recv_timeout>60</recv_timeout>
 
@@ -45,8 +47,6 @@
           <res>ans_zb</res>
         </server>
       </branch>
-
-
     </BusinessType>
 
     <BusinessType>
@@ -56,6 +56,9 @@
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>1</CounterType>
 
+      <!--是否采用恒生T2异步模式-->
+      <t2_async_mode>1</t2_async_mode>
+      
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
       <recv_timeout>10</recv_timeout>
 
@@ -87,11 +90,10 @@
     </BusinessType>
   </system>
 
+  
   <system>
     <id>njzq_flash</id>
     <desc>南京证券flash交易</desc>
-
-
     <BusinessType>
       <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
       <type>1</type>
@@ -132,11 +134,10 @@
     </BusinessType>
   </system>
 
+  
   <system>
     <id>njzq_wt</id>
     <desc>南京证券网厅</desc>
-
-
     <BusinessType>
       <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
       <type>1</type>
@@ -177,11 +178,10 @@
     </BusinessType>
   </system>
 
+  
   <system>
     <id>njzq_zt</id>
     <desc>南京证券掌厅</desc>
-
-
     <BusinessType>
       <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
       <type>1</type>

@@ -16,7 +16,7 @@
     <!--java 4字节消息头， 需要淘汰-->
     <tcp>
       <enable>1</enable>
-      <port>5001</port>
+      <port>9001</port>
       <workerthreadpool>16</workerthreadpool>
       <sendthreadpool>16</sendthreadpool>
     </tcp>
@@ -32,7 +32,7 @@
 
 
     <tcp_new>
-      <enable>1</enable>
+      <enable>0</enable>
       <port>5003</port>
       <workerthreadpool>16</workerthreadpool>
       <sendthreadpool>16</sendthreadpool>
@@ -65,8 +65,8 @@
       <server>
         <enable>1</enable>
         <servername></servername>
-        <ip>10.103.2.224</ip>
-        <port>21000</port>
+        <ip>172.25.0.55</ip>
+        <port>19001</port>
         <username>KCXP00</username>
         <password>888888</password>
         <req>req_zb</req>
@@ -75,8 +75,8 @@
       <server>
         <enable>1</enable>
         <servername></servername>
-        <ip>10.103.2.225</ip>
-        <port>21000</port>
+        <ip>172.25.0.55</ip>
+        <port>19001</port>
         <username>KCXP00</username>
         <password>888888</password>
         <req>req_zb</req>
@@ -110,7 +110,7 @@
 
     <file>
       <enable>1</enable>
-      <path>d:\tradegateway\log</path>
+      <path>d:\chenhf\new_tradegateway\log</path>
       <threadpool>1</threadpool>
     </file>
 
@@ -133,7 +133,7 @@
   </log>
 
   <!--业务系统信息-->
-  <system>gtja.xml</system>
+  <system>njzq.xml</system>
 
   
 </config>
