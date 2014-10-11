@@ -138,10 +138,8 @@
     <ClInclude Include="business\apexsoft\DingDian.h" />
     <ClInclude Include="business\apexsoft\TradeBusinessDingDian.h" />
     <ClInclude Include="business\hundsun_t2\CallbackImpl.h" />
-    <ClInclude Include="business\hundsun_t2\ConnectT2.h" />
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h" />
-    <ClInclude Include="business\IBusiness.h" />
     <ClInclude Include="business\SunGuard\AGC.h" />
     <ClInclude Include="business\SunGuard\sywg.h" />
     <ClInclude Include="business\SunGuard\SywgConnect.h" />
@@ -159,8 +157,12 @@
     <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
     <ClInclude Include="encrypt\MyBotan.h" />
+    <ClInclude Include="include\ConnectT2.h" />
+    <ClInclude Include="include\IBusiness.h" />
     <ClInclude Include="include\MiniDump.h" />
     <ClInclude Include="include\resource.h" />
+    <ClInclude Include="include\TradeGatewayGtja.h" />
+    <ClInclude Include="include\TradeGatewayGtjaDlg.h" />
     <ClInclude Include="include\XML\pugiconfig.hpp" />
     <ClInclude Include="include\XML\pugixml.hpp" />
     <ClInclude Include="include\XML\rapidxml.hpp" />
@@ -211,12 +213,11 @@
       <FileType>CppHeader</FileType>
     </Text>
     <ClInclude Include="output\FileLog.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadPool\worker.h" />
     <ClInclude Include="ThreadSafeQueue\job_queue.h" />
-    <ClInclude Include="TradeGatewayGtja.h" />
-    <ClInclude Include="TradeGatewayGtjaDlg.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="errcode.h" />
     <Text Include="文档\开发计划.txt" />

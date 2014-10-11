@@ -44,7 +44,7 @@ bool IBusiness::IsConnected()
 bool IBusiness::ParseRequest(std::string& request)
 {
 	std::vector<std::string> keyvalues;
-	std::string keyvalue = "";
+	//std::string keyvalue = "";
 	std::vector<std::string> kv;
 	std::string key = "";
 	std::string value = "";
@@ -52,24 +52,31 @@ bool IBusiness::ParseRequest(std::string& request)
 
 	reqmap.clear();
 
-	
+	gFileLog::instance().Log("request=" + request);
 	boost::split(keyvalues, request, boost::is_any_of(SOH)); // 注意需要通过配置文件配置
+
+	int size = keyvalues.size();
+	std::string si = boost::lexical_cast<std::string>(size);
+	gFileLog::instance().Log("size=" + si);
 
 	for (std::vector<std::string>::iterator it = keyvalues.begin(); it != keyvalues.end(); it++)
 	{
-		keyvalue = *it;
+		std::string  keyvalue = *it;
 		
 
 		if (keyvalue.empty())
 		{
-			return false;
+			gFileLog::instance().Log("keyvalue.empty()");
+
+			continue;
 		}
 		
 		kv.clear();
 		boost::split(kv, keyvalue, boost::is_any_of("="));
 
-		if (kv.size() != 2)
+		if (kv.size() < 2)
 		{
+			gFileLog::instance().Log("kv.size()");
 			return false;
 		}
 

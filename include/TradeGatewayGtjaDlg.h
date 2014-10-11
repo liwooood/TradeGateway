@@ -129,6 +129,8 @@ private:
 	TradeServer * pTradeServerTcpNew; // new ssl & tcp 
 	TradeServer * pTradeServerSslNew; // new ssl & tcp 
 
+	bool ParseRequest(std::string& request);
+
 public:
 	afx_msg void OnDestroy();
 	afx_msg void OnClose();

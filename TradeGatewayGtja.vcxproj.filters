@@ -241,12 +241,6 @@
     <ClInclude Include="targetver.h">
       <Filter>主框架</Filter>
     </ClInclude>
-    <ClInclude Include="TradeGatewayGtja.h">
-      <Filter>主框架</Filter>
-    </ClInclude>
-    <ClInclude Include="TradeGatewayGtjaDlg.h">
-      <Filter>主框架</Filter>
-    </ClInclude>
     <ClInclude Include="cache\CacheData.h">
       <Filter>缓存</Filter>
     </ClInclude>
@@ -273,9 +267,6 @@
     </ClInclude>
     <ClInclude Include="config\ConfigManager.h">
       <Filter>配置文件</Filter>
-    </ClInclude>
-    <ClInclude Include="business\IBusiness.h">
-      <Filter>业务层\柜台系统</Filter>
     </ClInclude>
     <ClInclude Include="business\SunGuard\sywg.h">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
@@ -382,9 +373,6 @@
     <ClInclude Include="business\hundsun_t2\CallbackImpl.h">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClInclude>
-    <ClInclude Include="business\hundsun_t2\ConnectT2.h">
-      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
-    </ClInclude>
     <ClInclude Include="ConnectPool\IConnect.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
@@ -410,6 +398,19 @@
       <Filter>第三方库\XML\RapidXML</Filter>
     </ClInclude>
     <ClInclude Include="include\resource.h">
+      <Filter>主框架</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ConnectT2.h">
+      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IBusiness.h">
+      <Filter>业务层\柜台系统</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="include\TradeGatewayGtja.h">
+      <Filter>主框架</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TradeGatewayGtjaDlg.h">
       <Filter>主框架</Filter>
     </ClInclude>
   </ItemGroup>

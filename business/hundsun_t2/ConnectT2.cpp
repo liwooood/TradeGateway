@@ -25,11 +25,30 @@ ConnectT2::ConnectT2(int ConnectNo, Counter counter)
 	m_sServerInfo = fmt.str();
 
 	connectTimeout = m_Counter.m_nConnectTimeout * 1000;
+
+
+	// 创建连接中断事件, 手工触发，初始状态无信号
+	hCloseEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	// 向回调类传递事件
+	callback.SetCloseEvent(hCloseEvent);
+
+	// 创建应答事件, 手工触发，初始状态无信号
+	hResponseEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	// 向回调类传递事件
+	callback.SetResponseEvent(hResponseEvent);
+
+	// 创建判断连接是否断开的线程
+	HANDLE hThread = CreateThread(NULL, 0, ConnectT2::AutoConnect, this, 0, NULL);
+	CloseHandle(hThread);
+
 }
 
 
 ConnectT2::~ConnectT2(void)
 {
+	CloseHandle(hCloseEvent);
+	CloseHandle(hResponseEvent);
+
 	CloseConnect();
 }
 
@@ -79,14 +98,7 @@ bool ConnectT2::CreateConnect()
 
 	int nRetry = gConfigManager::instance().m_nConnectRetry;
 	
-	// 创建事件
-	hCloseEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	// 向回调类传递事件
-	callback.SetCloseEvent(hCloseEvent);
-
-	hResponseEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	// 向回调类传递事件
-	callback.SetResponseEvent(hResponseEvent);
+	
 
 
 	lpConfig = NewConfig();
@@ -108,10 +120,7 @@ bool ConnectT2::CreateConnect()
 	lpConnection = NewConnection(lpConfig);
 	lpConnection->AddRef();
 
-	// 创建判断连接是否断开的线程
-	HANDLE hThread = CreateThread(NULL, 0, ConnectT2::AutoConnect, this, 0, NULL);
-	CloseHandle(hThread);
-
+	
 
 	for (int i=0; i<nRetry; i++)
 	{
@@ -205,7 +214,7 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	bool bRet = true;
 	int nRet = 0;
 	
-
+	gFileLog::instance().Log("恒生T2 异步模式request=" + request);
 	ParseRequest(request);
 
 	// 传递funcid
@@ -219,10 +228,14 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	{
 		try
 		{
+			gFileLog::instance().Log("恒生T2 异步模式route=" + route);
+
 			nRoute = boost::lexical_cast<int>(route);
 		}
 		catch(std::exception& e)
 		{
+			gFileLog::instance().Log("恒生T2 异步模式 route异常");
+
 			e.what();
 
 			GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
@@ -235,10 +248,14 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	
 	try
 	{
+		gFileLog::instance().Log("恒生T2 异步模式funcid=" + funcid);
+
 		lFuncId = boost::lexical_cast<long>(funcid);
 	}
 	catch(std::exception& e)
 	{
+		gFileLog::instance().Log("恒生T2 异步模式 funcid异常");
+
 		e.what();
 
 		GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
@@ -317,6 +334,8 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 
 	if (nRet < 0)
 	{
+		gFileLog::instance().Log("恒生T2 异步模式 SendBiz");
+
 		pack->Release();
 
 		
@@ -328,6 +347,8 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 
 	pack->FreeMem(pack->GetPackBuf());
 	pack->Release();
+
+	gFileLog::instance().Log("恒生T2 异步模式 发送成功");
 
 	
 FINISH:

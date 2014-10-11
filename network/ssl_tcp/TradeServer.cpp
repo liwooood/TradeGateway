@@ -449,6 +449,8 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	}
 	else
 	{
+		gFileLog::instance().Log("恒生T2 异步模式");
+
 		// 恒生T2异步模式
 		IConnect * pConn = gConnectPool.GetConnect();
 		//if (pConn == NULL)
@@ -457,20 +459,22 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		// 注意返回值和同步模式不同，同步模式返回false代表网络错误需要重试， 异步模式返回false只代表业务处理错误
 		if (!pConn->Send(request, response, status, errCode, errMsg))
 		{
-					response = "1";
-					response += SOH;
-					response += "2";
-					response += SOH;
+			gFileLog::instance().Log("异步模式发送失败");
 
-					response += "cssweb_code";
-					response += SOH;
-					response += "cssweb_msg";
-					response += SOH;
+			response = "1";
+			response += SOH;
+			response += "2";
+			response += SOH;
+
+			response += "cssweb_code";
+			response += SOH;
+			response += "cssweb_msg";
+			response += SOH;
 					
-					response += errCode;
-					response += SOH;
-					response += errMsg;
-					response += SOH;
+			response += errCode;
+			response += SOH;
+			response += errMsg;
+			response += SOH;
 					
 		}
 		else
@@ -480,9 +484,9 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 			// 得到应答数据
 			pConn->GetResponse(response, status, errCode, errMsg);
-
-			gConnectPool.PushConnect(pConn);
 		}
+
+		gConnectPool.PushConnect(pConn);
 	}
 
 
