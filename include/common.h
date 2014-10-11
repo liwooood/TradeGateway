@@ -2,7 +2,7 @@
 #define _COMMON_H_
 
 // 版本信息
-#define VERSION  "2.0.06"
+#define VERSION  "2.0.07"
 #define MY_BOOST_VERSION "1.55"
 
 // 柜台类型

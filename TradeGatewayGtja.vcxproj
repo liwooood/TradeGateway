@@ -157,6 +157,7 @@
     <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
     <ClInclude Include="encrypt\MyBotan.h" />
+    <ClInclude Include="include\common.h" />
     <ClInclude Include="include\ConnectT2.h" />
     <ClInclude Include="include\IBusiness.h" />
     <ClInclude Include="include\MiniDump.h" />
@@ -218,7 +219,6 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadPool\worker.h" />
     <ClInclude Include="ThreadSafeQueue\job_queue.h" />
-    <ClInclude Include="common.h" />
     <ClInclude Include="errcode.h" />
     <Text Include="文档\开发计划.txt" />
   </ItemGroup>

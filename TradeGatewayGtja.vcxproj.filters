@@ -343,9 +343,6 @@
     <ClInclude Include="agc_encrypt.h">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
     </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>公共类型</Filter>
-    </ClInclude>
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h">
       <Filter>业务层\柜台系统\恒生T2</Filter>
     </ClInclude>
@@ -412,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="include\TradeGatewayGtjaDlg.h">
       <Filter>主框架</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common.h">
+      <Filter>公共类型</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
