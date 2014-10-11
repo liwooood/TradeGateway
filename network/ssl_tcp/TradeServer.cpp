@@ -190,7 +190,11 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	gatewayServer = gatewayIp + ":" + gatewayPort;
 	// 定义结束
 							
-			
+	// 开始时间
+	ptBeginTime = boost::posix_time::microsec_clock::local_time();
+	beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
+
+
 	// 分析请求
 	if (!GetSysNoAndBusiType(request, sysNo, busiType, sysVer, account, funcId, clientIp))
 	{
@@ -449,7 +453,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	}
 	else
 	{
-		gFileLog::instance().Log("恒生T2 异步模式");
+		//gFileLog::instance().Log("恒生T2 异步模式");
 
 		// 恒生T2异步模式
 		IConnect * pConn = gConnectPool.GetConnect();
@@ -459,7 +463,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		// 注意返回值和同步模式不同，同步模式返回false代表网络错误需要重试， 异步模式返回false只代表业务处理错误
 		if (!pConn->Send(request, response, status, errCode, errMsg))
 		{
-			gFileLog::instance().Log("异步模式发送失败");
+			//gFileLog::instance().Log("异步模式发送失败");
 
 			response = "1";
 			response += SOH;
@@ -485,6 +489,9 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			// 得到应答数据
 			pConn->GetResponse(response, status, errCode, errMsg);
 		}
+
+		boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
+		runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
 
 		gConnectPool.PushConnect(pConn);
 	}

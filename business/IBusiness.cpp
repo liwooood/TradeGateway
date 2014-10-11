@@ -52,12 +52,12 @@ bool IBusiness::ParseRequest(std::string& request)
 
 	reqmap.clear();
 
-	gFileLog::instance().Log("request=" + request);
+	//gFileLog::instance().Log("request=" + request);
 	boost::split(keyvalues, request, boost::is_any_of(SOH)); // 注意需要通过配置文件配置
 
 	int size = keyvalues.size();
-	std::string si = boost::lexical_cast<std::string>(size);
-	gFileLog::instance().Log("size=" + si);
+	//std::string si = boost::lexical_cast<std::string>(size);
+	//gFileLog::instance().Log("size=" + si);
 
 	for (std::vector<std::string>::iterator it = keyvalues.begin(); it != keyvalues.end(); it++)
 	{
@@ -66,7 +66,7 @@ bool IBusiness::ParseRequest(std::string& request)
 
 		if (keyvalue.empty())
 		{
-			gFileLog::instance().Log("keyvalue.empty()");
+			//gFileLog::instance().Log("keyvalue.empty()");
 
 			continue;
 		}
@@ -76,7 +76,7 @@ bool IBusiness::ParseRequest(std::string& request)
 
 		if (kv.size() < 2)
 		{
-			gFileLog::instance().Log("kv.size()");
+			//gFileLog::instance().Log("kv.size()");
 			return false;
 		}
 

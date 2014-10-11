@@ -281,6 +281,7 @@ void SSLSession::write(IMessage* resp)
 		gFileLog::instance().Log("SSLSession write exp: " + expMsg);
 	}
 }
+
 void SSLSession::handle_write_head(const boost::system::error_code& error, size_t bytes_transferred, IMessage* resp)
 {
 	if (error)

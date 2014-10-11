@@ -214,7 +214,7 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	bool bRet = true;
 	int nRet = 0;
 	
-	gFileLog::instance().Log("恒生T2 异步模式request=" + request);
+	//gFileLog::instance().Log("恒生T2 异步模式request=" + request);
 	ParseRequest(request);
 
 	// 传递funcid
@@ -228,13 +228,13 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	{
 		try
 		{
-			gFileLog::instance().Log("恒生T2 异步模式route=" + route);
+			//gFileLog::instance().Log("恒生T2 异步模式route=" + route);
 
 			nRoute = boost::lexical_cast<int>(route);
 		}
 		catch(std::exception& e)
 		{
-			gFileLog::instance().Log("恒生T2 异步模式 route异常");
+			//gFileLog::instance().Log("恒生T2 异步模式 route异常");
 
 			e.what();
 
@@ -248,13 +248,13 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	
 	try
 	{
-		gFileLog::instance().Log("恒生T2 异步模式funcid=" + funcid);
+		//gFileLog::instance().Log("恒生T2 异步模式funcid=" + funcid);
 
 		lFuncId = boost::lexical_cast<long>(funcid);
 	}
 	catch(std::exception& e)
 	{
-		gFileLog::instance().Log("恒生T2 异步模式 funcid异常");
+		//gFileLog::instance().Log("恒生T2 异步模式 funcid异常");
 
 		e.what();
 
@@ -334,7 +334,7 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 
 	if (nRet < 0)
 	{
-		gFileLog::instance().Log("恒生T2 异步模式 SendBiz");
+		//gFileLog::instance().Log("恒生T2 异步模式 SendBiz");
 
 		pack->Release();
 
@@ -348,7 +348,7 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	pack->FreeMem(pack->GetPackBuf());
 	pack->Release();
 
-	gFileLog::instance().Log("恒生T2 异步模式 发送成功");
+	//gFileLog::instance().Log("恒生T2 异步模式 发送成功");
 
 	
 FINISH:
