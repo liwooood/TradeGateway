@@ -57,7 +57,7 @@
       <CounterType>1</CounterType>
 
       <!--是否采用恒生T2异步模式-->
-      <t2_async_mode>1</t2_async_mode>
+      <t2_async_mode>0</t2_async_mode>
       
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
       <recv_timeout>10</recv_timeout>

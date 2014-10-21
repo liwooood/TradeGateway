@@ -235,6 +235,22 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	
 	if (!g_ConnectManager.GetCounterTypeAndAsyncMode(sysNo, busiType, nCounterType, asyncMode))
 	{
+		logLevel = Trade::TradeLog::ERROR_LEVEL;
+
+		errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
+		errMsg = gError::instance().GetErrMsg(PARAM_ERROR);
+
+		response = "1" + SOH + "2" + SOH;
+		response += "cssweb_code";
+		response += SOH;
+		response += "cssweb_msg";
+		response += SOH;
+		response += errCode;
+		response += SOH;
+		response += errMsg;
+		response += SOH;
+
+		goto finish;
 	}
 
 
@@ -301,7 +317,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 					counter = g_ConnectManager.GetNextCounter(sysNo, nBusiType, "0000");
 					counterIp = counter->m_sIP;
 					counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-					counterType = counter->m_nCounterType;
+					counterType = boost::lexical_cast<std::string>(counter->m_nCounterType);
 				
 					bool bRet = false;
 
@@ -383,7 +399,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType)->GetCounter();
 				counterIp = counter->m_sIP;
 				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-				counterType = counter->m_nCounterType;
+				counterType = boost::lexical_cast<std::string>(counter->m_nCounterType);
 				counterServer = counterIp + ":"+ counterPort;
 
 				bNetwork = req->GetTcpSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
@@ -394,7 +410,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType)->GetCounter();
 				counterIp = counter->m_sIP;
 				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
-				counterType = counter->m_nCounterType;
+				counterType = boost::lexical_cast<std::string>(counter->m_nCounterType);
 				counterServer = counterIp + ":"+ counterPort;
 
 				bNetwork = req->GetSslSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
