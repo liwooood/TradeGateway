@@ -16,7 +16,7 @@ public:
 
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg) = 0;
 
-	virtual void WaitResponseEvent() = 0;
+	virtual DWORD WaitResponseEvent() = 0;
 	
 
 	virtual void GetResponse(std::string& response, int& status, std::string& errCode, std::string& errMsg) = 0;

@@ -484,10 +484,33 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		else
 		{
 			// 阻塞， 等待业务层处理完成，并触发完成事件信号
-			pConn->WaitResponseEvent();
+			DWORD dwResult = pConn->WaitResponseEvent();
+			if (dwResult == WAIT_TIMEOUT)
+			{
+				status = 0;
+				errCode = "2000";
+				errMsg = "接收柜台应答超时";
 
-			// 得到应答数据
-			pConn->GetResponse(response, status, errCode, errMsg);
+				response = "1";
+				response += SOH;
+				response += "2";
+				response += SOH;
+
+				response += "cssweb_code";
+				response += SOH;
+				response += "cssweb_msg";
+				response += SOH;
+
+				response += errCode;
+				response += SOH;
+				response += errMsg;
+				response += SOH;
+			}
+			else
+			{
+				// 得到应答数据
+				pConn->GetResponse(response, status, errCode, errMsg);
+			}
 		}
 
 		boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();

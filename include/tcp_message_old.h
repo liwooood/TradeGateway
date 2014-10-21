@@ -34,10 +34,12 @@ public:
 	virtual bool DecoderMsgHeader()
 	{
 		int msgContentSize = 0 ;
+
 		memcpy(&msgContentSize, m_MsgHeader.data(), m_MsgHeader.size());
 
 		msgContentSize = ntohl(msgContentSize);
-		if (msgContentSize <= 0)
+
+		if (msgContentSize <= 0 || msgContentSize >= 4096 )
 		{
 			return false;
 		}

@@ -152,7 +152,6 @@
     <ClInclude Include="ConnectPool\BusinessSystem.h" />
     <ClInclude Include="ConnectPool\BusinessType.h" />
     <Text Include="bin_release\ChangeLog.txt" />
-    <ClInclude Include="ConnectPool\IConnect.h" />
     <ClInclude Include="ConnectPool\ConnectManager.h" />
     <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
@@ -160,10 +159,11 @@
     <ClInclude Include="include\common.h" />
     <ClInclude Include="include\ConnectT2.h" />
     <ClInclude Include="include\IBusiness.h" />
+    <ClInclude Include="include\IConnect.h" />
     <ClInclude Include="include\MiniDump.h" />
-    <ClInclude Include="include\resource.h" />
     <ClInclude Include="include\TradeGatewayGtja.h" />
     <ClInclude Include="include\TradeGatewayGtjaDlg.h" />
+    <ClInclude Include="include\worker.h" />
     <ClInclude Include="include\XML\pugiconfig.hpp" />
     <ClInclude Include="include\XML\pugixml.hpp" />
     <ClInclude Include="include\XML\rapidxml.hpp" />
@@ -217,7 +217,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="ThreadPool\worker.h" />
     <ClInclude Include="ThreadSafeQueue\job_queue.h" />
     <ClInclude Include="errcode.h" />
     <Text Include="文档\开发计划.txt" />

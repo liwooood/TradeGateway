@@ -23,6 +23,7 @@ private:
 	Counter m_Counter;
 	std::string m_sServerInfo;
 	int connectTimeout;
+	int readWriteTimeout;
 
 	CConfigInterface * lpConfig;
 	CConnectionInterface * lpConnection;
@@ -47,14 +48,9 @@ public:
 	virtual void CloseConnect();
 
 	
-	
-	
-	
-
-	
 	// ¼Ì³Ð×ÔIBusiness
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg);
-	virtual void WaitResponseEvent();
+	virtual DWORD WaitResponseEvent();
 	virtual void GetResponse(std::string& response, int& status, std::string& errCode, std::string& errMsg);
 
 };

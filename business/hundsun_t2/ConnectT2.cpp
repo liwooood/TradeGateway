@@ -24,8 +24,8 @@ ConnectT2::ConnectT2(int ConnectNo, Counter counter)
 	fmt % m_nID % m_Counter.m_sIP % m_Counter.m_nPort;
 	m_sServerInfo = fmt.str();
 
-	connectTimeout = m_Counter.m_nConnectTimeout * 1000;
-
+	connectTimeout = gConfigManager::instance().m_nConnectPoolConnectTimeout * 1000;
+	readWriteTimeout = gConfigManager::instance().m_nConnectPoolReadWriteTimeout * 1000;
 
 	// 创建连接中断事件, 手工触发，初始状态无信号
 	hCloseEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
@@ -332,6 +332,8 @@ bool ConnectT2::Send(std::string& request, std::string& response, int& status, s
 	else
 		nRet = lpConnection->SendBiz(lFuncId, pack, 1, nRoute); //  1代表异步
 
+	
+
 	if (nRet < 0)
 	{
 		//gFileLog::instance().Log("恒生T2 异步模式 SendBiz");
@@ -359,9 +361,11 @@ FINISH:
 
 
 
-void ConnectT2::WaitResponseEvent()
+DWORD ConnectT2::WaitResponseEvent()
 {
-	WaitForSingleObject(hResponseEvent, INFINITE);
+	DWORD dwResult = WaitForSingleObject(hResponseEvent, readWriteTimeout);
+
+	return dwResult;
 }
 
 

@@ -352,9 +352,6 @@
     <ClInclude Include="ThreadSafeQueue\job_queue.h">
       <Filter>线程安全Queue</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadPool\worker.h">
-      <Filter>线程池ThreadPool</Filter>
-    </ClInclude>
     <ClInclude Include="errcode.h">
       <Filter>错误信息</Filter>
     </ClInclude>
@@ -369,9 +366,6 @@
     </ClInclude>
     <ClInclude Include="business\hundsun_t2\CallbackImpl.h">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectPool\IConnect.h">
-      <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniDump.h">
       <Filter>CrashDump</Filter>
@@ -394,16 +388,12 @@
     <ClInclude Include="include\XML\rapidxml.hpp">
       <Filter>第三方库\XML\RapidXML</Filter>
     </ClInclude>
-    <ClInclude Include="include\resource.h">
-      <Filter>主框架</Filter>
-    </ClInclude>
     <ClInclude Include="include\ConnectT2.h">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClInclude>
     <ClInclude Include="include\IBusiness.h">
       <Filter>业务层\柜台系统</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="include\TradeGatewayGtja.h">
       <Filter>主框架</Filter>
     </ClInclude>
@@ -412,6 +402,15 @@
     </ClInclude>
     <ClInclude Include="include\common.h">
       <Filter>公共类型</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>主框架</Filter>
+    </ClInclude>
+    <ClInclude Include="include\worker.h">
+      <Filter>线程池ThreadPool</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IConnect.h">
+      <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
