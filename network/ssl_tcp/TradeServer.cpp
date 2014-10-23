@@ -477,9 +477,13 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 		// 发送请求
 		// 注意返回值和同步模式不同，同步模式返回false代表网络错误需要重试， 异步模式返回false只代表业务处理错误
-		if (!pConn->Send(request, response, status, errCode, errMsg))
+		if (!pConn->Send(request))
 		{
-			//gFileLog::instance().Log("异步模式发送失败");
+			T2_ASYNC_RET ret = pConn->GetSendResponse();
+			status = ret.status;
+			response = ret.response;
+			errCode = ret.errCode;
+			errMsg = ret.errMsg;
 
 			response = "1";
 			response += SOH;
@@ -495,12 +499,12 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			response += SOH;
 			response += errMsg;
 			response += SOH;
-					
 		}
 		else
 		{
 			// 阻塞， 等待业务层处理完成，并触发完成事件信号
 			DWORD dwResult = pConn->WaitResponseEvent();
+
 			if (dwResult == WAIT_TIMEOUT)
 			{
 				status = 0;
@@ -525,7 +529,11 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			else
 			{
 				// 得到应答数据
-				pConn->GetResponse(response, status, errCode, errMsg);
+				T2_ASYNC_RET ret = pConn->GetAsyncResponse();
+				status = ret.status;
+				response = ret.response;
+				errCode = ret.errCode;
+				errMsg = ret.errMsg;
 			}
 		}
 
@@ -683,7 +691,14 @@ finish:
 
 
 	// 拷贝日志消息
-	req->Log(logLevel, sysNo, sysVer, busiType, funcId, account, clientIp, request, response, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
+	std::string res = "";
+	if (response.length() > gConfigManager::instance().m_nResponseLen)
+		res = response.substr(0, gConfigManager::instance().m_nResponseLen);
+	else 
+		res = response;
+
+
+	req->Log(logLevel, sysNo, sysVer, busiType, funcId, account, clientIp, request, res, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
 	resp->log = req->log; 
 
 

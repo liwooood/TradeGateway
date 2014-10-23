@@ -120,6 +120,8 @@ void IMessage::Log(Trade::TradeLog::LogLevel logLevel, std::string sysNo, std::s
 	log.set_status(status);
 	log.set_retcode(errCode);
 	log.set_retmsg(errMsg);
+	
+	
 	log.set_response(response);
 	log.set_enc_response(""); // flash
 	

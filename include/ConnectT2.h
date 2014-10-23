@@ -34,6 +34,16 @@ private:
 	// 应答事件
 	HANDLE hResponseEvent;
 
+
+	std::string funcId; // 需要发送层传入
+	std::string request;
+	//std::string account;
+
+	int status;
+	std::string errMsg;
+	std::string errCode;
+	std::string response;
+
 private:
 	static DWORD WINAPI AutoConnect(LPVOID lpParam);
 
@@ -49,9 +59,12 @@ public:
 
 	
 	// 继承自IBusiness
+	virtual bool Send(std::string request);
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg);
+	virtual T2_ASYNC_RET GetSendResponse();
+
 	virtual DWORD WaitResponseEvent();
-	virtual void GetResponse(std::string& response, int& status, std::string& errCode, std::string& errMsg);
+	virtual T2_ASYNC_RET GetAsyncResponse();
 
 };
 #endif

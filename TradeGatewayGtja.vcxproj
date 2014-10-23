@@ -137,7 +137,6 @@
     <ClInclude Include="agc_encrypt.h" />
     <ClInclude Include="business\apexsoft\DingDian.h" />
     <ClInclude Include="business\apexsoft\TradeBusinessDingDian.h" />
-    <ClInclude Include="business\hundsun_t2\CallbackImpl.h" />
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h" />
     <ClInclude Include="business\SunGuard\AGC.h" />
@@ -156,6 +155,7 @@
     <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
     <ClInclude Include="encrypt\MyBotan.h" />
+    <ClInclude Include="include\CallbackImpl.h" />
     <ClInclude Include="include\common.h" />
     <ClInclude Include="include\ConnectT2.h" />
     <ClInclude Include="include\IBusiness.h" />

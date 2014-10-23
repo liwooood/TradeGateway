@@ -76,12 +76,15 @@ DWORD WINAPI ConnectT2::AutoConnect(LPVOID lpParam)
             {
                
                 std::string sErrMsg =  pThis->lpConnection->GetErrorMsg(ret);
+				gFileLog::instance().Log("恒生t2异步，柜台中断重连失败" + sErrMsg);
 
                 // 避免连接太过频繁，Sleep一下
                 Sleep(100);
             }
             else
             {
+				gFileLog::instance().Log("恒生t2异步，柜台中断重连成功");
+
                 // 重连成功，跳出内层循环，等待断开事件再次被激活
                 break;
             }
@@ -209,16 +212,22 @@ void ConnectT2::CloseConnect()
 }
 
 
-bool ConnectT2::Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg)
+bool ConnectT2::Send(std::string request)
 {
 	bool bRet = true;
 	int nRet = 0;
 	
-	//gFileLog::instance().Log("恒生T2 异步模式request=" + request);
+	
+	
+
 	ParseRequest(request);
 
-	// 传递funcid
-	callback.SetFuncId(funcid);
+	// 传递参数
+	this->request = request;
+	
+	funcId = funcid;
+	callback.SetRequest(request, funcId, account);
+
 
 	if (route.empty())
 	{
@@ -360,6 +369,22 @@ FINISH:
 }
 
 
+T2_ASYNC_RET ConnectT2::GetSendResponse()
+{
+	T2_ASYNC_RET ret;
+
+	ret.request = request;
+	ret.funcId = funcid;
+	ret.account = account;
+
+	ret.status = status;
+	ret.response = response;
+	ret.errCode = errCode;
+	ret.errMsg = errMsg;
+	
+
+	return ret;
+}
 
 DWORD ConnectT2::WaitResponseEvent()
 {
@@ -369,10 +394,13 @@ DWORD ConnectT2::WaitResponseEvent()
 }
 
 
-void ConnectT2::GetResponse(std::string& response, int& status, std::string& errCode, std::string& errMsg)
+T2_ASYNC_RET ConnectT2::GetAsyncResponse()
 {
-	response = callback.getResponse();
-	status = callback.getStatus();
-	errCode = callback.getErrCode();
-	errMsg = callback.getErrMsg();
+	return callback.getResponse();
+	
+}
+
+bool ConnectT2::Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg)
+{
+	return false;
 }

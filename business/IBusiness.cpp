@@ -94,7 +94,10 @@ bool IBusiness::ParseRequest(std::string& request)
 	busiType = boost::lexical_cast<int>(bt);
 
 	sysVer = reqmap["cssweb_sysVer"];
+
 	funcid = reqmap["cssweb_funcid"];
+	
+
 	route = reqmap["cssweb_route"];
 	hardinfo = reqmap["cssweb_hardinfo"];
 	note = reqmap["cssweb_note"];
@@ -102,7 +105,8 @@ bool IBusiness::ParseRequest(std::string& request)
 
 
 	branchId = reqmap["branch_no"]; // 营业部id
-	account = reqmap["client_id"]; // 客户号
+	//account = reqmap["client_id"]; // 客户号
+	account = reqmap["cssweb_account"];
 
 	return true;
 }

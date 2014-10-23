@@ -22,6 +22,10 @@ private:
 
 	// 日志和结果所需定义的变量
 	std::string funcId; // 需要发送层传入
+	std::string request;
+	std::string account;
+
+	
 	int status;
 	std::string errMsg;
 	std::string errCode;
@@ -62,12 +66,12 @@ public:
 
 	void SetCloseEvent(HANDLE hCloseEvent);
 	void SetResponseEvent(HANDLE hResEvent);
-	void SetFuncId(std::string funcid);
 
-	std::string getResponse();
-	int getStatus();
-	std::string getErrCode();
-	std::string getErrMsg();
+
+	
+	void SetRequest(std::string req, std::string fid, std::string acc);
+
+	struct hundsun_t2_async_return getResponse();
 	
 };
 #endif

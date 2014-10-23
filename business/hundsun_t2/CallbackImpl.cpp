@@ -6,6 +6,7 @@
 
 #include "FileLogManager.h"
 #include "FileLog.h"
+#include "ConfigManager.h"
 
 
 CCallbackImpl::CCallbackImpl()
@@ -13,9 +14,11 @@ CCallbackImpl::CCallbackImpl()
 	SOH = "\x01";
 }
 
-void CCallbackImpl::SetFuncId(std::string funcid)
+void CCallbackImpl::SetRequest(std::string req, std::string fid, std::string acc)
 {
-	funcId = funcid;
+	request = req;
+	funcId = fid;
+	account = acc;
 }
 
 void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend, const void *Pointer, int nResult)
@@ -214,24 +217,49 @@ void CCallbackImpl::SetResponseEvent(HANDLE responseEvent)
 	this->hResEvent = responseEvent;
 }
 
-std::string CCallbackImpl::getResponse()
+T2_ASYNC_RET CCallbackImpl::getResponse()
 {
-	return response;
-}
+	T2_ASYNC_RET ret;
 
-int CCallbackImpl::getStatus()
-{
-	return status;
-}
+	ret.request = request;
+	ret.funcId = funcId;
+	ret.account = account;
 
-std::string CCallbackImpl::getErrCode()
-{
-	return errCode;
-}
+	ret.status = status;
+	ret.response = response;
+	ret.errCode = errCode;
+	ret.errMsg = errMsg;
 
-std::string CCallbackImpl::getErrMsg()
-{
-	return errMsg;
+	// 只是用于判断请求和应答是否串了，生产环境版本必须注释
+	std::string msg = "=========请求功能号：" + funcId;
+	msg += "\n";
+
+	msg += "账号：";
+	msg += account;
+	msg += "\n";
+
+
+	msg += "异步结果：";
+
+	if (status == 1)
+	{
+		if (response.length() > gConfigManager::instance().m_nResponseLen)
+			msg += response.substr(0, gConfigManager::instance().m_nResponseLen);
+		else
+			msg += response;
+	}
+	else
+	{
+		msg += errMsg;
+	}
+	msg += "\n";
+
+	std::string logFileName = "恒生异步异常_" + account + "_" + funcId ;
+
+	gFileLog::instance().Log(msg, 0, logFileName);
+	
+
+	return ret;
 }
 
 

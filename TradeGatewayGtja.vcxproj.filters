@@ -364,9 +364,6 @@
     <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h">
       <Filter>业务层\柜台系统\恒生T2\同步</Filter>
     </ClInclude>
-    <ClInclude Include="business\hundsun_t2\CallbackImpl.h">
-      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
-    </ClInclude>
     <ClInclude Include="include\MiniDump.h">
       <Filter>CrashDump</Filter>
     </ClInclude>
@@ -411,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="include\IConnect.h">
       <Filter>业务层\柜台连接池</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CallbackImpl.h">
+      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

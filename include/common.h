@@ -35,5 +35,17 @@ typedef struct func
 }FUNCTION_DESC;
 
 
+typedef struct hundsun_t2_async_return
+{
+	std::string request;
+	std::string funcId;
+	std::string account; 
+
+	int status;
+	std::string response;
+	std::string errCode;
+	std::string errMsg;
+}T2_ASYNC_RET;
+
 
 #endif
