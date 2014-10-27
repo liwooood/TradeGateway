@@ -722,6 +722,8 @@ bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, 
 	std::vector<std::string> keyvalues;
 	boost::split(keyvalues, request, boost::is_any_of(SOH));
 
+	std::string key = "";
+	std::string value = "";
 
 	for (std::vector<std::string>::iterator it = keyvalues.begin(); it != keyvalues.end(); it++)
 	{
@@ -731,6 +733,7 @@ bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, 
 		if (keyvalue.empty())
 			break;
 
+		/*
 		std::vector<std::string> kv;
 		boost::split(kv, keyvalue, boost::is_any_of("="));
 		if (kv.size() < 2)
@@ -743,6 +746,16 @@ bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, 
 		std::string value = "";
 		if (!kv[1].empty())
 			value = kv[1];
+			*/
+		std::size_t found = keyvalue.find_first_of("=");
+		
+
+		if (found != std::string::npos)
+		{
+			key = keyvalue.substr(0, found);
+			value = keyvalue.substr(found + 1);
+			
+		}
 
 
 		if (key == "cssweb_sysNo")

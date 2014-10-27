@@ -71,6 +71,17 @@ bool IBusiness::ParseRequest(std::string& request)
 			continue;
 		}
 		
+		std::size_t found = keyvalue.find_first_of("=");
+		
+
+		if (found != std::string::npos)
+		{
+			key = keyvalue.substr(0, found);
+			value = keyvalue.substr(found + 1);
+			reqmap[key] = value;
+		}
+
+		/*
 		kv.clear();
 		boost::split(kv, keyvalue, boost::is_any_of("="));
 
@@ -82,8 +93,8 @@ bool IBusiness::ParseRequest(std::string& request)
 
 		key = kv[0];
 		value = kv[1];
-
-		reqmap[key] = value;
+		*/
+		
 		
 	}
 
