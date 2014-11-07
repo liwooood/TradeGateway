@@ -35,6 +35,7 @@ private:
 	
 	void RetNoRecordRes();
 	void GenResponse(int nErrCode, std::string sErrMsg);
+	void debugOutput();
 
 public:
 	CCallbackImpl();

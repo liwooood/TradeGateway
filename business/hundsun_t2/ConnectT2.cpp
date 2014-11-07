@@ -127,7 +127,7 @@ bool ConnectT2::CreateConnect()
 
 	for (int i=0; i<nRetry; i++)
 	{
-		nRet = lpConnection->Create(&callback);
+		nRet = lpConnection->Create2BizMsg(&callback);
 		if (nRet == 0)
 		{
 			// 成功
@@ -274,10 +274,15 @@ bool ConnectT2::Send(std::string request)
 
 
 
-	IF2Packer* pack = NewPacker(2);
-	pack->AddRef();
+	IBizMessage* lpBizMessage = NewBizMessage();
+	lpBizMessage->AddRef();
+	lpBizMessage->SetFunction(lFuncId);
+	lpBizMessage->SetPacketType(REQUEST_PACKET);
 
-	pack->BeginPack();
+	IF2Packer* lpPacker = NewPacker(2);
+	lpPacker->AddRef();
+	lpPacker->BeginPack();
+
 	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
 	{
 		std::string key = it->first;
@@ -289,7 +294,7 @@ bool ConnectT2::Send(std::string request)
 
 
 		//pack->AddField(key.c_str());
-		pack->AddField(key.c_str(), 'S', 8000);
+		lpPacker->AddField(key.c_str(), 'S', 8000);
 
 	}
 
@@ -330,24 +335,25 @@ bool ConnectT2::Send(std::string request)
 			}
 		}
 
-		pack->AddStr(value.c_str());
+		lpPacker->AddStr(value.c_str());
 
 	} // end for
 
-	pack->EndPack();
+	lpPacker->EndPack();
 
-	if (nRoute == -1)
-		nRet = lpConnection->SendBiz(lFuncId, pack, 1); //  1代表异步
-	else
-		nRet = lpConnection->SendBiz(lFuncId, pack, 1, nRoute); //  1代表异步
 
+	lpBizMessage->SetContent(lpPacker->GetPackBuf(),lpPacker->GetPackLen());
+	nRet = lpConnection->SendBizMsg(lpBizMessage, 1); //  1代表异步
 	
 
 	if (nRet < 0)
 	{
 		//gFileLog::instance().Log("恒生T2 异步模式 SendBiz");
 
-		pack->Release();
+		lpPacker->FreeMem(lpPacker->GetPackBuf());
+		lpPacker->Release();
+
+		lpBizMessage->Release();
 
 		
 		GenResponse(nRet, lpConnection->GetErrorMsg(nRet), response, status, errCode, errMsg);
@@ -356,10 +362,12 @@ bool ConnectT2::Send(std::string request)
 	}
 
 
-	pack->FreeMem(pack->GetPackBuf());
-	pack->Release();
+	lpPacker->FreeMem(lpPacker->GetPackBuf());
+	lpPacker->Release();
 
-	//gFileLog::instance().Log("恒生T2 异步模式 发送成功");
+	lpBizMessage->Release();
+
+	
 
 	
 FINISH:

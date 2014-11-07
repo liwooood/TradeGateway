@@ -163,6 +163,7 @@
     <ClInclude Include="include\MiniDump.h" />
     <ClInclude Include="include\TradeGatewayGtja.h" />
     <ClInclude Include="include\TradeGatewayGtjaDlg.h" />
+    <ClInclude Include="include\TradeServer.h" />
     <ClInclude Include="include\worker.h" />
     <ClInclude Include="include\XML\pugiconfig.hpp" />
     <ClInclude Include="include\XML\pugixml.hpp" />
@@ -202,7 +203,6 @@
     <ClInclude Include="network\ssl_tcp\SSLSession.h" />
     <ClInclude Include="network\ssl_tcp\TcpServer.h" />
     <ClInclude Include="network\ssl_tcp\TcpSession.h" />
-    <ClInclude Include="network\ssl_tcp\TradeServer.h" />
     <ClInclude Include="network\tcp\tcp_message_old.h" />
     <Text Include="network\tcp\tcp_server_old.h.txt">
       <FileType>CppHeader</FileType>

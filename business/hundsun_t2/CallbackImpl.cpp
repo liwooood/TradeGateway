@@ -23,15 +23,40 @@ void CCallbackImpl::SetRequest(std::string req, std::string fid, std::string acc
 
 void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend, const void *Pointer, int nResult)
 {
+	
+
+}
+
+void CCallbackImpl::OnReceivedBizEx(CConnectionInterface *lpConnection, int hSend, LPRET_DATA lpRetData, const void *lpUnpackerOrStr, int nResult)
+{
+	
+}
+void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSend, IBizMessage* lpMsg)
+{
+	int nResult = 0;
+
 	status = 0;
 	errCode = "";
 	errMsg = "";
 	response = "";
+	
+	nResult = lpMsg->GetErrorNo();
+
+	
 
 	if (nResult == 0)
 	{
-		IF2UnPacker *lpUnPacker = (IF2UnPacker *)Pointer;
+		
+		int nMsgLen = 0;
+		/*
+		void * lpMsgBuffer = lpMsg->GetBuff(nMsgLen);
+		IBizMessage* lpBizMessage = NewBizMessage();
+		lpBizMessage->SetBuff(lpMsgBuffer, nMsgLen);
+		*/
+		const void * lpMsgBuffer = lpMsg->GetContent(nMsgLen);
+		IF2UnPacker * lpUnPacker = NewUnPacker((void *)lpMsgBuffer, nMsgLen);
 
+		
 		
 
 		int nRows = lpUnPacker->GetRowCount();
@@ -108,33 +133,11 @@ void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend,
 		//logLevel = Trade::TradeLog::INFO_LEVEL;
 
 	}
-	else if(nResult == 1)
-	{
-		IF2UnPacker *lpUnPacker = (IF2UnPacker *)Pointer;
-		errMsg = lpUnPacker->GetStr("error_info");
-		GenResponse(boost::lexical_cast<int>(lpUnPacker->GetStr("error_no")), errMsg);
-		
-		
-		goto FINISH;
-	}
-	else if(nResult == 2)
-	{
-		errMsg = (char*)Pointer;
-		
-		GenResponse(nResult, errMsg);
-		
-		goto FINISH;
-	}
-	else if (nResult == 3)
-	{
-		GenResponse(nResult, "业务包解包失败");
-		
-		goto FINISH;
-	}
 	else
 	{
+		errMsg = lpMsg->GetErrorInfo();
 		
-		GenResponse(nResult, lpConnection->GetErrorMsg(nResult));
+		GenResponse(nResult, errMsg);
 	
 		goto FINISH;
 	}
@@ -143,7 +146,6 @@ void CCallbackImpl::OnReceivedBiz(CConnectionInterface *lpConnection, int hSend,
 FINISH:
 	// 应答处理完成，触发事件，让业务层继续处理
 	SetEvent(hResEvent);
-
 }
 
 
@@ -230,6 +232,13 @@ T2_ASYNC_RET CCallbackImpl::getResponse()
 	ret.errCode = errCode;
 	ret.errMsg = errMsg;
 
+	debugOutput();
+
+	return ret;
+}
+
+void CCallbackImpl::debugOutput()
+{
 	// 只是用于判断请求和应答是否串了，生产环境版本必须注释
 	std::string msg = "=========请求功能号：" + funcId;
 	msg += "\n";
@@ -259,9 +268,7 @@ T2_ASYNC_RET CCallbackImpl::getResponse()
 	gFileLog::instance().Log(msg, 0, logFileName);
 	
 
-	return ret;
 }
-
 
 unsigned long CCallbackImpl::QueryInterface(const char *iid, IKnown **ppv)
 {
@@ -308,10 +315,7 @@ void CCallbackImpl::Reserved2(void *a, void *b, void *c, void *d)
 {
 }
 
-void CCallbackImpl::OnReceivedBizEx(CConnectionInterface *lpConnection, int hSend, LPRET_DATA lpRetData, const void *lpUnpackerOrStr, int nResult)
-{
-	
-}
+
 
 
 int CCallbackImpl::Reserved3()
@@ -332,9 +336,5 @@ void CCallbackImpl::Reserved6()
 }
 
 void CCallbackImpl::Reserved7()
-{
-}
-
-void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSend, IBizMessage* lpMsg)
 {
 }

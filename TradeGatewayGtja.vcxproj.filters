@@ -331,9 +331,6 @@
     <ClInclude Include="business\szkingdom_win\TradeBusiness.h">
       <Filter>业务层\柜台系统\金证windows</Filter>
     </ClInclude>
-    <ClInclude Include="network\ssl_tcp\TradeServer.h">
-      <Filter>业务层</Filter>
-    </ClInclude>
     <ClInclude Include="business\szkingdom_win\Encrypt.h">
       <Filter>业务层\柜台系统\金证windows</Filter>
     </ClInclude>
@@ -411,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="include\CallbackImpl.h">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TradeServer.h">
+      <Filter>业务层</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
