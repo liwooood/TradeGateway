@@ -48,13 +48,19 @@ void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSe
 	{
 		
 		int nMsgLen = 0;
-		/*
+		
 		void * lpMsgBuffer = lpMsg->GetBuff(nMsgLen);
+
+		void * buf = malloc(nMsgLen);
+		memcpy(buf, lpMsgBuffer, nMsgLen);
+
 		IBizMessage* lpBizMessage = NewBizMessage();
-		lpBizMessage->SetBuff(lpMsgBuffer, nMsgLen);
-		*/
-		const void * lpMsgBuffer = lpMsg->GetContent(nMsgLen);
-		IF2UnPacker * lpUnPacker = NewUnPacker((void *)lpMsgBuffer, nMsgLen);
+		lpBizMessage->SetBuff(buf, nMsgLen);
+		//IF2UnPacker * lpUnPacker = NewUnPacker((void *)lpBizMessage, nMsgLen);
+
+		int nContentLen = 0;
+		const void * lpContent = lpBizMessage->GetContent(nContentLen);
+		IF2UnPacker * lpUnPacker = NewUnPacker((void *)lpContent, nContentLen);
 
 		
 		
