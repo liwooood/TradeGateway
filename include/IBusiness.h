@@ -50,6 +50,9 @@ protected:
 
 	std::map<std::string, std::string> reqmap;
 
+	std::vector<std::string> keys;
+	int num;
+
 public:
 	IBusiness(void);
 	~IBusiness(void);

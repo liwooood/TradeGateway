@@ -283,48 +283,21 @@ bool ConnectT2::Send(std::string request)
 	lpPacker->AddRef();
 	lpPacker->BeginPack();
 
-	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
+	// 设置
+	for (std::vector<std::string>::iterator it = keys.begin(); it != keys.end(); it++)
 	{
-		std::string key = it->first;
-
-		if (FilterRequestField(key))
-		{
-			continue;
-		}		
-
+		std::string key = *it;
 
 		//pack->AddField(key.c_str());
 		lpPacker->AddField(key.c_str(), 'S', 8000);
-
 	}
-
+	/*
 	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
 	{
 		std::string key = it->first;
 		std::string value = it->second;
 
-		if (FilterRequestField(key))
-		{
-			continue;
-		}		
-
-		if (key.compare("auth_key") == 0)
-		{
-			boost::algorithm::replace_all(value, "^", "=");
-			//std::string temp;
-			//temp = "auth_key=";
-			//temp += value;
-			//gFileLog::instance().Log(temp);
-		}
-
-		if (key.compare("usbkey_request_info") == 0)
-		{
-			boost::algorithm::replace_all(value, "^", "=");
-			//std::string temp;
-			//temp = "auth_key=";
-			//temp += value;
-			//gFileLog::instance().Log(temp);
-		}
+		
 
 		// 如果是南京证券
 		if (sysNo.find("njzq") != std::string::npos)
@@ -338,6 +311,44 @@ bool ConnectT2::Send(std::string request)
 		lpPacker->AddStr(value.c_str());
 
 	} // end for
+	*/
+
+	
+	// 设置value
+	for (int i=0; i<num; i++)
+	{
+
+		for (std::vector<std::string>::iterator it = keys.begin(); it != keys.end(); it++)
+		{
+			std::string key = *it;
+
+			if (i != 0)
+			{
+				key = key + "_" + boost::lexical_cast<std::string>(i);
+			}
+
+			std::string value = reqmap[key];
+			TRACE("key=");
+			TRACE(key.c_str());
+			TRACE(", value=");
+			TRACE(value.c_str());
+			TRACE("\n");
+
+			
+			// 如果是南京证券
+			if (sysNo.find("njzq") != std::string::npos)
+			{
+				if (key == "op_station")
+				{
+					value = note;
+				}
+			}
+
+			lpPacker->AddStr(value.c_str());
+			
+		}
+	}
+
 
 	lpPacker->EndPack();
 

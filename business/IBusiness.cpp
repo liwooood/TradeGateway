@@ -78,6 +78,7 @@ bool IBusiness::ParseRequest(std::string& request)
 		{
 			key = keyvalue.substr(0, found);
 			value = keyvalue.substr(found + 1);
+
 			reqmap[key] = value;
 		}
 
@@ -118,6 +119,62 @@ bool IBusiness::ParseRequest(std::string& request)
 	branchId = reqmap["branch_no"]; // 营业部id
 	//account = reqmap["client_id"]; // 客户号
 	account = reqmap["cssweb_account"];
+
+	// 得到请求数
+	std::map<std::string, std::string>::iterator itFound = reqmap.find("cssweb_num");
+	if (itFound != reqmap.end())
+	{
+		num = boost::lexical_cast<int>(itFound->second);
+	}
+	else
+	{
+		num = 1;
+	}
+
+	
+	// 提取业务key
+	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
+	{
+		key = it->first;
+		
+		// 过滤自定义参数
+		std::size_t found = key.find("cssweb_");
+		if (found != std::string::npos)
+			continue;
+
+		if (num == 1)
+		{
+			keys.push_back(key);
+		}
+		else
+		{
+			// a=data, a_1=data, a_2=data, 只提取a， 
+			bool bFound = false;
+			for (int i=1; i<num; i++)
+			{
+				std::string newkey = key + "_" + boost::lexical_cast<std::string>(i);
+				std::map<std::string, std::string>::iterator itFound = reqmap.find(newkey);
+				if (itFound != reqmap.end())
+				{
+					//TRACE("k=");
+					//TRACE(key.c_str());
+					//TRACE("\n");
+
+					bFound = true;
+					break;
+				}
+			}
+		
+			if (bFound)
+			{
+				keys.push_back(key);
+
+				//TRACE("提取key=");
+				//TRACE(key.c_str());
+				//TRACE("\n");
+			}
+		}
+	}
 
 	return true;
 }
