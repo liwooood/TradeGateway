@@ -39,19 +39,30 @@ void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSe
 	errCode = "";
 	errMsg = "";
 	response = "";
+	void * buf  = NULL;
+	std::string tmp = "";
+
+	if (lpMsg == NULL)
+	{
+		GenResponse(1000, "lpMsg is null");
+		goto FINISH;
+	}
+
+
+	
 	
 	nResult = lpMsg->GetErrorNo();
-
+	tmp = "功能号" + funcId + ", 临出输出出错码:" + boost::lexical_cast<std::string>(nResult);
+	gFileLog::instance().Log(tmp);
 	
 
 	if (nResult == 0)
 	{
-		
 		int nMsgLen = 0;
 		
 		void * lpMsgBuffer = lpMsg->GetBuff(nMsgLen);
 
-		void * buf = malloc(nMsgLen);
+		buf = malloc(nMsgLen);
 		memcpy(buf, lpMsgBuffer, nMsgLen);
 
 		IBizMessage* lpBizMessage = NewBizMessage();
@@ -150,6 +161,13 @@ void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSe
 
 
 FINISH:
+
+	if (buf != NULL)
+	{
+		free(buf);
+		buf = NULL;
+	}
+
 	// 应答处理完成，触发事件，让业务层继续处理
 	SetEvent(hResEvent);
 }

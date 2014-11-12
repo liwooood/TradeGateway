@@ -244,9 +244,6 @@
     <ClInclude Include="cache\CacheData.h">
       <Filter>缓存</Filter>
     </ClInclude>
-    <ClInclude Include="encrypt\MyBotan.h">
-      <Filter>加解密</Filter>
-    </ClInclude>
     <ClInclude Include="output\FileLog.h">
       <Filter>调试输出</Filter>
     </ClInclude>
@@ -411,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="include\TradeServer.h">
       <Filter>业务层</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MyBotan.h">
+      <Filter>加解密</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

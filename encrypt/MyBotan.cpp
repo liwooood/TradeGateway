@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "MyBotan.h"
 
 
@@ -354,7 +356,7 @@ bool CMyBotan::AESEncrypt_Base16Encoder(std::string algo, std::string key, std::
 	}
 	catch (std::exception& e)
 	{
-		e.what();
+		TRACE(e.what());
 		return false;
 	}
 	catch (...)

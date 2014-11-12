@@ -154,13 +154,13 @@
     <ClInclude Include="ConnectPool\ConnectManager.h" />
     <ClInclude Include="ConnectPool\ConnectPool.h" />
     <ClInclude Include="ConnectPool\Counter.h" />
-    <ClInclude Include="encrypt\MyBotan.h" />
     <ClInclude Include="include\CallbackImpl.h" />
     <ClInclude Include="include\common.h" />
     <ClInclude Include="include\ConnectT2.h" />
     <ClInclude Include="include\IBusiness.h" />
     <ClInclude Include="include\IConnect.h" />
     <ClInclude Include="include\MiniDump.h" />
+    <ClInclude Include="include\MyBotan.h" />
     <ClInclude Include="include\TradeGatewayGtja.h" />
     <ClInclude Include="include\TradeGatewayGtjaDlg.h" />
     <ClInclude Include="include\TradeServer.h" />

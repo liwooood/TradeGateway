@@ -162,7 +162,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	{
 		// 只有移动端需要转换字符集
 		UErrorCode errcode = U_ZERO_ERROR;
-		char dest[8192];
+		char dest[20480];
 		memset(dest, 0x00, sizeof(dest));
 		// 从utf8转成gbk
 		int ret = ucnv_convert("gbk", "utf8", dest, sizeof(dest), request_utf8.c_str(), -1, &errcode);
