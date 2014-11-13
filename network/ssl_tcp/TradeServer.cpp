@@ -167,6 +167,8 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		// ´Óutf8×ª³Égbk
 		int ret = ucnv_convert("gbk", "utf8", dest, sizeof(dest), request_utf8.c_str(), -1, &errcode);
 		request = dest;
+		//gFileLog::instance().Log(request_utf8, 0, "utf8");
+		//gFileLog::instance().Log(request, 0, "gbk");
 
 		gatewayIp = gConfigManager::instance().m_sIp;
 		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nSslPort);

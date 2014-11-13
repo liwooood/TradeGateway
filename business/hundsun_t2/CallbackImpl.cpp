@@ -51,7 +51,7 @@ void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSe
 
 	
 	
-	nResult = lpMsg->GetErrorNo();
+	nResult = lpMsg->GetReturnCode();
 	tmp = "功能号" + funcId + ", 临出输出出错码:" + boost::lexical_cast<std::string>(nResult);
 	gFileLog::instance().Log(tmp);
 	
@@ -150,13 +150,13 @@ void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSe
 		//logLevel = Trade::TradeLog::INFO_LEVEL;
 
 	}
+	else if(nResult == 1 || nResult == -1)
+	{
+		GenResponse(lpMsg->GetErrorNo(), lpMsg->GetErrorInfo());
+	}
 	else
 	{
-		errMsg = lpMsg->GetErrorInfo();
-		
-		GenResponse(nResult, errMsg);
-	
-		goto FINISH;
+		GenResponse(nResult, "柜台返回业务操作失败");
 	}
 
 
