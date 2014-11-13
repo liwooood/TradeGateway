@@ -127,6 +127,7 @@ void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSe
 				// 打印每条记录
 				for (int c = 0; c < nCols; c++)
 				{
+					
 					std::string temp = lpUnPacker->GetStrByIndex(c);
 
 					// 国泰君安一户通特殊处理
@@ -152,11 +153,33 @@ void CCallbackImpl::OnReceivedBizMsg(CConnectionInterface *lpConnection, int hSe
 	}
 	else if(nResult == 1 || nResult == -1)
 	{
+		
 		GenResponse(lpMsg->GetErrorNo(), lpMsg->GetErrorInfo());
 	}
 	else
 	{
-		GenResponse(nResult, "柜台返回业务操作失败");
+		int nMsgLen = 0;
+		
+		void * lpMsgBuffer = lpMsg->GetBuff(nMsgLen);
+
+		buf = malloc(nMsgLen);
+		memcpy(buf, lpMsgBuffer, nMsgLen);
+
+		IBizMessage* lpBizMessage = NewBizMessage();
+		lpBizMessage->SetBuff(buf, nMsgLen);
+		//IF2UnPacker * lpUnPacker = NewUnPacker((void *)lpBizMessage, nMsgLen);
+
+		int nContentLen = 0;
+		const void * lpContent = lpBizMessage->GetContent(nContentLen);
+		IF2UnPacker * lpUnPacker = NewUnPacker((void *)lpContent, nContentLen);
+
+		
+		errCode = lpUnPacker->GetStr("error_no");
+
+		errMsg = lpUnPacker->GetStr("error_info");
+		
+
+		GenResponse(boost::lexical_cast<int>(errCode), errMsg);
 	}
 
 
