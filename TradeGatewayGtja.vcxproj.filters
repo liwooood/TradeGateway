@@ -352,12 +352,6 @@
     <ClInclude Include="network\ISession.h">
       <Filter>网络层\会话层</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectPool\ConnectPool.h">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClInclude>
-    <ClInclude Include="business\hundsun_t2\TradeBusinessT2.h">
-      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
-    </ClInclude>
     <ClInclude Include="include\MiniDump.h">
       <Filter>CrashDump</Filter>
     </ClInclude>
@@ -411,6 +405,12 @@
     </ClInclude>
     <ClInclude Include="include\MyBotan.h">
       <Filter>加解密</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TradeBusinessT2.h">
+      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ConnectPool.h">
+      <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

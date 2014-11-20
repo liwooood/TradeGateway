@@ -5,6 +5,7 @@
 
 #include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/format.hpp>
 
 
 #include "TradeBusinessT2.h"
@@ -31,6 +32,21 @@ TradeBusinessT2::TradeBusinessT2()
 	lpConnection = NULL;
 }
 
+TradeBusinessT2::TradeBusinessT2(int ConnectNo, Counter counter)
+{
+	lpConnection = NULL;
+	lpConfig = NULL;
+
+	m_nID = ConnectNo;
+	m_Counter = counter;
+
+	boost::format fmt("序号%1% 柜台地址%2%:%3%");
+	fmt % m_nID % m_Counter.m_sIP % m_Counter.m_nPort;
+	m_sServerInfo = fmt.str();
+
+	connectTimeout = gConfigManager::instance().m_nConnectPoolConnectTimeout * 1000;
+	readWriteTimeout = gConfigManager::instance().m_nConnectPoolReadWriteTimeout * 1000;
+}
 
 TradeBusinessT2::~TradeBusinessT2(void)
 {
@@ -45,9 +61,9 @@ bool TradeBusinessT2::CreateConnect()
 	lpConfig = NewConfig();
 	lpConfig->AddRef();
 
-	std::string s = m_Counter->m_sIP;
+	std::string s = m_Counter.m_sIP;
 	s += ":";
-	s += boost::lexical_cast<std::string>(m_Counter->m_nPort);
+	s += boost::lexical_cast<std::string>(m_Counter.m_nPort);
 	lpConfig->SetString("t2sdk", "servers", s.c_str());
 
 	std::string license_file;
@@ -64,7 +80,7 @@ bool TradeBusinessT2::CreateConnect()
 	nRet = lpConnection->Create(NULL);
 
 		
-	nRet = lpConnection->Connect(m_Counter->m_nConnectTimeout*1000);
+	nRet = lpConnection->Connect(connectTimeout);
 
 	if (nRet != 0)
 	{
@@ -152,61 +168,50 @@ bool TradeBusinessT2::Send(std::string& request, std::string& response, int& sta
 	pack->AddRef();
 
 	pack->BeginPack();
-	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
+
+	// 设置key
+	for (std::vector<std::string>::iterator it = keys.begin(); it != keys.end(); it++)
 	{
-		std::string key = it->first;
-
-		if (FilterRequestField(key))
-		{
-			continue;
-		}		
-
+		std::string key = *it;
 
 		//pack->AddField(key.c_str());
 		pack->AddField(key.c_str(), 'S', 8000);
-
 	}
 
-	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
+	// 设置value
+	for (int i=0; i<num; i++)
 	{
-		std::string key = it->first;
-		std::string value = it->second;
 
-		if (FilterRequestField(key))
+		for (std::vector<std::string>::iterator it = keys.begin(); it != keys.end(); it++)
 		{
-			continue;
-		}		
+			std::string key = *it;
 
-		if (key.compare("auth_key") == 0)
-		{
-			boost::algorithm::replace_all(value, "^", "=");
-			//std::string temp;
-			//temp = "auth_key=";
-			//temp += value;
-			//gFileLog::instance().Log(temp);
-		}
-
-		if (key.compare("usbkey_request_info") == 0)
-		{
-			boost::algorithm::replace_all(value, "^", "=");
-			//std::string temp;
-			//temp = "auth_key=";
-			//temp += value;
-			//gFileLog::instance().Log(temp);
-		}
-
-		// 如果是南京证券
-		if (sysNo.find("njzq") != std::string::npos)
-		{
-			if (key == "op_station")
+			if (i != 0)
 			{
-				value = note;
+				key = key + "_" + boost::lexical_cast<std::string>(i);
 			}
+
+			std::string value = reqmap[key];
+			TRACE("key=");
+			TRACE(key.c_str());
+			TRACE(", value=");
+			TRACE(value.c_str());
+			TRACE("\n");
+
+			
+			// 如果是南京证券
+			if (sysNo.find("njzq") != std::string::npos)
+			{
+				if (key == "op_station")
+				{
+					value = note;
+				}
+			}
+
+			pack->AddStr(value.c_str());
+			
 		}
-
-		pack->AddStr(value.c_str());
-
-	} // end for
+	}
 
 	pack->EndPack();
 
@@ -246,7 +251,7 @@ bool TradeBusinessT2::Send(std::string& request, std::string& response, int& sta
 	//nRet = m_pConn->lpConnection->RecvBiz(nRet, &Pointer, gConfigManager::instance().m_nConnectTimeout, 0);
 	
 	
-	nRet = lpConnection->RecvBiz(nRet, &Pointer, m_Counter->m_nRecvTimeout*1000);
+	nRet = lpConnection->RecvBiz(nRet, &Pointer, m_Counter.m_nRecvTimeout*1000);
 
 
 	// 返回成功

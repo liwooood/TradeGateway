@@ -2,6 +2,7 @@
 #include "ConfigManager.h"
 #include "FileLog.h"
 #include "ConnectT2.h"
+#include "TradeBusinessT2.h"
 
 
 ConnectPool gConnectPool;
@@ -40,7 +41,9 @@ bool ConnectPool::CreateConnPool()
 		for (std::vector<Counter>::iterator pos = m_vCounter.begin(); pos != m_vCounter.end(); pos++)
 		{
 			
-			IConnect * pConn = new ConnectT2(m_nID, *pos);
+			//IConnect * pConn = new ConnectT2(m_nID, *pos);
+			IConnect * pConn = new TradeBusinessT2(m_nID, *pos);
+			
 			if (pConn->CreateConnect())
 			{
 				m_pool.push(pConn);

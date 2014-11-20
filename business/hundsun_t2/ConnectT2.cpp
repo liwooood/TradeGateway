@@ -283,7 +283,7 @@ bool ConnectT2::Send(std::string request)
 	lpPacker->AddRef();
 	lpPacker->BeginPack();
 
-	// …Ë÷√
+	// …Ë÷√key
 	for (std::vector<std::string>::iterator it = keys.begin(); it != keys.end(); it++)
 	{
 		std::string key = *it;

@@ -61,9 +61,10 @@ public:
 	// ¼Ì³Ð×ÔIBusiness
 	virtual bool Send(std::string request);
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg);
-	virtual T2_ASYNC_RET GetSendResponse();
+	
 
 	virtual DWORD WaitResponseEvent();
+	virtual T2_ASYNC_RET GetSendResponse();
 	virtual T2_ASYNC_RET GetAsyncResponse();
 
 };

@@ -475,8 +475,8 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 		// 恒生T2异步模式
 		IConnect * pConn = gConnectPool.GetConnect();
-		//if (pConn == NULL)
-
+		
+		/*
 		// 发送请求
 		// 注意返回值和同步模式不同，同步模式返回false代表网络错误需要重试， 异步模式返回false只代表业务处理错误
 		if (!pConn->Send(request))
@@ -538,9 +538,37 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				errMsg = ret.errMsg;
 			}
 		}
+		*/
+		pConn->Send(request, response, status, errCode, errMsg);
 
 		boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
 		runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
+
+		if (status == 0)
+		{
+			response = "1";
+			response += SOH;
+			response += "4";
+			response += SOH;
+
+			response += "cssweb_code";
+			response += SOH;
+			response += "cssweb_msg";
+			response += SOH;
+			response += "cssweb_gwInfo";
+			response += SOH;
+			response += "cssweb_counter";
+			response += SOH;
+
+			response += errCode;
+			response += SOH;
+			response += errMsg;
+			response += SOH;
+			response += gatewayServer;
+			response += SOH;
+			response += counterServer;
+			response += SOH;
+		}
 
 		gConnectPool.PushConnect(pConn);
 	}
