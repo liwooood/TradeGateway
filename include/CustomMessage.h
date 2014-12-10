@@ -11,9 +11,9 @@
 #include <boost/shared_ptr.hpp>
 
 #include "MsgHeader.h"
-//#include "tcpsession.h"
 
-#include "imessage.h"
+
+#include "IMessage.h"
 
 /*
 独立出来的原因，
@@ -34,17 +34,7 @@ private:
 	struct MsgHeader msgHeader;
 	
 
-	
-
-	
-	
-
 public:
-	
-	
-
-	
-	
 	bool DecoderMsgHeader();
 
 

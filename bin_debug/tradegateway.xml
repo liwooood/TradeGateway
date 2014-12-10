@@ -24,7 +24,7 @@
 
 
     <ssl_new>
-      <enable>0</enable>
+      <enable>1</enable>
       <port>5002</port>
       <workerthreadpool>16</workerthreadpool>
       <sendthreadpool>16</sendthreadpool>
@@ -133,7 +133,7 @@
   </log>
 
   <!--业务系统信息-->
-  <system>njzq.xml</system>
+  <system>gtja.xml</system>
 
   
 </config>

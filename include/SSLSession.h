@@ -14,8 +14,15 @@
 
 
 #include "job_queue.h"
+
 #include "IBusiness.h"
-//#include "network/ISession.h"
+#include "TradeBusinessT2.h"
+#include "TradeBusiness.h"
+#include "TradeBusinessDingDian.h"
+#include "DingDian.h"
+#include "SywgConnect.h"
+//#include "TCPClientSync.h"
+
 
 
 
@@ -65,11 +72,11 @@ public:
 	
 
 	// 柜台连接
-	IBusiness * counterT2;
-	IBusiness * counterSzkingdom;
-	IBusiness * counterApex;
-	IBusiness * counterAGC;
-	IBusiness * counterXinYi;
+	TradeBusinessT2 counterT2;
+	TradeBusiness counterSzkingdom;
+	TradeBusinessDingDian counterApex;
+	CSywgConnect counterAGC;
+	//CTCPClientSync counterXinYi;
 
 	// 消息类型
 	int m_msgType;
@@ -78,7 +85,7 @@ public:
 	// 关闭柜台连接
 	void CloseCounterConnect();
 	// 得到柜台连接
-	IBusiness * GetCounterConnect(int counterType);
+	IBusiness& GetCounterConnect(int counterType);
 
 	/*
 

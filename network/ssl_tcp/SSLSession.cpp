@@ -1,11 +1,10 @@
 #include "stdafx.h"
 
-#include "SSLSession.h"
+#include <boost/bind.hpp>
+#include <boost/functional/factory.hpp>
 
-#include <boost/bind.hpp>
-#include <boost/functional/factory.hpp>
-#include <boost/bind.hpp>
-#include <boost/functional/factory.hpp>
+
+#include "SSLSession.h"
 
 #include "FileLog.h"
 #include "FileLogManager.h"
@@ -13,23 +12,10 @@
 
 
 #include "imessage.h"
-
 #include "tcp_message_old.h"
 #include "ssl_message.h"
 #include "custommessage.h" 
 
-// 金证
-#include "tradebusiness.h"
-
-// 恒生
-#include "tradebusinesst2.h"
-// 顶点
-#include "TradeBusinessDingDian.h"
-#include "DingDian.h"
-// AGC
-#include "SywgConnect.h"
-// 新意
-#include "TCPClientSync.h"
 
 
 SSLSession::SSLSession(ios_type& ios, queue_type& q, int msgType, boost::asio::ssl::context& context)
@@ -42,52 +28,13 @@ SSLSession::SSLSession(ios_type& ios, queue_type& q, int msgType, boost::asio::s
 
 	m_msgType = msgType;
 
-	counterT2 = NULL;
-	counterSzkingdom = NULL;
-	counterApex = NULL;
-	counterAGC = NULL;
-	counterXinYi = NULL;
-
-	counterT2 = new TradeBusinessT2();
-	counterSzkingdom = new TradeBusiness();
-	counterApex = new TradeBusinessDingDian();
-	counterAGC = new CSywgConnect();
-	counterXinYi = new CTCPClientSync();
+	
 }
 
 SSLSession::~SSLSession()
 {
 	TRACE("~SSLSession()\n");
-
-	if (counterT2 != NULL)
-	{
-		delete counterT2;
-		counterT2 = NULL;
-	}
-
-	if (counterSzkingdom != NULL)
-	{
-		delete counterSzkingdom;
-		counterSzkingdom = NULL;
-	}
-
-	if (counterApex != NULL)
-	{
-		delete counterApex;
-		counterApex = NULL;
-	}
-
-	if (counterAGC != NULL)
-	{
-		delete counterAGC;
-		counterAGC = NULL;
-	}
-
-	if (counterXinYi != NULL)
-	{
-		delete counterXinYi;
-		counterXinYi = NULL;
-	}
+	
 }
 
 SSLSession::ios_type& SSLSession::io_service()
@@ -363,68 +310,54 @@ void SSLSession::handle_write_msg(const boost::system::error_code& error, size_t
 
 void SSLSession::CloseCounterConnect()
 {
-	if (counterT2 != NULL)
-	{
-		counterT2->CloseConnect();
+	
+	
+		counterT2.CloseConnect();
 		
-	}
-
-	if (counterSzkingdom != NULL)
-	{
-		counterSzkingdom->CloseConnect();
+	
+		counterSzkingdom.CloseConnect();
 		
-	}
-
-	if (counterApex != NULL)
-	{
-		counterApex->CloseConnect();
+	
+		counterApex.CloseConnect();
 		
-	}
-
-	if (counterAGC != NULL)
-	{
-		counterAGC->CloseConnect();
-		
-	}
-
-	if (counterXinYi != NULL)
-	{
-		counterXinYi->CloseConnect();
-		
-	}
+	
+		counterAGC.CloseConnect();
+	
+		//counterXinYi.CloseConnect();
+	
 }
 
 // 根据参数，返回对应的柜台连接
-IBusiness * SSLSession::GetCounterConnect(int counterType)
+IBusiness& SSLSession::GetCounterConnect(int counterType)
 {
 
-	IBusiness * business = NULL;
+	
 
-	switch(counterType)
+	if(counterType == COUNTER_TYPE_HS_T2)
 	{
-	case COUNTER_TYPE_HS_T2:
-		business = counterT2;
-		break;
-	case COUNTER_TYPE_HS_COM:
-		
-		break;
-	case COUNTER_TYPE_JZ_WIN:
-		business = counterSzkingdom;
-		break;
-	case COUNTER_TYPE_JZ_LINUX:
-		
-		break;
-	case COUNTER_TYPE_DINGDIAN:
-		business = counterApex;
-		break;
-	case COUNTER_TYPE_JSD:
-		business = counterAGC;
-		break;
-	case COUNTER_TYPE_XINYI:
-		business = counterXinYi;
-		break;
+	
+		return counterT2;
+	}
+	
+	else if(counterType == COUNTER_TYPE_JZ_WIN)
+	{
+	
+		return counterSzkingdom;
+	}
+	
+	else if(counterType == COUNTER_TYPE_DINGDIAN)
+	{
+		return counterApex;
+	}
+	else if(counterType == COUNTER_TYPE_JSD)
+	{
+		return counterAGC;
+	}
+	else if(counterType == COUNTER_TYPE_XINYI)
+	{
 	
 	}
-
-	return business;
+	else
+	{
+	}	
 }

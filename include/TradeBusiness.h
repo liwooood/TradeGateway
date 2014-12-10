@@ -1,10 +1,13 @@
+#ifndef _TRADE_BUSINESS_H_
+#define _TRADE_BUSINESS_H_
+
 #include <string>
 #include <map>
 
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#include "tradelog.pb.h"
+
 #include "IBusiness.h"
 
 
@@ -24,3 +27,4 @@ public:
 	void * handle; // ¹ñÌ¨Á¬½Ó¾ä±ú
 	
 };
+#endif

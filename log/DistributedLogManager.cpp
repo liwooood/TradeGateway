@@ -1,4 +1,5 @@
-// xml
+#include "stdafx.h"
+
 #include "xml\rapidxml.hpp"
 #include "xml\rapidxml_utils.hpp"
 

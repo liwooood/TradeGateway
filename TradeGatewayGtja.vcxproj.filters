@@ -233,6 +233,9 @@
     <Filter Include="内存泄漏vld">
       <UniqueIdentifier>{f2585c0a-32a4-4a51-82c2-127918099a17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="监控">
+      <UniqueIdentifier>{6720bc6f-67f6-4d93-958d-9ea76b49e154}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -268,9 +271,6 @@
     <ClInclude Include="business\SunGuard\sywg.h">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
     </ClInclude>
-    <ClInclude Include="business\SunGuard\SywgConnect.h">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
-    </ClInclude>
     <ClInclude Include="ConnectPool\Branch.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
@@ -279,9 +279,6 @@
     </ClInclude>
     <ClInclude Include="network\tcp\tcp_message_old.h">
       <Filter>网络层\网络消息\Tcp Old</Filter>
-    </ClInclude>
-    <ClInclude Include="network\IMessage.h">
-      <Filter>网络层\网络消息</Filter>
     </ClInclude>
     <ClInclude Include="log\FileLogManager.h">
       <Filter>日志\文件日志</Filter>
@@ -295,23 +292,11 @@
     <ClInclude Include="log\DistributedLogManager.h">
       <Filter>日志\分布式日志</Filter>
     </ClInclude>
-    <ClInclude Include="business\xinyi\TCPClientSync.h">
-      <Filter>业务层\柜台系统\新意</Filter>
-    </ClInclude>
     <ClInclude Include="log\tradelog.pb.h">
       <Filter>日志\日志消息</Filter>
     </ClInclude>
     <ClInclude Include="network\ssl\pkgheader.pb.h">
       <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="network\ssl_tcp\CustomMessage.h">
-      <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
-    </ClInclude>
-    <ClInclude Include="network\ssl_tcp\MsgHeader.h">
-      <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
-    </ClInclude>
-    <ClInclude Include="network\ssl_tcp\SSLSession.h">
-      <Filter>网络层\会话层\SSL</Filter>
     </ClInclude>
     <ClInclude Include="network\ssl_tcp\TcpSession.h">
       <Filter>网络层\会话层\Tcp</Filter>
@@ -348,9 +333,6 @@
     </ClInclude>
     <ClInclude Include="errcode.h">
       <Filter>错误信息</Filter>
-    </ClInclude>
-    <ClInclude Include="network\ISession.h">
-      <Filter>网络层\会话层</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniDump.h">
       <Filter>CrashDump</Filter>
@@ -411,6 +393,24 @@
     </ClInclude>
     <ClInclude Include="include\ConnectPool.h">
       <Filter>业务层\柜台连接池</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SSLSession.h">
+      <Filter>网络层\会话层\SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CustomMessage.h">
+      <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MsgHeader.h">
+      <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IMessage.h">
+      <Filter>网络层\网络消息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SywgConnect.h">
+      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ISession.h">
+      <Filter>网络层\会话层</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -476,9 +476,6 @@
     </ClCompile>
     <ClCompile Include="log\DistributedLogManager.cpp">
       <Filter>日志\分布式日志</Filter>
-    </ClCompile>
-    <ClCompile Include="business\xinyi\TCPClientSync.cpp">
-      <Filter>业务层\柜台系统\新意</Filter>
     </ClCompile>
     <ClCompile Include="log\tradelog.pb.cc">
       <Filter>日志\日志消息</Filter>

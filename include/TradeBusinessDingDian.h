@@ -1,3 +1,6 @@
+#ifndef _TRADE_BUSINESS_DINGDIAN_H_
+#define _TRADE_BUSINESS_DINGDIAN_H_
+
 #include <string>
 #include <map>
 
@@ -24,3 +27,4 @@ private:
 	long m_hHandle;
 	void GetMacAndDiskID(std::string hardinfo, std::string& mac, std::string& diskid);
 };
+#endif

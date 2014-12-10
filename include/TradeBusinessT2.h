@@ -1,3 +1,6 @@
+#ifndef _TRADE_BUSINESS_T2_H_
+#define _TRADE_BUSINESS_T2_H_
+
 #include <string>
 #include <map>
 
@@ -26,7 +29,7 @@ private:
 public:
 	TradeBusinessT2();
 	TradeBusinessT2(int ConnectNo, Counter counter);
-	~TradeBusinessT2(void);
+	
 
 	virtual bool CreateConnect();
 	virtual void CloseConnect();
@@ -60,3 +63,4 @@ public:
 		return ret;
 	};
 };
+#endif

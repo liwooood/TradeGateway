@@ -9,6 +9,9 @@
 // boost
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
+
 
 #include "common.h"
 #include "tradelog.pb.h"
@@ -55,7 +58,7 @@ protected:
 
 public:
 	IBusiness(void);
-	~IBusiness(void);
+	
 
 	
 

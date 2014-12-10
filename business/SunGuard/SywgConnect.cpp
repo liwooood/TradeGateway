@@ -134,8 +134,11 @@ bool CSywgConnect::CreateConnect()
 // OK
 void CSywgConnect::CloseConnect()
 {
-	closesocket(sockfd);
-	sockfd = INVALID_SOCKET;
+	if (sockfd != INVALID_SOCKET)
+	{
+		closesocket(sockfd);
+		sockfd = INVALID_SOCKET;
+	}
 	
 	m_bConnected = false;
 }

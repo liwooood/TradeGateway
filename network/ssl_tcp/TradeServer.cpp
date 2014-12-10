@@ -12,6 +12,8 @@
 #include <boost/interprocess/file_mapping.hpp>
 #include <boost/interprocess/mapped_region.hpp>
 #include <boost/functional/factory.hpp>
+#include <boost/range/iterator_range.hpp>
+#include <boost/algorithm/string.hpp>
 //压缩
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
@@ -21,6 +23,7 @@
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/zlib.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>
+
 
 // ICU
 #include <unicode/putil.h>
@@ -43,7 +46,7 @@
 // AGC
 #include "SywgConnect.h"
 // 新意
-#include "TCPClientSync.h"
+//#include "TCPClientSync.h"
 
 
 
@@ -65,7 +68,7 @@
 #include "custommessage.h"
 
 #include "ConnectPool.h"
-
+#include "ConnectT2.h"
 
 
 TradeServer::TradeServer(int msgType)
@@ -259,7 +262,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	if (asyncMode == 0)
 	{
 		//可以用以下语句代替冗长的写法
-		IBusiness * business = req->GetTcpSession()->GetCounterConnect(nCounterType);
+		//IBusiness& business = req->GetSslSession()->GetCounterConnect(nCounterType);
 
 	
 		// 得到配置的柜台服务器数
@@ -295,10 +298,10 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				bool bCounterConnected = false;
 
 				if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
-					bCounterConnected = req->GetTcpSession()->GetCounterConnect(nCounterType)->IsConnected();
+					bCounterConnected = req->GetTcpSession()->GetCounterConnect(nCounterType).IsConnected();
 
 				if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
-					bCounterConnected = req->GetSslSession()->GetCounterConnect(nCounterType)->IsConnected();
+					bCounterConnected = req->GetSslSession()->GetCounterConnect(nCounterType).IsConnected();
 			
 				// 是否已建立连接
 				if (bCounterConnected)
@@ -325,14 +328,14 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 					if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
 					{
-						req->GetTcpSession()->GetCounterConnect(nCounterType)->SetCounter(counter);
-						bRet = req->GetTcpSession()->GetCounterConnect(nCounterType)->CreateConnect();
+						req->GetTcpSession()->GetCounterConnect(nCounterType).SetCounter(counter);
+						bRet = req->GetTcpSession()->GetCounterConnect(nCounterType).CreateConnect();
 					}
 
 					if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
 					{
-						req->GetSslSession()->GetCounterConnect(nCounterType)->SetCounter(counter);
-						bRet = req->GetSslSession()->GetCounterConnect(nCounterType)->CreateConnect();
+						req->GetSslSession()->GetCounterConnect(nCounterType).SetCounter(counter);
+						bRet = req->GetSslSession()->GetCounterConnect(nCounterType).CreateConnect();
 					}
 
 				
@@ -398,24 +401,24 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			bool bNetwork = false;
 			if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
 			{
-				Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType)->GetCounter();
+				Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType).GetCounter();
 				counterIp = counter->m_sIP;
 				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
 				counterType = boost::lexical_cast<std::string>(counter->m_nCounterType);
 				counterServer = counterIp + ":"+ counterPort;
 
-				bNetwork = req->GetTcpSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
+				bNetwork = req->GetTcpSession()->GetCounterConnect(nCounterType).Send(request, response, status, errCode, errMsg);
 			}
 
 			if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
 			{
-				Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType)->GetCounter();
+				Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType).GetCounter();
 				counterIp = counter->m_sIP;
 				counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
 				counterType = boost::lexical_cast<std::string>(counter->m_nCounterType);
 				counterServer = counterIp + ":"+ counterPort;
 
-				bNetwork = req->GetSslSession()->GetCounterConnect(nCounterType)->Send(request, response, status, errCode, errMsg);
+				bNetwork = req->GetSslSession()->GetCounterConnect(nCounterType).Send(request, response, status, errCode, errMsg);
 			}
 
 			if (!bNetwork)
@@ -475,7 +478,10 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 		// 恒生T2异步模式
 		IConnect * pConn = gConnectPool.GetConnect();
-		
+
+		//Counter counter;
+		//IConnect * pConn = new TradeBusinessT2(0, counter);
+
 		/*
 		// 发送请求
 		// 注意返回值和同步模式不同，同步模式返回false代表网络错误需要重试， 异步模式返回false只代表业务处理错误

@@ -15,79 +15,23 @@
 
 
 #include "imessage.h"
-
 #include "tcp_message_old.h"
 #include "ssl_message.h"
 #include "custommessage.h" 
 
 
-// 金证
-#include "tradebusiness.h"
-
-// 恒生
-#include "tradebusinesst2.h"
-// 顶点
-#include "TradeBusinessDingDian.h"
-#include "DingDian.h"
-// AGC
-#include "SywgConnect.h"
-// 新意
-#include "TCPClientSync.h"
 
 TcpSession::TcpSession( ios_type& ios, queue_type& q, int msgType):
 	socket_(ios), 
 	strand_(ios), 
 	queue_(q)
 {
-	
 	m_msgType = msgType;
-
-	counterT2 = NULL;
-	counterSzkingdom = NULL;
-	counterApex = NULL;
-	counterAGC = NULL;
-	counterXinYi = NULL;
-
-	counterT2 = new TradeBusinessT2();
-	counterSzkingdom = new TradeBusiness();
-	counterApex = new TradeBusinessDingDian();
-	counterAGC = new CSywgConnect();
-	counterXinYi = new CTCPClientSync();
 }
-
 TcpSession::~TcpSession()
 {
 	TRACE("~TcpSession()\n");
-
-	if (counterT2 != NULL)
-	{
-		delete counterT2;
-		counterT2 = NULL;
-	}
-
-	if (counterSzkingdom != NULL)
-	{
-		delete counterSzkingdom;
-		counterSzkingdom = NULL;
-	}
-
-	if (counterApex != NULL)
-	{
-		delete counterApex;
-		counterApex = NULL;
-	}
-
-	if (counterAGC != NULL)
-	{
-		delete counterAGC;
-		counterAGC = NULL;
-	}
-
-	if (counterXinYi != NULL)
-	{
-		delete counterXinYi;
-		counterXinYi = NULL;
-	}
+	
 }
 
 
@@ -343,68 +287,50 @@ void TcpSession::handle_write_msg(const boost::system::error_code& error, size_t
 
 void TcpSession::CloseCounterConnect()
 {
-	if (counterT2 != NULL)
-	{
-		counterT2->CloseConnect();
+	counterT2.CloseConnect();
 		
-	}
-
-	if (counterSzkingdom != NULL)
-	{
-		counterSzkingdom->CloseConnect();
+	
+		counterSzkingdom.CloseConnect();
 		
-	}
-
-	if (counterApex != NULL)
-	{
-		counterApex->CloseConnect();
+	
+		counterApex.CloseConnect();
 		
-	}
-
-	if (counterAGC != NULL)
-	{
-		counterAGC->CloseConnect();
-		
-	}
-
-	if (counterXinYi != NULL)
-	{
-		counterXinYi->CloseConnect();
-		
-	}
+	
+		counterAGC.CloseConnect();
+	
+		//counterXinYi.CloseConnect();
 }
 
 // 根据参数，返回对应的柜台连接
-IBusiness * TcpSession::GetCounterConnect(int counterType)
+IBusiness& TcpSession::GetCounterConnect(int counterType)
 {
+	
 
-	IBusiness * business = NULL;
-
-	switch(counterType)
+	if(counterType == COUNTER_TYPE_HS_T2)
 	{
-	case COUNTER_TYPE_HS_T2:
-		business = counterT2;
-		break;
-	case COUNTER_TYPE_HS_COM:
-		
-		break;
-	case COUNTER_TYPE_JZ_WIN:
-		business = counterSzkingdom;
-		break;
-	case COUNTER_TYPE_JZ_LINUX:
-		
-		break;
-	case COUNTER_TYPE_DINGDIAN:
-		business = counterApex;
-		break;
-	case COUNTER_TYPE_JSD:
-		business = counterAGC;
-		break;
-	case COUNTER_TYPE_XINYI:
-		business = counterXinYi;
-		break;
+	
+		return counterT2;
+	}
+	
+	else if(counterType == COUNTER_TYPE_JZ_WIN)
+	{
+	
+		return counterSzkingdom;
+	}
+	
+	else if(counterType == COUNTER_TYPE_DINGDIAN)
+	{
+		return counterApex;
+	}
+	else if(counterType == COUNTER_TYPE_JSD)
+	{
+		return counterAGC;
+	}
+	else if(counterType == COUNTER_TYPE_XINYI)
+	{
 	
 	}
-
-	return business;
+	else
+	{
+	}	
 }

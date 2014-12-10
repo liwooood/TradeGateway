@@ -686,6 +686,7 @@ void TradeBusinessDingDian::CloseConnect()
 	if (m_hHandle != -1)
 	{
 		Fix_Close(m_hHandle);
+		m_hHandle = -1;
 	}
 }
 

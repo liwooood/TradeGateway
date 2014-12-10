@@ -48,10 +48,6 @@ TradeBusinessT2::TradeBusinessT2(int ConnectNo, Counter counter)
 	readWriteTimeout = gConfigManager::instance().m_nConnectPoolReadWriteTimeout * 1000;
 }
 
-TradeBusinessT2::~TradeBusinessT2(void)
-{
-	CloseConnect();
-}
 
 
 bool TradeBusinessT2::CreateConnect()
@@ -179,6 +175,12 @@ bool TradeBusinessT2::Send(std::string& request, std::string& response, int& sta
 	}
 
 	// 设置value
+	if (num > 1)
+	{
+		std::string sNum = "num=" + boost::lexical_cast<std::string>(num) + request;
+		gFileLog::instance().Log(sNum, 0, "num.log");
+	}
+
 	for (int i=0; i<num; i++)
 	{
 
@@ -220,7 +222,11 @@ bool TradeBusinessT2::Send(std::string& request, std::string& response, int& sta
 	
 	
 	//nRet = m_pConn->lpConnection->SendBiz(boost::lexical_cast<int>(funcid), pack, 0, boost::lexical_cast<int>(system)); //  同步
-
+	/*
+	GenResponse(0, "临时退出", response, status, errCode, errMsg);
+		bRet = true;
+		goto FINISH;
+		*/
 
 	if (nRoute == -1)
 		nRet = lpConnection->SendBiz(lFuncId, pack); //  同步

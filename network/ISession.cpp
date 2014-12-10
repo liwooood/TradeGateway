@@ -14,7 +14,7 @@
 // AGC
 #include "SywgConnect.h"
 // 新意
-#include "TCPClientSync.h"
+//#include "TCPClientSync.h"
 
 
 ISession::ISession(void)
@@ -29,7 +29,7 @@ ISession::ISession(void)
 	counterSzkingdom = new TradeBusiness();
 	counterApex = new TradeBusinessDingDian();
 	counterAGC = new CSywgConnect();
-	counterXinYi = new CTCPClientSync();
+//	counterXinYi = new CTCPClientSync();
 }
 
 
@@ -99,7 +99,7 @@ void ISession::CloseCounterConnect()
 		
 	}
 }
-
+/*
 // 根据参数，返回对应的柜台连接
 IBusiness * ISession::GetCounterConnect(int counterType)
 {
@@ -134,3 +134,4 @@ IBusiness * ISession::GetCounterConnect(int counterType)
 
 	return business;
 }
+*/

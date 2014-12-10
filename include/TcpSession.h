@@ -99,7 +99,7 @@ public:
 	// 关闭柜台连接
 	void CloseCounterConnect();
 	// 得到柜台连接
-	IBusiness * GetCounterConnect(int counterType);
+	IBusiness& GetCounterConnect(int counterType);
 
 	/*
 

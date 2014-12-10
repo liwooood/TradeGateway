@@ -315,6 +315,12 @@ bool ConnectT2::Send(std::string request)
 
 	
 	// ÉèÖÃvalue
+	if (num > 1)
+	{
+		std::string sNum = "num=" + boost::lexical_cast<std::string>(num) + request;
+		gFileLog::instance().Log(sNum, 0, "num.log");
+	}
+
 	for (int i=0; i<num; i++)
 	{
 
