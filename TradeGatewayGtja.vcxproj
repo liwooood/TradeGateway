@@ -169,6 +169,7 @@
     <ClInclude Include="include\ssl_message.h" />
     <ClInclude Include="include\SywgConnect.h" />
     <ClInclude Include="include\TcpServer.h" />
+    <ClInclude Include="include\TcpSession.h" />
     <ClInclude Include="include\tcp_message_old.h" />
     <ClInclude Include="include\TradeBusinessT2.h" />
     <ClInclude Include="include\TradeGatewayGtja.h" />
@@ -203,7 +204,6 @@
     <Text Include="network\ssl\trade_server_ssl.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
-    <ClInclude Include="network\ssl_tcp\TcpSession.h" />
     <Text Include="network\tcp\tcp_server_old.h.txt">
       <FileType>CppHeader</FileType>
     </Text>

@@ -1,9 +1,6 @@
 #ifndef _TCP_SESSION_H_
 #define _TCP_SESSION_H_
 
-
-
-
 #include <iostream>
 #include <string>
 
@@ -14,15 +11,19 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/pool/object_pool.hpp>
 
-#include "MsgHeader.h"
-//#include "network/CustomMessage.h"
+
 #include "job_queue.h"
 
-
-
-
-#include "TcpSession.h"
 #include "IBusiness.h"
+#include "TradeBusinessT2.h"
+#include "TradeBusiness.h"
+#include "TradeBusinessDingDian.h"
+#include "DingDian.h"
+#include "SywgConnect.h"
+//#include "TCPClientSync.h"
+
+class IMessage;
+
 
 
 /*
@@ -31,9 +32,6 @@ http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/example/cpp03/ssl/serve
 
 http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/example/cpp03/http/server2/connection.hpp
 */
-
-class IMessage;
-
 class TcpSession : public boost::enable_shared_from_this<TcpSession>
 {
 public:
@@ -86,11 +84,11 @@ public:
 	// 建立线程，发送心跳消息，调用业务连接的心跳自定义实现方法，保持活动
 
 	// 柜台连接
-	IBusiness * counterT2;
-	IBusiness * counterSzkingdom;
-	IBusiness * counterApex;
-	IBusiness * counterAGC;
-	IBusiness * counterXinYi;
+	TradeBusinessT2 counterT2;
+	TradeBusiness counterSzkingdom;
+	TradeBusinessDingDian counterApex;
+	CSywgConnect counterAGC;
+	//CTCPClientSync counterXinYi;
 
 	// 消息类型
 	int m_msgType;

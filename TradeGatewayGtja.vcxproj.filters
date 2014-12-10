@@ -292,9 +292,6 @@
     <ClInclude Include="network\ssl\pkgheader.pb.h">
       <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="network\ssl_tcp\TcpSession.h">
-      <Filter>网络层\会话层\Tcp</Filter>
-    </ClInclude>
     <ClInclude Include="business\szkingdom_win\TradeBusiness.h">
       <Filter>业务层\柜台系统\金证windows</Filter>
     </ClInclude>
@@ -411,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="include\SSLServer.h">
       <Filter>网络层\网络服务\SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TcpSession.h">
+      <Filter>网络层\会话层\Tcp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
