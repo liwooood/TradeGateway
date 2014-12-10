@@ -3,15 +3,13 @@
 #include <boost/bind.hpp>
 #include <boost/functional/factory.hpp>
 
+
+
 #include "TcpSession.h"
 
-
-
 #include "FileLog.h"
-
 #include "FileLogManager.h"
 #include "DistributedLogManager.h"
-
 
 
 #include "imessage.h"

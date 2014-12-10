@@ -155,15 +155,21 @@
     <ClInclude Include="include\ConnectPool.h" />
     <ClInclude Include="include\ConnectT2.h" />
     <ClInclude Include="include\CustomMessage.h" />
+    <ClInclude Include="include\errcode.h" />
     <ClInclude Include="include\IBusiness.h" />
     <ClInclude Include="include\IConnect.h" />
     <ClInclude Include="include\IMessage.h" />
+    <ClInclude Include="include\io_service_pool.h" />
     <ClInclude Include="include\ISession.h" />
     <ClInclude Include="include\MiniDump.h" />
     <ClInclude Include="include\MsgHeader.h" />
     <ClInclude Include="include\MyBotan.h" />
+    <ClInclude Include="include\SSLServer.h" />
     <ClInclude Include="include\SSLSession.h" />
+    <ClInclude Include="include\ssl_message.h" />
     <ClInclude Include="include\SywgConnect.h" />
+    <ClInclude Include="include\TcpServer.h" />
+    <ClInclude Include="include\tcp_message_old.h" />
     <ClInclude Include="include\TradeBusinessT2.h" />
     <ClInclude Include="include\TradeGatewayGtja.h" />
     <ClInclude Include="include\TradeGatewayGtjaDlg.h" />
@@ -187,9 +193,7 @@
     <Text Include="network\http\trade_server_http.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
-    <ClInclude Include="network\io_service_pool.h" />
     <ClInclude Include="network\ssl\pkgheader.pb.h" />
-    <ClInclude Include="network\ssl\ssl_message.h" />
     <Text Include="network\ssl\ssl_server.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
@@ -199,10 +203,7 @@
     <Text Include="network\ssl\trade_server_ssl.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
-    <ClInclude Include="network\ssl_tcp\SSLServer.h" />
-    <ClInclude Include="network\ssl_tcp\TcpServer.h" />
     <ClInclude Include="network\ssl_tcp\TcpSession.h" />
-    <ClInclude Include="network\tcp\tcp_message_old.h" />
     <Text Include="network\tcp\tcp_server_old.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
@@ -217,7 +218,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadSafeQueue\job_queue.h" />
-    <ClInclude Include="errcode.h" />
     <Text Include="文档\开发计划.txt" />
   </ItemGroup>
   <ItemGroup>

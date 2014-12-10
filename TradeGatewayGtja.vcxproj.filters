@@ -274,12 +274,6 @@
     <ClInclude Include="ConnectPool\Branch.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
-    <ClInclude Include="network\ssl\ssl_message.h">
-      <Filter>网络层\网络消息\SSL PB</Filter>
-    </ClInclude>
-    <ClInclude Include="network\tcp\tcp_message_old.h">
-      <Filter>网络层\网络消息\Tcp Old</Filter>
-    </ClInclude>
     <ClInclude Include="log\FileLogManager.h">
       <Filter>日志\文件日志</Filter>
     </ClInclude>
@@ -301,15 +295,6 @@
     <ClInclude Include="network\ssl_tcp\TcpSession.h">
       <Filter>网络层\会话层\Tcp</Filter>
     </ClInclude>
-    <ClInclude Include="network\ssl_tcp\SSLServer.h">
-      <Filter>网络层\网络服务\SSL</Filter>
-    </ClInclude>
-    <ClInclude Include="network\ssl_tcp\TcpServer.h">
-      <Filter>网络层\网络服务\TCP</Filter>
-    </ClInclude>
-    <ClInclude Include="network\io_service_pool.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
     <ClInclude Include="business\szkingdom_win\TradeBusiness.h">
       <Filter>业务层\柜台系统\金证windows</Filter>
     </ClInclude>
@@ -330,9 +315,6 @@
     </ClInclude>
     <ClInclude Include="ThreadSafeQueue\job_queue.h">
       <Filter>线程安全Queue</Filter>
-    </ClInclude>
-    <ClInclude Include="errcode.h">
-      <Filter>错误信息</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniDump.h">
       <Filter>CrashDump</Filter>
@@ -411,6 +393,24 @@
     </ClInclude>
     <ClInclude Include="include\ISession.h">
       <Filter>网络层\会话层</Filter>
+    </ClInclude>
+    <ClInclude Include="include\errcode.h">
+      <Filter>错误信息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tcp_message_old.h">
+      <Filter>网络层\网络消息\Tcp Old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ssl_message.h">
+      <Filter>网络层\网络消息\SSL PB</Filter>
+    </ClInclude>
+    <ClInclude Include="include\io_service_pool.h">
+      <Filter>网络层</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TcpServer.h">
+      <Filter>网络层\网络服务\TCP</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SSLServer.h">
+      <Filter>网络层\网络服务\SSL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

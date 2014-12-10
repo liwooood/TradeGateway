@@ -1,5 +1,5 @@
-#ifndef _TCP_SESSION_
-#define _TCP_SESSION_
+#ifndef _TCP_SESSION_H_
+#define _TCP_SESSION_H_
 
 #include <iostream>
 #include <string>
@@ -11,7 +11,7 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/pool/object_pool.hpp>
 
-#include "MsgHeader.h"
+
 #include "job_queue.h"
 
 #include "IBusiness.h"
