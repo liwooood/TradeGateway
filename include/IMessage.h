@@ -1,16 +1,16 @@
-#ifndef _IMESSAGE_H_
-#define _IMESSAGE_H_
+#ifndef IMESSAGE_H
+#define IMESSAGE_H
 
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 
-#include "tradelog.pb.h"
+
 
 #include "sslsession.h"
 #include "tcpsession.h"
-
+#include "tradelog.pb.h"
 
 
 #define MSG_TYPE_HTTP 0

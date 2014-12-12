@@ -6,8 +6,8 @@
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/thread/detail/singleton.hpp>
 
-#include "job_queue.h"
-#include "worker.h"
+#include "QueueThreadSafe.h"
+#include "WorkerThreadPool.h"
 
 #include "tradelog.pb.h"
 
@@ -20,8 +20,8 @@ public:
 	DistributedLogManager(void);
 	~DistributedLogManager(void);
 
-	typedef job_queue<Trade::TradeLog> kafka_queue_type;
-	typedef worker<kafka_queue_type> kafka_worker_type;
+	typedef QueueThreadSafe<Trade::TradeLog> kafka_queue_type;
+	typedef WorkerThreadPool<kafka_queue_type> kafka_worker_type;
 
 	kafka_queue_type kafka_q_;
 	kafka_worker_type kafka_worker_;

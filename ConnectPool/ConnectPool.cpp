@@ -2,7 +2,7 @@
 #include "ConfigManager.h"
 #include "FileLog.h"
 #include "ConnectT2.h"
-#include "TradeBusinessT2.h"
+#include "TradeBusinessHS.h"
 
 
 ConnectPool gConnectPool;
@@ -42,7 +42,7 @@ bool ConnectPool::CreateConnPool()
 		{
 			
 			//IConnect * pConn = new ConnectT2(m_nID, *pos);
-			IConnect * pConn = new TradeBusinessT2(m_nID, *pos);
+			IConnect * pConn = new TradeBusinessHS(m_nID, *pos);
 			
 			if (pConn->CreateConnect())
 			{
@@ -60,7 +60,7 @@ bool ConnectPool::CreateConnPool()
 
 	
 
-	if (m_pool.queue_.size() != totalConnCount)
+	if (m_pool.queue.size() != totalConnCount)
 	{
 		std::string msg = "建立连接池失败";
 		gFileLog::instance().Log(msg);
@@ -184,12 +184,12 @@ void ConnectPool::PushConnect(IConnect* pConn)
 	std::string msg = "释放连接, " + pConn->GetConnectInfo();
 	gFileLog::instance().Log(msg);
 
-	msg = "释放连接: 归还前大小" + boost::lexical_cast<std::string>(m_pool.queue_.size());
+	msg = "释放连接: 归还前大小" + boost::lexical_cast<std::string>(m_pool.queue.size());
 	gFileLog::instance().Log(msg);
 
 	m_pool.push(pConn);
 
-	msg = "释放连接: 归还后大小" + boost::lexical_cast<std::string>(m_pool.queue_.size());
+	msg = "释放连接: 归还后大小" + boost::lexical_cast<std::string>(m_pool.queue.size());
 	gFileLog::instance().Log(msg);
 }
 
@@ -205,7 +205,7 @@ void ConnectPool::CloseConnPool()
 		m_pool.stop();
 
 	
-		for (std::deque<IConnect*>::iterator pos = m_pool.queue_.begin(); pos != m_pool.queue_.end(); pos++)
+		for (std::deque<IConnect*>::iterator pos = m_pool.queue.begin(); pos != m_pool.queue.end(); pos++)
 		{
 			IConnect * pConn = *pos;
 

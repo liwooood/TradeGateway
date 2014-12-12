@@ -16,7 +16,7 @@
     <!--java 4字节消息头， 需要淘汰-->
     <tcp>
       <enable>1</enable>
-      <port>9001</port>
+      <port>5001</port>
       <workerthreadpool>16</workerthreadpool>
       <sendthreadpool>16</sendthreadpool>
     </tcp>

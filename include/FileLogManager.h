@@ -9,8 +9,8 @@
 #include <boost/thread/detail/singleton.hpp>
 
 
-#include "job_queue.h"
-#include "worker.h"
+#include "QueueThreadSafe.h"
+#include "WorkerThreadPool.h"
 #include "tradelog.pb.h"
 #include "common.h"
 
@@ -23,8 +23,8 @@
 class FileLogManager
 {
 private:
-	typedef job_queue<Trade::TradeLog> file_queue_type;
-	typedef worker<file_queue_type> file_worker_type;
+	typedef QueueThreadSafe<Trade::TradeLog> file_queue_type;
+	typedef WorkerThreadPool<file_queue_type> file_worker_type;
 
 	file_queue_type file_q_;
 	file_worker_type file_worker_;

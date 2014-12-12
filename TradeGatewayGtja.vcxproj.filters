@@ -233,8 +233,17 @@
     <Filter Include="内存泄漏vld">
       <UniqueIdentifier>{f2585c0a-32a4-4a51-82c2-127918099a17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="监控">
+    <Filter Include="会话管理">
+      <UniqueIdentifier>{9587df73-17e6-4f1f-8f26-3adaaa0931a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="嵌入式数据库">
+      <UniqueIdentifier>{11944356-1891-48bf-a5c4-5d38865efa7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="安全控制">
       <UniqueIdentifier>{6720bc6f-67f6-4d93-958d-9ea76b49e154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="线程安全Queue\无锁队列">
+      <UniqueIdentifier>{53dc434d-7573-4295-94ed-6fcaa96e4bdb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -249,9 +258,6 @@
     </ClInclude>
     <ClInclude Include="output\FileLog.h">
       <Filter>调试输出</Filter>
-    </ClInclude>
-    <ClInclude Include="business\apexsoft\TradeBusinessDingDian.h">
-      <Filter>业务层\柜台系统\顶点</Filter>
     </ClInclude>
     <ClInclude Include="ConnectPool\BusinessSystem.h">
       <Filter>业务层\柜台连接池</Filter>
@@ -292,9 +298,6 @@
     <ClInclude Include="network\ssl\pkgheader.pb.h">
       <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="business\szkingdom_win\TradeBusiness.h">
-      <Filter>业务层\柜台系统\金证windows</Filter>
-    </ClInclude>
     <ClInclude Include="business\szkingdom_win\Encrypt.h">
       <Filter>业务层\柜台系统\金证windows</Filter>
     </ClInclude>
@@ -309,9 +312,6 @@
     </ClInclude>
     <ClInclude Include="business\apexsoft\DingDian.h">
       <Filter>业务层\柜台系统\顶点</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreadSafeQueue\job_queue.h">
-      <Filter>线程安全Queue</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniDump.h">
       <Filter>CrashDump</Filter>
@@ -352,9 +352,6 @@
     <ClInclude Include="resource.h">
       <Filter>主框架</Filter>
     </ClInclude>
-    <ClInclude Include="include\worker.h">
-      <Filter>线程池ThreadPool</Filter>
-    </ClInclude>
     <ClInclude Include="include\IConnect.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
@@ -366,9 +363,6 @@
     </ClInclude>
     <ClInclude Include="include\MyBotan.h">
       <Filter>加解密</Filter>
-    </ClInclude>
-    <ClInclude Include="include\TradeBusinessT2.h">
-      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
     </ClInclude>
     <ClInclude Include="include\ConnectPool.h">
       <Filter>业务层\柜台连接池</Filter>
@@ -384,9 +378,6 @@
     </ClInclude>
     <ClInclude Include="include\IMessage.h">
       <Filter>网络层\网络消息</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SywgConnect.h">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
     </ClInclude>
     <ClInclude Include="include\ISession.h">
       <Filter>网络层\会话层</Filter>
@@ -412,6 +403,33 @@
     <ClInclude Include="include\TcpSession.h">
       <Filter>网络层\会话层\Tcp</Filter>
     </ClInclude>
+    <ClInclude Include="include\QueueThreadSafe.h">
+      <Filter>线程安全Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WorkerThreadPool.h">
+      <Filter>线程池ThreadPool</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TradeBusinessJZ.h">
+      <Filter>业务层\柜台系统\金证windows</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DingDian.h">
+      <Filter>业务层\柜台系统\顶点</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TradeBusinessJSD.h">
+      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TradeBusinessHS.h">
+      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TradeBusinessDD.h">
+      <Filter>业务层\柜台系统\顶点</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusData.h">
+      <Filter>会话管理</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutDlg.h">
+      <Filter>主框架</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -435,9 +453,6 @@
     <ClCompile Include="output\FileLog.cpp">
       <Filter>调试输出</Filter>
     </ClCompile>
-    <ClCompile Include="business\apexsoft\TradeBusinessDingDian.cpp">
-      <Filter>业务层\柜台系统\顶点</Filter>
-    </ClCompile>
     <ClCompile Include="ConnectPool\BusinessSystem.cpp">
       <Filter>业务层\柜台连接池</Filter>
     </ClCompile>
@@ -455,9 +470,6 @@
     </ClCompile>
     <ClCompile Include="business\IBusiness.cpp">
       <Filter>业务层\柜台系统</Filter>
-    </ClCompile>
-    <ClCompile Include="business\SunGuard\SywgConnect.cpp">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
     </ClCompile>
     <ClCompile Include="ConnectPool\Branch.cpp">
       <Filter>业务层\柜台连接池</Filter>
@@ -498,9 +510,6 @@
     <ClCompile Include="network\ssl_tcp\TcpServer.cpp">
       <Filter>网络层\网络服务\TCP</Filter>
     </ClCompile>
-    <ClCompile Include="business\szkingdom_win\TradeBusiness.cpp">
-      <Filter>业务层\柜台系统\金证windows</Filter>
-    </ClCompile>
     <ClCompile Include="network\ssl_tcp\TradeServer.cpp">
       <Filter>业务层</Filter>
     </ClCompile>
@@ -525,9 +534,6 @@
     <ClCompile Include="ConnectPool\ConnectPool.cpp">
       <Filter>业务层\柜台连接池</Filter>
     </ClCompile>
-    <ClCompile Include="business\hundsun_t2\TradeBusinessT2.cpp">
-      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
-    </ClCompile>
     <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClCompile>
@@ -542,6 +548,24 @@
     </ClCompile>
     <ClCompile Include="include\XML\pugixml.cpp">
       <Filter>第三方库\XML\pugixml</Filter>
+    </ClCompile>
+    <ClCompile Include="business\szkingdom_win\TradeBusinessJZ.cpp">
+      <Filter>业务层\柜台系统\金证windows</Filter>
+    </ClCompile>
+    <ClCompile Include="business\SunGuard\TradeBusinessJSD.cpp">
+      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+    </ClCompile>
+    <ClCompile Include="business\hundsun_t2\TradeBusinessHS.cpp">
+      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
+    </ClCompile>
+    <ClCompile Include="business\apexsoft\TradeBusinessDD.cpp">
+      <Filter>业务层\柜台系统\顶点</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusData.cpp">
+      <Filter>会话管理</Filter>
+    </ClCompile>
+    <ClCompile Include="AboutDlg.cpp">
+      <Filter>主框架</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -738,6 +762,9 @@
     </Text>
     <Text Include="log\日志开发说明.txt">
       <Filter>日志</Filter>
+    </Text>
+    <Text Include="协议说明.txt">
+      <Filter>文档</Filter>
     </Text>
   </ItemGroup>
 </Project>

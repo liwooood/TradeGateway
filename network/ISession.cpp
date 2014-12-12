@@ -3,72 +3,24 @@
 #include "ISession.h"
 
 
-// 金证
-#include "tradebusiness.h"
 
-// 恒生
-#include "tradebusinesst2.h"
-// 顶点
-#include "TradeBusinessDingDian.h"
-#include "DingDian.h"
-// AGC
-#include "SywgConnect.h"
-// 新意
-//#include "TCPClientSync.h"
 
 
 ISession::ISession(void)
 {
-	counterT2 = NULL;
-	counterSzkingdom = NULL;
-	counterApex = NULL;
-	counterAGC = NULL;
-	counterXinYi = NULL;
-
-	counterT2 = new TradeBusinessT2();
-	counterSzkingdom = new TradeBusiness();
-	counterApex = new TradeBusinessDingDian();
-	counterAGC = new CSywgConnect();
-//	counterXinYi = new CTCPClientSync();
+	
 }
 
 
 ISession::~ISession(void)
 {
-	if (counterT2 != NULL)
-	{
-		delete counterT2;
-		counterT2 = NULL;
-	}
-
-	if (counterSzkingdom != NULL)
-	{
-		delete counterSzkingdom;
-		counterSzkingdom = NULL;
-	}
-
-	if (counterApex != NULL)
-	{
-		delete counterApex;
-		counterApex = NULL;
-	}
-
-	if (counterAGC != NULL)
-	{
-		delete counterAGC;
-		counterAGC = NULL;
-	}
-
-	if (counterXinYi != NULL)
-	{
-		delete counterXinYi;
-		counterXinYi = NULL;
-	}
+	
 }
 
 
 void ISession::CloseCounterConnect()
 {
+	/*
 	if (counterT2 != NULL)
 	{
 		counterT2->CloseConnect();
@@ -98,6 +50,7 @@ void ISession::CloseCounterConnect()
 		counterXinYi->CloseConnect();
 		
 	}
+	*/
 }
 /*
 // 根据参数，返回对应的柜台连接

@@ -126,6 +126,10 @@ void SSLSession::read()
 {
 	IMessage* req = create_request();			
 
+	int size = req->GetMsgHeaderSize();
+	std::string msg = "需要接收的包头字节大小" + boost::lexical_cast<std::string>(size);
+	gFileLog::instance().Log(msg, 0, "temp.txt");
+
 	boost::asio::async_read(socket_, 
 		boost::asio::buffer(req->GetMsgHeader(), req->GetMsgHeaderSize()), 
 		boost::asio::transfer_all(),
@@ -161,6 +165,10 @@ void SSLSession::handle_read_head(const boost::system::error_code& error, size_t
 		close();
 		return;
 	}
+
+	int size = req->GetMsgContentSize();
+	std::string msg = "需要接收的包体字节大小" + boost::lexical_cast<std::string>(size);
+	gFileLog::instance().Log(msg, 0, "temp.txt");
 
 	boost::asio::async_read(socket_, 
 		boost::asio::buffer(req->GetMsgContent(), req->GetMsgContentSize()),
@@ -214,6 +222,10 @@ void SSLSession::write(IMessage* resp)
 			AfxMessageBox("消息类型错误");
 		}
 
+		int size = resp->GetMsgHeaderSize();
+	std::string msg = "需要发送的包头字节大小" + boost::lexical_cast<std::string>(size);
+	gFileLog::instance().Log(msg, 0, "temp.txt");
+
 		boost::asio::async_write(socket_,
 			boost::asio::buffer(resp->GetMsgHeader(), resp->GetMsgHeaderSize()),
 			boost::asio::transfer_all(),
@@ -250,6 +262,10 @@ void SSLSession::handle_write_head(const boost::system::error_code& error, size_
 
 	try
 	{
+		int size = resp->GetMsgContentSize();
+	std::string msg = "需要发送的包体字节大小" + boost::lexical_cast<std::string>(size);
+	gFileLog::instance().Log(msg, 0, "temp.txt");
+
 		boost::asio::async_write(socket_,
 			boost::asio::buffer(resp->GetMsgContent(), resp->GetMsgContentSize()),
 			boost::asio::transfer_all(),

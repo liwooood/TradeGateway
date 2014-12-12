@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "job_queue.h"
+#include "QueueThreadSafe.h"
 #include "IConnect.h"
 
 #include "common.h"
@@ -14,7 +14,7 @@ class ConnectPool
 {
 private:
 	// 直接整合std::deque比较好
-	typedef job_queue<IConnect*> conn_queue_type;
+	typedef QueueThreadSafe<IConnect*> conn_queue_type;
 	conn_queue_type m_pool;
 	//std::vector<conn_queue_type> pool;
 

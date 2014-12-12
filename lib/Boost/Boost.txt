@@ -1,1 +1,2 @@
 因为用到了压缩功能，所以编译boost的时候需要指定zlib源代码，使用boost::iostream的功能
+b2 --prefix=d:\boost\1.57 -sZLIB_SOURCE=d:\zlib\zlib-1.2.8 toolset=msvc-12.0 install

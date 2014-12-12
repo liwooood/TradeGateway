@@ -13,14 +13,14 @@
 #include <boost/asio/ssl.hpp>
 
 
-#include "job_queue.h"
+#include "QueueThreadSafe.h"
 
 #include "IBusiness.h"
-#include "TradeBusinessT2.h"
-#include "TradeBusiness.h"
-#include "TradeBusinessDingDian.h"
+#include "TradeBusinessHS.h"
+#include "TradeBusinessJZ.h"
+#include "TradeBusinessDD.h"
 #include "DingDian.h"
-#include "SywgConnect.h"
+#include "TradeBusinessJSD.h"
 //#include "TCPClientSync.h"
 
 
@@ -36,7 +36,7 @@ public:
 	typedef boost::asio::io_service ios_type;
 
 	typedef ios_type::strand strand_type;
-	typedef job_queue<IMessage*> queue_type;
+	typedef QueueThreadSafe<IMessage*> queue_type;
 	
 
 private:
@@ -72,10 +72,10 @@ public:
 	
 
 	// 柜台连接
-	TradeBusinessT2 counterT2;
-	TradeBusiness counterSzkingdom;
-	TradeBusinessDingDian counterApex;
-	CSywgConnect counterAGC;
+	TradeBusinessHS counterT2;
+	TradeBusinessJZ counterSzkingdom;
+	TradeBusinessDD counterApex;
+	TradeBusinessJSD counterAGC;
 	//CTCPClientSync counterXinYi;
 
 	// 消息类型

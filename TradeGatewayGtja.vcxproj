@@ -134,14 +134,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="agc_encrypt.h" />
     <ClInclude Include="business\apexsoft\DingDian.h" />
-    <ClInclude Include="business\apexsoft\TradeBusinessDingDian.h" />
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\SunGuard\AGC.h" />
     <ClInclude Include="business\SunGuard\sywg.h" />
     <ClInclude Include="business\szkingdom_win\Encrypt.h" />
-    <ClInclude Include="business\szkingdom_win\TradeBusiness.h" />
     <ClInclude Include="cache\CacheData.h" />
     <ClInclude Include="config\ConfigManager.h" />
     <ClInclude Include="ConnectPool\Branch.h" />
@@ -155,27 +154,31 @@
     <ClInclude Include="include\ConnectPool.h" />
     <ClInclude Include="include\ConnectT2.h" />
     <ClInclude Include="include\CustomMessage.h" />
+    <ClInclude Include="include\DingDian.h" />
     <ClInclude Include="include\errcode.h" />
     <ClInclude Include="include\IBusiness.h" />
     <ClInclude Include="include\IConnect.h" />
     <ClInclude Include="include\IMessage.h" />
     <ClInclude Include="include\io_service_pool.h" />
     <ClInclude Include="include\ISession.h" />
+    <ClInclude Include="include\QueueThreadSafe.h" />
     <ClInclude Include="include\MiniDump.h" />
     <ClInclude Include="include\MsgHeader.h" />
     <ClInclude Include="include\MyBotan.h" />
     <ClInclude Include="include\SSLServer.h" />
     <ClInclude Include="include\SSLSession.h" />
     <ClInclude Include="include\ssl_message.h" />
-    <ClInclude Include="include\SywgConnect.h" />
+    <ClInclude Include="include\TradeBusinessJSD.h" />
     <ClInclude Include="include\TcpServer.h" />
     <ClInclude Include="include\TcpSession.h" />
     <ClInclude Include="include\tcp_message_old.h" />
-    <ClInclude Include="include\TradeBusinessT2.h" />
+    <ClInclude Include="include\TradeBusinessDD.h" />
+    <ClInclude Include="include\TradeBusinessJZ.h" />
+    <ClInclude Include="include\TradeBusinessHS.h" />
     <ClInclude Include="include\TradeGatewayGtja.h" />
     <ClInclude Include="include\TradeGatewayGtjaDlg.h" />
     <ClInclude Include="include\TradeServer.h" />
-    <ClInclude Include="include\worker.h" />
+    <ClInclude Include="include\WorkerThreadPool.h" />
     <ClInclude Include="include\XML\pugiconfig.hpp" />
     <ClInclude Include="include\XML\pugixml.hpp" />
     <ClInclude Include="include\XML\rapidxml.hpp" />
@@ -215,24 +218,26 @@
     </Text>
     <ClInclude Include="output\FileLog.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="StatusData.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="ThreadSafeQueue\job_queue.h" />
+    <Text Include="协议说明.txt" />
     <Text Include="文档\开发计划.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AboutDlg.cpp" />
     <ClCompile Include="business\apexsoft\DingDian.cpp" />
-    <ClCompile Include="business\apexsoft\TradeBusinessDingDian.cpp" />
+    <ClCompile Include="business\apexsoft\TradeBusinessDD.cpp" />
     <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp" />
     <ClCompile Include="business\hundsun_t2\ConnectT2.cpp" />
-    <ClCompile Include="business\hundsun_t2\TradeBusinessT2.cpp" />
+    <ClCompile Include="business\hundsun_t2\TradeBusinessHS.cpp" />
     <ClCompile Include="business\IBusiness.cpp" />
     <ClCompile Include="business\SunGuard\AGC.cpp" />
     <ClCompile Include="business\SunGuard\Crc.cpp" />
     <ClCompile Include="business\SunGuard\Des.cpp" />
-    <ClCompile Include="business\SunGuard\SywgConnect.cpp" />
+    <ClCompile Include="business\SunGuard\TradeBusinessJSD.cpp" />
     <ClCompile Include="business\szkingdom_win\Encrypt.cpp" />
-    <ClCompile Include="business\szkingdom_win\TradeBusiness.cpp" />
+    <ClCompile Include="business\szkingdom_win\TradeBusinessJZ.cpp" />
     <ClCompile Include="cache\CacheData.cpp" />
     <ClCompile Include="config\ConfigManager.cpp" />
     <ClCompile Include="ConnectPool\Branch.cpp" />
@@ -276,6 +281,7 @@
     <ClCompile Include="output\FileLog.cpp" />
     <ClCompile Include="src\import_lib.cpp" />
     <ClCompile Include="src\MiniDump.cpp" />
+    <ClCompile Include="StatusData.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -9,7 +9,7 @@
 #include <boost/thread/detail/singleton.hpp>
 
 
-#include "job_queue.h"
+#include "QueueThreadSafe.h"
 
 class LogConnect;
 
@@ -30,7 +30,7 @@ public:
 	
 
 private:
-	job_queue<LogConnect*> m_pool;
+	QueueThreadSafe<LogConnect*> m_pool;
 	int m_nID; // 连接序列号
 	int m_nConnCount; // 连接数
 	

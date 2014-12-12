@@ -54,7 +54,7 @@ BOOL LogConnectPool::CreateConnectPool()
 	} // end for 初始次数
 	
 
-	m_nConnCount = m_pool.queue_.size();
+	m_nConnCount = m_pool.queue.size();
 
 	if (m_nConnCount == 0)
 	{
@@ -81,7 +81,7 @@ BOOL LogConnectPool::IncreaseConnPool()
 {
 	BOOL bRet = FALSE;
 
-	int nOldSize = m_pool.queue_.size();
+	int nOldSize = m_pool.queue.size();
 
 
 
@@ -107,7 +107,7 @@ BOOL LogConnectPool::IncreaseConnPool()
 	} // end for 增长次数
 		
 
-	m_nConnCount = m_pool.queue_.size();
+	m_nConnCount = m_pool.queue.size();
 
 	if (m_nConnCount == nOldSize)
 	{
@@ -144,7 +144,7 @@ void LogConnectPool::CloseConnectPool()
 	*/
 
 	// 方案二
-	for (std::deque<LogConnect*>::iterator pos = m_pool.queue_.begin(); pos != m_pool.queue_.end(); pos++)
+	for (std::deque<LogConnect*>::iterator pos = m_pool.queue.begin(); pos != m_pool.queue.end(); pos++)
 	{
 		LogConnect * pConn = *pos;
 
@@ -164,7 +164,7 @@ LogConnect* LogConnectPool::GetConnect()
 {
 	std::string msg;
 
-	if (m_pool.queue_.empty())
+	if (m_pool.queue.empty())
 	{
 		if (!IncreaseConnPool())
 			return NULL;
@@ -196,11 +196,11 @@ void LogConnectPool::PushConnect(LogConnect * pConn)
 	std::string msg = "释放连接, " ;//+ pConn->GetConnectInfo();
 	gFileLog::instance().Log(msg, 4, logFileName);
 
-	msg = "释放连接: 归还前大小" + boost::lexical_cast<std::string>(m_pool.queue_.size());
+	msg = "释放连接: 归还前大小" + boost::lexical_cast<std::string>(m_pool.queue.size());
 	gFileLog::instance().Log(msg, 4, logFileName);
 
 	m_pool.push(pConn);
 
-	msg = "释放连接: 归还后大小" + boost::lexical_cast<std::string>(m_pool.queue_.size());
+	msg = "释放连接: 归还后大小" + boost::lexical_cast<std::string>(m_pool.queue.size());
 	gFileLog::instance().Log(msg, 4, logFileName);
 }

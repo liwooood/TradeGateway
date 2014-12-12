@@ -12,14 +12,14 @@
 #include <boost/pool/object_pool.hpp>
 
 
-#include "job_queue.h"
+#include "QueueThreadSafe.h"
 
 #include "IBusiness.h"
-#include "TradeBusinessT2.h"
-#include "TradeBusiness.h"
-#include "TradeBusinessDingDian.h"
+#include "TradeBusinessHS.h"
+#include "TradeBusinessJZ.h"
+#include "TradeBusinessDD.h"
 #include "DingDian.h"
-#include "SywgConnect.h"
+#include "TradeBusinessJSD.h"
 //#include "TCPClientSync.h"
 
 class IMessage;
@@ -32,6 +32,7 @@ http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/example/cpp03/ssl/serve
 
 http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/example/cpp03/http/server2/connection.hpp
 */
+//class TcpSession : public boost::enable_shared_from_this<TcpSession>, public ISession
 class TcpSession : public boost::enable_shared_from_this<TcpSession>
 {
 public:
@@ -39,7 +40,7 @@ public:
 	typedef boost::asio::io_service ios_type;
 
 	typedef ios_type::strand strand_type;
-	typedef job_queue<IMessage*> queue_type;
+	typedef QueueThreadSafe<IMessage*> queue_type;
 
 	//内存池，暂时不用
 	//typedef boost::object_pool<CustomMessage*> object_pool_type;
@@ -84,10 +85,10 @@ public:
 	// 建立线程，发送心跳消息，调用业务连接的心跳自定义实现方法，保持活动
 
 	// 柜台连接
-	TradeBusinessT2 counterT2;
-	TradeBusiness counterSzkingdom;
-	TradeBusinessDingDian counterApex;
-	CSywgConnect counterAGC;
+	TradeBusinessHS counterT2;
+	TradeBusinessJZ counterSzkingdom;
+	TradeBusinessDD counterApex;
+	TradeBusinessJSD counterAGC;
 	//CTCPClientSync counterXinYi;
 
 	// 消息类型

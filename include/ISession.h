@@ -1,10 +1,20 @@
-#ifndef _ISESSION_H_
-#define _ISESSION_H_
+#ifndef ISESSION_H
+#define ISESSION_H
 
-#include <boost/asio.hpp>
 
-#include "IBusiness.h"
-//#include "network/CustomMessage.h"
+
+// 金证
+#include "TradeBusinessJZ.h"
+
+// 恒生
+#include "TradeBusinessHS.h"
+// 顶点
+#include "TradeBusinessDD.h"
+// AGC
+#include "TradeBusinessJSD.h"
+// 新意
+//#include "TCPClientSync.h"
+
 
 class IMessage;
 
@@ -15,11 +25,11 @@ public:
 	~ISession(void);
 
 	// 柜台连接
-	IBusiness * counterT2;
-	IBusiness * counterSzkingdom;
-	IBusiness * counterApex;
-	IBusiness * counterAGC;
-	IBusiness * counterXinYi;
+	TradeBusinessHS hs;
+	TradeBusinessJZ jz;
+	TradeBusinessDD dd;
+	TradeBusinessJSD jsd;
+	//CTCPClientSync test;
 
 	// 消息类型
 	int m_msgType;

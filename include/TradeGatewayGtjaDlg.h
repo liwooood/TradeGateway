@@ -20,7 +20,7 @@
 
 #include "TradeServer.h"
 
-
+#include "resource.h"
 
 
 // CTradeGatewayGtjaDlg ¶Ô»°¿ò
@@ -146,4 +146,6 @@ public:
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton1();
 	//afx_msg void OnBnClickedStartup();
+	afx_msg void OnBnClickedAbout();
+	
 };

@@ -2,8 +2,8 @@
 #define _TRADE_SERVER_TCP_
 
 #include "CustomMessage.h"
-#include "job_queue.h"
-#include "worker.h"
+#include "QueueThreadSafe.h"
+#include "WorkerThreadPool.h"
 
 //#include "network/TcpSession.h"
 
@@ -13,11 +13,11 @@
 class TradeServer
 {
 public:
-	typedef job_queue<IMessage*> req_queue_type;
-	typedef worker<req_queue_type> req_worker_type;
+	typedef QueueThreadSafe<IMessage*> req_queue_type;
+	typedef WorkerThreadPool<req_queue_type> req_worker_type;
 
-	typedef job_queue<IMessage*> resp_queue_type;
-	typedef worker<resp_queue_type> resp_worker_type;
+	typedef QueueThreadSafe<IMessage*> resp_queue_type;
+	typedef WorkerThreadPool<resp_queue_type> resp_worker_type;
 
 private:
 	req_queue_type recvq_;

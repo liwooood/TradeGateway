@@ -130,34 +130,6 @@ bool IBusiness::ParseRequest(std::string& request)
 		num = 1;
 	}
 
-	//if (num > 1)
-	{
-		std::string sNum = "num=" + boost::lexical_cast<std::string>(num) + request;
-		gFileLog::instance().Log(sNum, 0, "num.log");
-
-		
-	}
-	
-	// 提取业务key
-	std::string mapOutput ;
-	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
-	{
-		std::string key = it->first;
-
-		mapOutput += key;
-		mapOutput += ",";
-	}
-	gFileLog::instance().Log("map="+ mapOutput, 0, "num.log");
-
-	std::string keyOutput = "key开始前=";
-	for (std::vector<std::string>::iterator it = keys.begin(); it != keys.end(); it++)
-	{
-		std::string key = *it;
-
-		keyOutput += key;
-		keyOutput += ",";
-	}
-	gFileLog::instance().Log(keyOutput, 0, "num.log");
 
 	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
 	{
@@ -202,15 +174,7 @@ bool IBusiness::ParseRequest(std::string& request)
 		}
 	}
 
-	std::string keyOutput2 ="key=";
-	for (std::vector<std::string>::iterator it = keys.begin(); it != keys.end(); it++)
-	{
-		std::string key = *it;
-
-		keyOutput2 += key;
-		keyOutput2 += ",";
-	}
-	gFileLog::instance().Log(keyOutput2, 0, "num.log");
+	
 
 	return true;
 }

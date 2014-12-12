@@ -36,15 +36,15 @@
 #include "configmanager.h"
 
 // 金证
-#include "tradebusiness.h"
+#include "TradeBusinessJZ.h"
 
 // 恒生
-#include "tradebusinesst2.h"
+#include "TradeBusinessHS.h"
 // 顶点
-#include "TradeBusinessDingDian.h"
+#include "TradeBusinessDD.h"
 #include "DingDian.h"
 // AGC
-#include "SywgConnect.h"
+#include "TradeBusinessJSD.h"
 // 新意
 //#include "TCPClientSync.h"
 
