@@ -165,13 +165,13 @@
     <ClInclude Include="include\MiniDump.h" />
     <ClInclude Include="include\MsgHeader.h" />
     <ClInclude Include="include\MyBotan.h" />
+    <ClInclude Include="include\SslMessagePB.h" />
     <ClInclude Include="include\SSLServer.h" />
     <ClInclude Include="include\SSLSession.h" />
-    <ClInclude Include="include\ssl_message.h" />
     <ClInclude Include="include\TradeBusinessJSD.h" />
     <ClInclude Include="include\TcpServer.h" />
     <ClInclude Include="include\TcpSession.h" />
-    <ClInclude Include="include\tcp_message_old.h" />
+    <ClInclude Include="include\TcpMessageOld.h" />
     <ClInclude Include="include\TradeBusinessDD.h" />
     <ClInclude Include="include\TradeBusinessJZ.h" />
     <ClInclude Include="include\TradeBusinessHS.h" />

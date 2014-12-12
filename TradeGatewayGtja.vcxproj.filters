@@ -119,12 +119,6 @@
     <Filter Include="网络层\网络消息">
       <UniqueIdentifier>{0f35af1c-396e-43f7-a3be-5a6dfd2cbe44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="网络层\网络消息\Tcp Old">
-      <UniqueIdentifier>{c0b69dde-ff86-4abd-aed0-cf2c45510637}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络消息\Tcp  &amp; SSL">
-      <UniqueIdentifier>{8ac242f4-61f4-483b-8368-541a5d525685}</UniqueIdentifier>
-    </Filter>
     <Filter Include="网络层\网络服务">
       <UniqueIdentifier>{1bf9b355-b3ab-48cf-975e-e5a85b6a2a77}</UniqueIdentifier>
     </Filter>
@@ -215,12 +209,6 @@
     <Filter Include="错误信息">
       <UniqueIdentifier>{5c289177-ec8b-4508-8411-9e5b5abe3e98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="网络层\网络消息\SSL PB">
-      <UniqueIdentifier>{060612fd-4e12-4651-809d-43c7e0069baa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络消息\SSL PB\protobuf">
-      <UniqueIdentifier>{dc0f81dd-291e-44f8-9a46-44c19b051098}</UniqueIdentifier>
-    </Filter>
     <Filter Include="注册表">
       <UniqueIdentifier>{5140f9ba-0a49-496d-8c2c-5b29e7daa878}</UniqueIdentifier>
     </Filter>
@@ -244,6 +232,9 @@
     </Filter>
     <Filter Include="线程安全Queue\无锁队列">
       <UniqueIdentifier>{53dc434d-7573-4295-94ed-6fcaa96e4bdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="网络层\网络消息\protobuf">
+      <UniqueIdentifier>{dc0f81dd-291e-44f8-9a46-44c19b051098}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -296,7 +287,7 @@
       <Filter>日志\日志消息</Filter>
     </ClInclude>
     <ClInclude Include="network\ssl\pkgheader.pb.h">
-      <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
+      <Filter>网络层\网络消息\protobuf</Filter>
     </ClInclude>
     <ClInclude Include="business\szkingdom_win\Encrypt.h">
       <Filter>业务层\柜台系统\金证windows</Filter>
@@ -370,12 +361,6 @@
     <ClInclude Include="include\SSLSession.h">
       <Filter>网络层\会话层\SSL</Filter>
     </ClInclude>
-    <ClInclude Include="include\CustomMessage.h">
-      <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MsgHeader.h">
-      <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
-    </ClInclude>
     <ClInclude Include="include\IMessage.h">
       <Filter>网络层\网络消息</Filter>
     </ClInclude>
@@ -384,12 +369,6 @@
     </ClInclude>
     <ClInclude Include="include\errcode.h">
       <Filter>错误信息</Filter>
-    </ClInclude>
-    <ClInclude Include="include\tcp_message_old.h">
-      <Filter>网络层\网络消息\Tcp Old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ssl_message.h">
-      <Filter>网络层\网络消息\SSL PB</Filter>
     </ClInclude>
     <ClInclude Include="include\io_service_pool.h">
       <Filter>网络层</Filter>
@@ -429,6 +408,18 @@
     </ClInclude>
     <ClInclude Include="AboutDlg.h">
       <Filter>主框架</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SslMessagePB.h">
+      <Filter>网络层\网络消息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TcpMessageOld.h">
+      <Filter>网络层\网络消息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CustomMessage.h">
+      <Filter>网络层\网络消息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MsgHeader.h">
+      <Filter>网络层\网络消息</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -493,10 +484,7 @@
       <Filter>日志\日志消息</Filter>
     </ClCompile>
     <ClCompile Include="network\ssl\pkgheader.pb.cc">
-      <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="network\ssl_tcp\CustomMessage.cpp">
-      <Filter>网络层\网络消息\Tcp  &amp; SSL</Filter>
+      <Filter>网络层\网络消息\protobuf</Filter>
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\SSLSession.cpp">
       <Filter>网络层\会话层\SSL</Filter>
@@ -567,6 +555,9 @@
     <ClCompile Include="AboutDlg.cpp">
       <Filter>主框架</Filter>
     </ClCompile>
+    <ClCompile Include="network\ssl_tcp\CustomMessage.cpp">
+      <Filter>网络层\网络消息</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\TradeGatewayGtja.ico">
@@ -604,10 +595,10 @@
       <Filter>日志\日志消息</Filter>
     </None>
     <None Include="network\ssl\pkgheader.proto">
-      <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
+      <Filter>网络层\网络消息\protobuf</Filter>
     </None>
     <None Include="network\ssl\proto2cpp.bat">
-      <Filter>网络层\网络消息\SSL PB\protobuf</Filter>
+      <Filter>网络层\网络消息\protobuf</Filter>
     </None>
     <None Include="文档\系统设计文档\恒生T2异步模式.vsdx">
       <Filter>文档</Filter>

@@ -1,13 +1,14 @@
 #include "stdafx.h"
 
-#include "IMessage.h"
 #include <boost/checked_delete.hpp>
+
+#include "IMessage.h"
+
 
 
 IMessage::IMessage()
 {
-	//m_MsgHeader.resize(msgHeaderSize);
-	//this->session = session;
+
 }
 
 
@@ -19,7 +20,7 @@ TcpSessionPtr& IMessage::GetTcpSession()
 {
 	return tcpSession;
 }
-void IMessage::SetTcpSession(TcpSessionPtr sess)
+void IMessage::SetTcpSession(TcpSessionPtr& sess)
 {
 	tcpSession = sess;
 }
@@ -28,7 +29,7 @@ SSLSessionPtr& IMessage::GetSslSession()
 {
 	return sslSession;
 }
-void IMessage::SetSslSession(SSLSessionPtr sess)
+void IMessage::SetSslSession(SSLSessionPtr& sess)
 {
 	sslSession = sess;
 }
@@ -36,17 +37,17 @@ void IMessage::SetSslSession(SSLSessionPtr sess)
 
 std::vector<char>& IMessage::GetMsgHeader()
 {
-	return m_MsgHeader;
+	return msgHeader;
 }
 
 size_t IMessage::GetMsgHeaderSize()
 {
-	return m_MsgHeader.size();
+	return msgHeader.size();
 }
 
 void IMessage::SetMsgHeader(std::vector<char> header)
 {
-	m_MsgHeader = header;
+	msgHeader = header;
 }
 
 
@@ -54,48 +55,47 @@ void IMessage::SetMsgHeader(std::vector<char> header)
 
 std::vector<char>& IMessage::GetMsgContent()
 {
-	return m_MsgContent;
+	return msgContent;
 }
 
 
 std::string IMessage::GetMsgContentString()
 {
-	std::string str(m_MsgContent.begin(), m_MsgContent.end());
-	return str;
+	std::string str(msgContent.begin(), msgContent.end());
 
+	return str;
 }
 
 size_t IMessage::GetMsgContentSize()
 {
-	return m_MsgContent.size();
+	return msgContent.size();
 }
 
 void IMessage::SetMsgContent(std::string content)
 {
-	size_t MsgContentSize = content.size();
+	size_t msgContentSize = content.size();
 
-	if (MsgContentSize == 0)
+	if (msgContentSize == 0)
 		return;
 
-	m_MsgContent.resize(MsgContentSize);
+	msgContent.resize(msgContentSize);
 
 	//std::copy(content.begin(), content.end(), back_inserter(m_MsgContent));
 
-	memcpy(m_MsgContent.data(), content.c_str(), MsgContentSize);
+	memcpy(msgContent.data(), content.c_str(), msgContentSize);
 }
 
 void IMessage::SetMsgContent(std::vector<char> content)
 {
-	size_t MsgContentSize = content.size();
+	size_t msgContentSize = content.size();
 
-	if (MsgContentSize == 0)
+	if (msgContentSize == 0)
 		return;
 
-	m_MsgContent.resize(MsgContentSize);
+	msgContent.resize(msgContentSize);
 
 	
-	m_MsgContent = content;
-	
+	msgContent = content;
 }
 
 
@@ -135,19 +135,28 @@ void IMessage::Log(Trade::TradeLog::LogLevel logLevel, std::string sysNo, std::s
 
 void IMessage::SetRecvTime()
 {
-	boost::posix_time::ptime ptRecvTime =  boost::posix_time::microsec_clock::local_time();
-	std::string recvTime = boost::gregorian::to_iso_extended_string(ptRecvTime.date()) + " " + boost::posix_time::to_simple_string(ptRecvTime.time_of_day());
-	log.set_recvtime(recvTime);
+	boost::posix_time::ptime recvTime =  boost::posix_time::microsec_clock::local_time();
+
+	std::string s = boost::gregorian::to_iso_extended_string(recvTime.date()) + " " + boost::posix_time::to_simple_string(recvTime.time_of_day());
+	
+	log.set_recvtime(s);
 }
 
 void IMessage::SetSendTime()
 {
-	boost::posix_time::ptime ptSendTime = boost::posix_time::microsec_clock::local_time();
-	std::string sSendTime = boost::gregorian::to_iso_extended_string(ptSendTime.date()) + " " + boost::posix_time::to_simple_string(ptSendTime.time_of_day());
-	log.set_sendtime(sSendTime);
+	boost::posix_time::ptime sendTime = boost::posix_time::microsec_clock::local_time();
+
+	std::string s = boost::gregorian::to_iso_extended_string(sendTime.date()) + " " + boost::posix_time::to_simple_string(sendTime.time_of_day());
+	
+	log.set_sendtime(s);
 }
 
 void IMessage::destroy()
 {
 	boost::checked_delete(this);
+}
+
+int IMessage::GetMsgType()
+{
+	return msgType;
 }

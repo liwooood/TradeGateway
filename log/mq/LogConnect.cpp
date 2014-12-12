@@ -382,7 +382,7 @@ bool LogConnect::Send(std::string& request, std::string& response)
 	binRespMsgHeader.MsgType = MSG_TYPE_REQUEST;
 	binRespMsgHeader.zip = 0;
 	binRespMsgHeader.MsgContentSize = request.size();
-	memcpy(&(pReq->m_MsgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
+	memcpy(&(pReq->msgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
 
 
 	int temp = pReq->GetMsgHeaderSize();

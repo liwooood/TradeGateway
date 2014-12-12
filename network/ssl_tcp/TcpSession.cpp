@@ -11,11 +11,10 @@
 #include "FileLogManager.h"
 #include "DistributedLogManager.h"
 
-
-#include "imessage.h"
-#include "tcp_message_old.h"
-#include "ssl_message.h"
-#include "custommessage.h" 
+#include "IMessage.h"
+#include "TcpMessageOld.h"
+#include "SslMessagePB.h"
+#include "CustomMessage.h" 
 
 
 
@@ -71,10 +70,10 @@ IMessage* TcpSession::create_request()
 	switch (m_msgType)
 	{
 	case MSG_TYPE_TCP_OLD:
-		req = new tcp_message_old();
+		req = new TcpMessageOld();
 		break;
 	case MSG_TYPE_SSL_PB:
-		req = new ssl_message();
+		req = new SslMessagePB();
 		break;
 	case MSG_TYPE_TCP_NEW:
 		req = new CustomMessage(MSG_TYPE_TCP_NEW);
@@ -185,7 +184,7 @@ void TcpSession::write(IMessage* resp)
 {
 	try
 	{
-		if (m_msgType != resp->m_msgType)
+		if (m_msgType != resp->msgType)
 		{
 			AfxMessageBox("消息类型错误");
 		}
@@ -285,18 +284,7 @@ void TcpSession::handle_write_msg(const boost::system::error_code& error, size_t
 
 void TcpSession::CloseCounterConnect()
 {
-	counterT2.CloseConnect();
-		
 	
-		counterSzkingdom.CloseConnect();
-		
-	
-		counterApex.CloseConnect();
-		
-	
-		counterAGC.CloseConnect();
-	
-		//counterXinYi.CloseConnect();
 }
 
 // 根据参数，返回对应的柜台连接

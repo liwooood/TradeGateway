@@ -1,19 +1,11 @@
 #ifndef CUSTOM_MESSAGE_H
 #define CUSTOM_MESSAGE_H
 
-#include <vector>
+#include "IMessage.h"
 
-#include <boost/array.hpp>
-#include <boost/scoped_array.hpp> 
-#include <boost/noncopyable.hpp>
-#include <boost/checked_delete.hpp>
-#include <boost/function.hpp>
-#include <boost/shared_ptr.hpp>
+
 
 #include "MsgHeader.h"
-
-
-#include "IMessage.h"
 
 /*
 独立出来的原因，
@@ -31,32 +23,11 @@ public:
 
 private:
 	// 消息头
-	struct MsgHeader msgHeader;
+	struct MsgHeader customMsgHeader;
 	
 
 public:
 	bool DecoderMsgHeader();
-
-
-	/*
-	PMSG_HEADER GetMsgHeader();
-	
-
-
-	
-	char * GetMsgContent();
-	
-	
-
-	
-	
-
-	
-	
-
-	*/
-
-	
 };
 
 

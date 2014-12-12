@@ -24,7 +24,11 @@ public:
 	ISession(void);
 	~ISession(void);
 
-	// 柜台连接
+	
+	virtual void write(IMessage* resp) = 0;
+
+private:
+	// 单会话单连接模式
 	TradeBusinessHS hs;
 	TradeBusinessJZ jz;
 	TradeBusinessDD dd;
@@ -32,19 +36,19 @@ public:
 	//CTCPClientSync test;
 
 	// 消息类型
-	int m_msgType;
+	int msgType;
 
 	virtual void start()=0;
 	virtual void close()=0;
-	
-	virtual IMessage* create_request() = 0;
+
 	virtual void read() = 0;
-	virtual void handle_read_head(const boost::system::error_code& error, size_t bytes_transferred, IMessage* req) = 0;
-	virtual void handle_read_msg(const boost::system::error_code& error, size_t bytes_transferred, IMessage* req) = 0;
+	virtual IMessage* CreateRequest() = 0;
+	virtual void OnReadHead(const boost::system::error_code& error, size_t transferredBytes, IMessage* req) = 0;
+	virtual void OnReadMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* req) = 0;
 	
-	virtual void write(IMessage* resp) = 0;
-	virtual void handle_write_head(const boost::system::error_code& error, size_t bytes_transferred, IMessage* resp) = 0;
-	virtual void handle_write_msg(const boost::system::error_code& error, size_t bytes_transferred, IMessage* resp) = 0;
+	
+	virtual void OnWriteHead(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp) = 0;
+	virtual void OnWriteMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp) = 0;
 
 	
 	// 关闭柜台连接

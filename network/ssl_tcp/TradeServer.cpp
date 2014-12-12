@@ -63,9 +63,11 @@
 
 #include "TcpSession.h"
 #include "SSLSession.h"
-#include "tcp_message_old.h"
-#include "ssl_message.h"
-#include "custommessage.h"
+
+#include "IMessage.h"
+#include "TcpMessageOld.h"
+#include "SslMessagePB.h"
+#include "CustomMessage.h" 
 
 #include "ConnectPool.h"
 #include "ConnectT2.h"
@@ -98,10 +100,10 @@ TradeServer::req_queue_type& TradeServer::recv_queue()
 // 处理应答
 bool TradeServer::ProcessResponse(IMessage* resp)
 {
-	if (resp->m_msgType == MSG_TYPE_TCP_OLD || resp->m_msgType == MSG_TYPE_TCP_NEW)
+	if (resp->msgType == MSG_TYPE_TCP_OLD || resp->msgType == MSG_TYPE_TCP_NEW)
 		resp->GetTcpSession()->write(resp);
 
-	if (resp->m_msgType == MSG_TYPE_SSL_PB || resp->m_msgType == MSG_TYPE_SSL_NEW)
+	if (resp->msgType == MSG_TYPE_SSL_PB || resp->msgType == MSG_TYPE_SSL_NEW)
 		resp->GetSslSession()->write(resp);
 
 	return true;
@@ -297,10 +299,10 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			{
 				bool bCounterConnected = false;
 
-				if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
+				if (req->msgType == MSG_TYPE_TCP_OLD || req->msgType == MSG_TYPE_TCP_NEW)
 					bCounterConnected = req->GetTcpSession()->GetCounterConnect(nCounterType).IsConnected();
 
-				if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
+				if (req->msgType == MSG_TYPE_SSL_PB || req->msgType == MSG_TYPE_SSL_NEW)
 					bCounterConnected = req->GetSslSession()->GetCounterConnect(nCounterType).IsConnected();
 			
 				// 是否已建立连接
@@ -326,13 +328,13 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				
 					bool bRet = false;
 
-					if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
+					if (req->msgType == MSG_TYPE_TCP_OLD || req->msgType == MSG_TYPE_TCP_NEW)
 					{
 						req->GetTcpSession()->GetCounterConnect(nCounterType).SetCounter(counter);
 						bRet = req->GetTcpSession()->GetCounterConnect(nCounterType).CreateConnect();
 					}
 
-					if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
+					if (req->msgType == MSG_TYPE_SSL_PB || req->msgType == MSG_TYPE_SSL_NEW)
 					{
 						req->GetSslSession()->GetCounterConnect(nCounterType).SetCounter(counter);
 						bRet = req->GetSslSession()->GetCounterConnect(nCounterType).CreateConnect();
@@ -399,7 +401,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		
 			// 处理业务，业务处理失败或成功都算成功的，只有通信失败才需要重试
 			bool bNetwork = false;
-			if (req->m_msgType == MSG_TYPE_TCP_OLD || req->m_msgType == MSG_TYPE_TCP_NEW)
+			if (req->msgType == MSG_TYPE_TCP_OLD || req->msgType == MSG_TYPE_TCP_NEW)
 			{
 				Counter * counter = req->GetTcpSession()->GetCounterConnect(nCounterType).GetCounter();
 				counterIp = counter->m_sIP;
@@ -410,7 +412,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				bNetwork = req->GetTcpSession()->GetCounterConnect(nCounterType).Send(request, response, status, errCode, errMsg);
 			}
 
-			if (req->m_msgType == MSG_TYPE_SSL_PB || req->m_msgType == MSG_TYPE_SSL_NEW)
+			if (req->msgType == MSG_TYPE_SSL_PB || req->msgType == MSG_TYPE_SSL_NEW)
 			{
 				Counter * counter = req->GetSslSession()->GetCounterConnect(nCounterType).GetCounter();
 				counterIp = counter->m_sIP;
@@ -581,9 +583,9 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 
 finish:
-	if (req->m_msgType == MSG_TYPE_TCP_OLD)
+	if (req->msgType == MSG_TYPE_TCP_OLD)
 	{
-		resp = new tcp_message_old();
+		resp = new TcpMessageOld();
 
 		// 设置会话
 		resp->SetTcpSession(req->GetTcpSession());
@@ -591,15 +593,15 @@ finish:
 		// 设置消息头
 		int msgHeaderSize = response.size();
 		msgHeaderSize = htonl(msgHeaderSize);
-		memcpy(&(resp->m_MsgHeader.front()), &msgHeaderSize, 4);
+		memcpy(&(resp->msgHeader.front()), &msgHeaderSize, 4);
 
 		// 设置消息内容
 		resp->SetMsgContent(response);
 	}
 		
-	if (req->m_msgType ==  MSG_TYPE_SSL_PB)
+	if (req->msgType ==  MSG_TYPE_SSL_PB)
 	{
-		resp = new ssl_message();
+		resp = new SslMessagePB();
 
 		// 设置会话
 		resp->SetSslSession(req->GetSslSession());
@@ -640,10 +642,10 @@ finish:
 		pbHeader.set_errcode(0);
 		
 		// 设置消息头
-		bool bTmp = pbHeader.SerializeToArray(&(resp->m_MsgHeader.front()), pbHeader.ByteSize());		
+		bool bTmp = pbHeader.SerializeToArray(&(resp->msgHeader.front()), pbHeader.ByteSize());		
 	}
 	
-	if (req->m_msgType == MSG_TYPE_TCP_NEW)
+	if (req->msgType == MSG_TYPE_TCP_NEW)
 	{
 		resp = new CustomMessage(MSG_TYPE_TCP_NEW);
 
@@ -680,10 +682,10 @@ finish:
 		}
 
 		// 设置消息头
-		memcpy(&(resp->m_MsgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
+		memcpy(&(resp->msgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
 	}
 	
-	if (req->m_msgType ==  MSG_TYPE_SSL_NEW)
+	if (req->msgType ==  MSG_TYPE_SSL_NEW)
 	{
 		resp = new CustomMessage(MSG_TYPE_SSL_NEW);
 
@@ -722,7 +724,7 @@ finish:
 
 		//msgHeader.resize(sizeof(MSG_HEADER));
 
-		memcpy(&(resp->m_MsgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
+		memcpy(&(resp->msgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
 	}
 
 

@@ -20,37 +20,11 @@ ISession::~ISession(void)
 
 void ISession::CloseCounterConnect()
 {
-	/*
-	if (counterT2 != NULL)
-	{
-		counterT2->CloseConnect();
-		
-	}
-
-	if (counterSzkingdom != NULL)
-	{
-		counterSzkingdom->CloseConnect();
-		
-	}
-
-	if (counterApex != NULL)
-	{
-		counterApex->CloseConnect();
-		
-	}
-
-	if (counterAGC != NULL)
-	{
-		counterAGC->CloseConnect();
-		
-	}
-
-	if (counterXinYi != NULL)
-	{
-		counterXinYi->CloseConnect();
-		
-	}
-	*/
+	hs.CloseConnect();
+	jz.CloseConnect();
+	dd.CloseConnect();
+	jsd.CloseConnect();
+	//test.CloseConnect();
 }
 /*
 // 根据参数，返回对应的柜台连接
