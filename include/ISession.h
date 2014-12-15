@@ -13,7 +13,7 @@
 // AGC
 #include "TradeBusinessJSD.h"
 // 新意
-//#include "TCPClientSync.h"
+#include "TradeBusinessTest.h"
 
 
 class IMessage;
@@ -33,7 +33,7 @@ protected:
 	TradeBusinessJZ jz;
 	TradeBusinessDD dd;
 	TradeBusinessJSD jsd;
-	//CTCPClientSync test;
+	TradeBusinessTest test;
 
 	// 消息类型
 	int msgType;
@@ -54,7 +54,7 @@ protected:
 	// 关闭柜台连接
 	void CloseCounterConnect();
 	// 得到柜台连接
-	//IBusiness * GetCounterConnect(int counterType);
+	IBusiness& GetCounterConnect(int counterType);
 };
 
 #endif

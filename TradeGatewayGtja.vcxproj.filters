@@ -110,9 +110,6 @@
     <Filter Include="网络层">
       <UniqueIdentifier>{f10e9538-27e1-4db3-af81-d86439fbc667}</UniqueIdentifier>
     </Filter>
-    <Filter Include="网络层\会话管理">
-      <UniqueIdentifier>{eff467c9-996d-4ffd-9678-f81404cb33cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="网络层\网络消息">
       <UniqueIdentifier>{0f35af1c-396e-43f7-a3be-5a6dfd2cbe44}</UniqueIdentifier>
     </Filter>
@@ -397,6 +394,9 @@
     <ClInclude Include="include\IOServicePool.h">
       <Filter>网络层\网络服务</Filter>
     </ClInclude>
+    <ClInclude Include="include\TradeBusinessTest.h">
+      <Filter>业务层\柜台系统\新意</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -533,6 +533,9 @@
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\TcpServer.cpp">
       <Filter>网络层\网络服务</Filter>
+    </ClCompile>
+    <ClCompile Include="business\xinyi\TradeBusinessTest.cpp">
+      <Filter>业务层\柜台系统\新意</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

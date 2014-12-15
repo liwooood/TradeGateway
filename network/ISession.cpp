@@ -26,39 +26,37 @@ void ISession::CloseCounterConnect()
 	jsd.CloseConnect();
 	//test.CloseConnect();
 }
-/*
+
 // 根据参数，返回对应的柜台连接
-IBusiness * ISession::GetCounterConnect(int counterType)
+IBusiness& ISession::GetCounterConnect(int counterType)
 {
 
-	IBusiness * business = NULL;
-
-	switch(counterType)
+	if(counterType == COUNTER_TYPE_HS_T2)
 	{
-	case COUNTER_TYPE_HS_T2:
-		business = counterT2;
-		break;
-	case COUNTER_TYPE_HS_COM:
-		
-		break;
-	case COUNTER_TYPE_JZ_WIN:
-		business = counterSzkingdom;
-		break;
-	case COUNTER_TYPE_JZ_LINUX:
-		
-		break;
-	case COUNTER_TYPE_DINGDIAN:
-		business = counterApex;
-		break;
-	case COUNTER_TYPE_JSD:
-		business = counterAGC;
-		break;
-	case COUNTER_TYPE_XINYI:
-		business = counterXinYi;
-		break;
 	
+		return hs;
 	}
-
-	return business;
+	
+	else if(counterType == COUNTER_TYPE_JZ_WIN)
+	{
+	
+		return jz;
+	}
+	
+	else if(counterType == COUNTER_TYPE_DINGDIAN)
+	{
+		return dd;
+	}
+	else if(counterType == COUNTER_TYPE_JSD)
+	{
+		return jsd;
+	}
+	else if(counterType == COUNTER_TYPE_XINYI)
+	{
+		return test;
+	}
+	else
+	{
+	}	
+	
 }
-*/

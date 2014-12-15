@@ -280,39 +280,3 @@ void TcpSession::handle_write_msg(const boost::system::error_code& error, size_t
 	resp->destroy();
 }
 
-
-
-// 根据参数，返回对应的柜台连接
-IBusiness& TcpSession::GetCounterConnect(int counterType)
-{
-	
-	/*
-	if(counterType == COUNTER_TYPE_HS_T2)
-	{
-	
-		return counterT2;
-	}
-	
-	else if(counterType == COUNTER_TYPE_JZ_WIN)
-	{
-	
-		return counterSzkingdom;
-	}
-	
-	else if(counterType == COUNTER_TYPE_DINGDIAN)
-	{
-		return counterApex;
-	}
-	else if(counterType == COUNTER_TYPE_JSD)
-	{
-		return counterAGC;
-	}
-	else if(counterType == COUNTER_TYPE_XINYI)
-	{
-	
-	}
-	else
-	{
-	}	
-	*/
-}

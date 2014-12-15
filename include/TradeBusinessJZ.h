@@ -1,5 +1,5 @@
-#ifndef _TRADE_BUSINESS_H_
-#define _TRADE_BUSINESS_H_
+#ifndef TRADE_BUSINESS_H
+#define TRADE_BUSINESS_H
 
 #include <string>
 #include <map>

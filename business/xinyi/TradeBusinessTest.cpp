@@ -16,26 +16,26 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/system/system_error.hpp>
 
-#include "TCPClientSync.h"
+#include "TradeBusinessTest.h"
 
 #include "FileLog.h"
 #include "counter.h"
 #include "ConfigManager.h"
 
 
-CTCPClientSync::CTCPClientSync(void)
+TradeBusinessTest::TradeBusinessTest(void)
 {
 	m_bConnected = false;
 }
 
-CTCPClientSync::~CTCPClientSync(void)
+TradeBusinessTest::~TradeBusinessTest(void)
 {
 }
 
 
 
 // 建立连接
-bool CTCPClientSync::CreateConnect()
+bool TradeBusinessTest::CreateConnect()
 {
 	int rc = 0;
 	u_long bio = 1;
@@ -123,7 +123,7 @@ bool CTCPClientSync::CreateConnect()
 
 
 
-bool CTCPClientSync::Write(CustomMessage * pReq)
+bool TradeBusinessTest::Write(CustomMessage * pReq)
 {
 	if (!WriteMsgHeader(pReq))
 		return false;
@@ -135,7 +135,7 @@ bool CTCPClientSync::Write(CustomMessage * pReq)
 }
 
 // 写包头
-bool CTCPClientSync::WriteMsgHeader(CustomMessage * pReq)
+bool TradeBusinessTest::WriteMsgHeader(CustomMessage * pReq)
 {
 	if (!Send(pReq->GetMsgHeader().data(), sizeof(MSG_HEADER), 0) )
 	{
@@ -152,7 +152,7 @@ bool CTCPClientSync::WriteMsgHeader(CustomMessage * pReq)
 	return m_bConnected;
 }
 
-bool CTCPClientSync::WriteMsgContent(CustomMessage * pReq)
+bool TradeBusinessTest::WriteMsgContent(CustomMessage * pReq)
 {
 	if (!Send(pReq->GetMsgContent().data(), pReq->GetMsgContentSize(), 0) )
 	{
@@ -169,7 +169,7 @@ bool CTCPClientSync::WriteMsgContent(CustomMessage * pReq)
 	return m_bConnected;
 }
 
-bool CTCPClientSync::Read(CustomMessage * pRes)
+bool TradeBusinessTest::Read(CustomMessage * pRes)
 {
 	if (!ReadMsgHeader(pRes))
 		return false;
@@ -182,7 +182,7 @@ bool CTCPClientSync::Read(CustomMessage * pRes)
 }
 
 // 读包头
-bool CTCPClientSync::ReadMsgHeader(CustomMessage * pRes)
+bool TradeBusinessTest::ReadMsgHeader(CustomMessage * pRes)
 {
 	if (!Recv(pRes->GetMsgHeader().data(), sizeof(MSG_HEADER), 0) )
 	{
@@ -200,7 +200,7 @@ bool CTCPClientSync::ReadMsgHeader(CustomMessage * pRes)
 }
 
 // 读包内容
-bool CTCPClientSync::ReadMsgContent(CustomMessage * pRes)
+bool TradeBusinessTest::ReadMsgContent(CustomMessage * pRes)
 {
 	
 
@@ -226,7 +226,7 @@ bool CTCPClientSync::ReadMsgContent(CustomMessage * pRes)
 }
 
 // 关闭连接
-void CTCPClientSync::CloseConnect()
+void TradeBusinessTest::CloseConnect()
 {
 	closesocket(sockfd);
 	sockfd = INVALID_SOCKET;
@@ -238,7 +238,7 @@ void CTCPClientSync::CloseConnect()
 
 
 
-bool CTCPClientSync::Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg)
+bool TradeBusinessTest::Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg)
 {
 	// 临时修改，无论新意服务器业务处理成功，还是失败，都不让TradeServer处理逻辑
 
@@ -260,7 +260,7 @@ bool CTCPClientSync::Send(std::string& request, std::string& response, int& stat
 	binRespMsgHeader.MsgContentSize = request.size();
 	binRespMsgHeader.MsgType = MSG_TYPE_REQUEST;
 	binRespMsgHeader.zip = 0;
-	memcpy(&(pReq->m_MsgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
+	memcpy(&(pReq->msgHeader.front()), &binRespMsgHeader, sizeof(MSG_HEADER));
 
 	//pReq->SetMsgHeader();
 
@@ -289,7 +289,7 @@ bool CTCPClientSync::Send(std::string& request, std::string& response, int& stat
 }
 
 // 发送心跳包
-bool CTCPClientSync::HeartBeat()
+bool TradeBusinessTest::HeartBeat()
 {
 	bool bRet = false;
 	/*
@@ -348,7 +348,7 @@ bool CTCPClientSync::HeartBeat()
 }
 
 
-int CTCPClientSync::Send(const char * buf, int len, int flags)
+int TradeBusinessTest::Send(const char * buf, int len, int flags)
 {
 	int rc = 0;
 	
@@ -382,7 +382,7 @@ int CTCPClientSync::Send(const char * buf, int len, int flags)
 	return rc;
 }
 
-int CTCPClientSync::Recv(char* buf, int len, int flags)
+int TradeBusinessTest::Recv(char* buf, int len, int flags)
 {
 	int rc = 0;
 	int totalBytes = 0;

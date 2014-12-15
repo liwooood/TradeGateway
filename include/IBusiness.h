@@ -1,5 +1,5 @@
-#ifndef _IBUSINESS_H_
-#define _IBUSINESS_H_
+#ifndef IBUSINESS_H
+#define IBUSINESS_H
 
 // stl
 #include <string>
