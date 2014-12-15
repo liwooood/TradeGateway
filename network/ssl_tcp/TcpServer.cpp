@@ -39,7 +39,7 @@ void TcpServer::StartAccept()
 	//session.reset(new TcpSession(ios_pool_.get(), queue_, m_msgType));
 	TcpSessionPtr session = boost::factory<TcpSessionPtr>()(iosPool.get(), queue, msgType);
 
-		acceptor.async_accept( session->socket(), 
+		acceptor.async_accept(session->getSocket(), 
 			boost::bind(&TcpServer::OnAccept, 
 			this, 
 			boost::asio::placeholders::error, 

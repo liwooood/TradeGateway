@@ -12,7 +12,7 @@ public:
 	FileLog(void);
 	~FileLog(void);
 
-	void Log(std::string log, int level=0, std::string file="TradeGateway");
+	void Log(std::string log, int level=0, std::string file="证券网关日志");
 	void error(std::string fileName, std::string log);
 };
 

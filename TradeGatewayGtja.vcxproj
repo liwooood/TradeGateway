@@ -197,13 +197,7 @@
       <FileType>CppHeader</FileType>
     </Text>
     <ClInclude Include="network\ssl\pkgheader.pb.h" />
-    <Text Include="network\ssl\ssl_session.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
     <Text Include="network\ssl\trade_server_ssl.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
-    <Text Include="network\tcp\tcp_session_old.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
     <Text Include="network\tcp\trade_server_tcp_old.h.txt">
@@ -253,9 +247,6 @@
     </Text>
     <ClCompile Include="network\ISession.cpp" />
     <ClCompile Include="network\ssl\pkgheader.pb.cc" />
-    <Text Include="network\ssl\ssl_session.cpp.txt">
-      <FileType>CppCode</FileType>
-    </Text>
     <Text Include="network\ssl\trade_server_ssl.cpp.txt">
       <FileType>CppCode</FileType>
     </Text>
@@ -265,9 +256,6 @@
     <ClCompile Include="network\ssl_tcp\TcpServer.cpp" />
     <ClCompile Include="network\ssl_tcp\TcpSession.cpp" />
     <ClCompile Include="network\ssl_tcp\TradeServer.cpp" />
-    <Text Include="network\tcp\tcp_session_old.cpp.txt">
-      <FileType>CppCode</FileType>
-    </Text>
     <Text Include="network\tcp\trade_server_tcp_old.cpp.txt">
       <FileType>CppCode</FileType>
     </Text>

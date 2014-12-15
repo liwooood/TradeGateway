@@ -17,13 +17,14 @@
 #include "CustomMessage.h" 
 
 
+TcpSession::MemPoolType TcpSession::memPool;
 
-TcpSession::TcpSession( ios_type& ios, queue_type& q, int msgType):
-	socket_(ios), 
-	strand_(ios), 
-	queue_(q)
+TcpSession::TcpSession(IOSType& ios, QueueType& q, int msgType):
+	socket(ios), 
+	strand(ios), 
+	queue(q)
 {
-	m_msgType = msgType;
+	this->msgType = msgType;
 }
 
 TcpSession::~TcpSession()
@@ -31,29 +32,28 @@ TcpSession::~TcpSession()
 }
 
 
-TcpSession::socket_type& TcpSession::socket()
+TcpSession::SocketType& TcpSession::getSocket()
 {
-	return socket_;
+	return socket;
 }
 
-TcpSession::ios_type& TcpSession::io_service()
+TcpSession::IOSType& TcpSession::getIOService()
 {
-	return socket_.get_io_service();
+	return socket.get_io_service();
 }
 
 void TcpSession::close()
 {
 	// 关闭柜台连接
-//	CloseCounterConnect();
+	CloseCounterConnect();
 
 	boost::system::error_code ignored_ec;
 
-	socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
+	socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
 
-	socket_.close(ignored_ec);
+	socket.close(ignored_ec);
 
-	// 释放Server创建的指针
-	//delete this;
+	
 }
 
 
@@ -62,11 +62,11 @@ void TcpSession::start()
 	read();
 }
 
-IMessage* TcpSession::create_request()
+IMessage* TcpSession::CreateRequest()
 {
 	IMessage* req = NULL;
 
-	switch (m_msgType)
+	switch (msgType)
 	{
 	case MSG_TYPE_TCP_OLD:
 		req = new TcpMessageOld();
@@ -99,30 +99,30 @@ IMessage* TcpSession::create_request()
 // 读请求
 void TcpSession::read()
 {
-	IMessage* req = create_request();	
+	IMessage* req = CreateRequest();	
 
-	boost::asio::async_read(socket_, 
+	boost::asio::async_read(socket, 
 		boost::asio::buffer(req->GetMsgHeader(), req->GetMsgHeaderSize()), 
 		boost::asio::transfer_all(),
-		strand_.wrap(
-			boost::bind(&TcpSession::handle_read_head, shared_from_this(), boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred, req)
+		strand.wrap(
+			boost::bind(&TcpSession::OnReadHead, shared_from_this(), boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred, req)
 		)
 	);
 }
 
-void TcpSession::handle_read_head(const boost::system::error_code& error, size_t bytes_transferred, IMessage* req)
+void TcpSession::OnReadHead(const boost::system::error_code& error, size_t transferredBytes, IMessage* req)
 {
 	if (error)
 	{
-		gFileLog::instance().Log("TcpSession 读包头失败或客户端关闭连接， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error("network", "TcpSession 读包头失败或客户端关闭连接， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
 	}
 
-	if (bytes_transferred != req->GetMsgHeaderSize())
+	if (transferredBytes != req->GetMsgHeaderSize())
 	{
-		gFileLog::instance().Log("TcpSession 读包头失败，需要读:" + boost::lexical_cast<std::string>(req->GetMsgHeaderSize()) + ", 实际读:" + boost::lexical_cast<std::string>(bytes_transferred) );
+		gFileLog::instance().error("network", "TcpSession 读包头失败，需要读:" + boost::lexical_cast<std::string>(req->GetMsgHeaderSize()) + ", 实际读:" + boost::lexical_cast<std::string>(transferredBytes) );
 
 		close();
 		return;
@@ -131,39 +131,39 @@ void TcpSession::handle_read_head(const boost::system::error_code& error, size_t
 	
 	if (!req->DecoderMsgHeader())
 	{
-		gFileLog::instance().Log("TcpSession 解码包头失败");
+		gFileLog::instance().error("network", "TcpSession 解码包头失败");
 
 		close();
 		return;
 	}
 
-	boost::asio::async_read(socket_, 
+	boost::asio::async_read(socket, 
 		boost::asio::buffer(req->GetMsgContent(), req->GetMsgContentSize()),
 		boost::asio::transfer_all(),
-		strand_.wrap(
-			bind(&TcpSession::handle_read_msg, shared_from_this(), boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred, req)
+		strand.wrap(
+			boost::bind(&TcpSession::OnReadMsg, shared_from_this(), boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred, req)
 		)
 	);
 }
 
 
 
-void TcpSession::handle_read_msg(const boost::system::error_code& error, size_t bytes_transferred, IMessage* req)
+void TcpSession::OnReadMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* req)
 {
 	
 		
 	if (error) 
 	{
 	
-		//gFileLog::instance().Log("TcpSession 读包内容失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error("network", "TcpSession 读包内容失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
 	}
 
-	if (bytes_transferred != req->GetMsgContentSize())
+	if (transferredBytes != req->GetMsgContentSize())
 	{
-		gFileLog::instance().Log("TcpSession 读包内容失败 需要读:" + boost::lexical_cast<std::string>(req->GetMsgContentSize()) + ", 实际读:" + boost::lexical_cast<std::string>(bytes_transferred) );
+		gFileLog::instance().error("network", "TcpSession 读包内容失败 需要读:" + boost::lexical_cast<std::string>(req->GetMsgContentSize()) + ", 实际读:" + boost::lexical_cast<std::string>(transferredBytes) );
 
 		close();
 		return;
@@ -173,7 +173,7 @@ void TcpSession::handle_read_msg(const boost::system::error_code& error, size_t 
 	// 设置接收到的时间
 	req->SetRecvTime();
 
-	queue_.push(req);
+	queue.push(req);
 
 	read();
 }
@@ -181,79 +181,61 @@ void TcpSession::handle_read_msg(const boost::system::error_code& error, size_t 
 // 写应答数据
 void TcpSession::write(IMessage* resp)
 {
-	try
-	{
-		if (m_msgType != resp->msgType)
-		{
-			AfxMessageBox("消息类型错误");
-		}
-
-		boost::asio::async_write(socket_,
+		boost::asio::async_write(socket,
 			boost::asio::buffer(resp->GetMsgHeader(), resp->GetMsgHeaderSize()),
 			boost::asio::transfer_all(),
-			strand_.wrap(
-				bind(&TcpSession::handle_write_head, shared_from_this(), boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred, resp)
+			strand.wrap(
+				boost::bind(&TcpSession::OnWriteHead, shared_from_this(), boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred, resp)
 			)
 		);
-	}
-	catch(std::exception& e)
-	{
-		std::string expMsg = e.what();
-		gFileLog::instance().Log("TcpSession write exp: " + expMsg);
-	}
+	
 }
 
-void TcpSession::handle_write_head(const boost::system::error_code& error, size_t bytes_transferred, IMessage* resp)
+void TcpSession::OnWriteHead(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp)
 {
 	if (error)
 	{
-		gFileLog::instance().Log("TcpSession 写包头失败，错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error("network", "TcpSession 写包头失败，错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
 	}
 
 
-	if (bytes_transferred != resp->GetMsgHeaderSize())
+	if (transferredBytes != resp->GetMsgHeaderSize())
 	{
-		gFileLog::instance().Log("TcpSession 写包头失败 需要写:" + boost::lexical_cast<std::string>(resp->GetMsgHeaderSize()) + ", 实际写:" + boost::lexical_cast<std::string>(bytes_transferred) );
+		gFileLog::instance().error("network", "TcpSession 写包头失败 需要写:" + boost::lexical_cast<std::string>(resp->GetMsgHeaderSize()) + ", 实际写:" + boost::lexical_cast<std::string>(transferredBytes) );
 
 		close();
 		return;
 	}
 
-	try
-	{
-		boost::asio::async_write(socket_,
+	
+		boost::asio::async_write(socket,
 			boost::asio::buffer(resp->GetMsgContent(), resp->GetMsgContentSize()),
 			boost::asio::transfer_all(),
-			strand_.wrap(
-				bind(&TcpSession::handle_write_msg, shared_from_this(), boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred, resp)
+			strand.wrap(
+				boost::bind(&TcpSession::OnWriteMsg, shared_from_this(), boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred, resp)
 			)
 		);
-	}
-	catch(std::exception& e)
-	{
-		std::string expMsg = e.what();
-		gFileLog::instance().Log("TcpSession handle_write_head exp: " + expMsg);
-	}	
+	
 }
 
-void TcpSession::handle_write_msg(const boost::system::error_code& error, size_t bytes_transferred, IMessage* resp)
+void TcpSession::OnWriteMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp)
 {
 
 	if (error)
 	{
 
-		gFileLog::instance().Log("TcpSession 写包内容失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error("network", "TcpSession 写包内容失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
 	}
 
-	if (bytes_transferred != resp->GetMsgContentSize())
+	if (transferredBytes != resp->GetMsgContentSize())
 	{
-		gFileLog::instance().Log("TcpSession 写包内容失败 需要写:" + boost::lexical_cast<std::string>(resp->GetMsgContentSize()) + ", 实际写:" + boost::lexical_cast<std::string>(bytes_transferred) );
+		gFileLog::instance().error("network", "TcpSession 写包内容失败 需要写:" + boost::lexical_cast<std::string>(resp->GetMsgContentSize()) + ", 实际写:" + boost::lexical_cast<std::string>(transferredBytes) );
 
 		close();
 		return;
@@ -261,20 +243,9 @@ void TcpSession::handle_write_msg(const boost::system::error_code& error, size_t
 
 	// 存入日志队列
 	resp->SetSendTime();
-
 	gFileLogManager::instance().push(resp->log);
 	gDistributedLogManager::instance().push(resp->log);
 
-	/*
-	if (msgHeader.FunctionNo == 0)
-	{
-		// 心跳功能不写日志
-	}
-	else
-	{
-		
-	}
-	*/
 
 	// 删除应答包
 	resp->destroy();

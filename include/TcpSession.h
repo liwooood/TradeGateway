@@ -33,74 +33,53 @@ http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/example/cpp03/ssl/serve
 
 http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/example/cpp03/http/server2/connection.hpp
 */
-class TcpSession : public boost::enable_shared_from_this<TcpSession>
+class TcpSession : public boost::enable_shared_from_this<TcpSession>, public ISession
 {
 public:
-	typedef boost::asio::ip::tcp::socket socket_type;
-	typedef boost::asio::io_service ios_type;
+	typedef boost::asio::ip::tcp::socket SocketType;
+	typedef boost::asio::io_service IOSType;
 
-	typedef ios_type::strand strand_type;
-	typedef QueueThreadSafe<IMessage*> queue_type;
+	typedef IOSType::strand StrandType;
+	typedef QueueThreadSafe<IMessage*> QueueType;
 
 	//内存池，暂时不用
-	//typedef boost::object_pool<CustomMessage*> object_pool_type;
+	typedef boost::object_pool<IMessage*> MemPoolType;
 
 private:
-	socket_type socket_;
-	strand_type strand_;
-	queue_type& queue_;
+	SocketType socket;
+	StrandType strand;
+	QueueType& queue;
 
-	//static object_pool_type msg_pool_;
+	static MemPoolType memPool;
+	
+
+
+	// 消息类型
+	int msgType;
 
 
 public:
-	TcpSession( ios_type& ios, queue_type& q, int msgType);
+	TcpSession(IOSType& ios, QueueType& q, int msgType);
 	~TcpSession();
 
-	socket_type& socket();
-	ios_type& io_service();
+	SocketType& getSocket();
+	IOSType& getIOService();
+
+
 
 	virtual void start();
 	virtual void close();
 	
 
-
-	virtual IMessage* create_request();
+	virtual IMessage* CreateRequest();
 	virtual void read();
-	virtual void handle_read_head(const boost::system::error_code& error, size_t bytes_transferred, IMessage* req);
-	virtual void handle_read_msg(const boost::system::error_code& error, size_t bytes_transferred, IMessage* req);
+	virtual void OnReadHead(const boost::system::error_code& error, size_t transferredBytes, IMessage* req);
+	virtual void OnReadMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* req);
 
 
 	virtual void write(IMessage* resp);
-	virtual void handle_write_head(const boost::system::error_code& error, size_t bytes_transferred, IMessage* resp);
-	virtual void handle_write_msg(const boost::system::error_code& error, size_t bytes_transferred, IMessage* resp);
-
-public:
-
-	// 是否登录状态
-	int loginStatus;
-
-	
-
-	// 建立线程，发送心跳消息，调用业务连接的心跳自定义实现方法，保持活动
-
-
-	// 消息类型
-	int m_msgType;
-
-	
-	
-	// 得到柜台连接
-	IBusiness& GetCounterConnect(int counterType);
-
-	/*
-
-	 以下变量可以通过TcpServer或SSLServer引入
-	 业务层TradeServer的ProcessRequest的部分逻辑，可以放在会话层sslsession处理，因为sslsession是唯一的，每个session有connectmanager, 可以减少并发争用，并且不会有并发的问题
-	
-	ConnectManager cm;
-	 */
-	
+	virtual void OnWriteHead(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp);
+	virtual void OnWriteMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp);	
 };
 
 

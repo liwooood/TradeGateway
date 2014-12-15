@@ -21,8 +21,8 @@
 class SSLServer
 {
 public:
-	typedef SSLSession::ios_type IOSType;
-	typedef SSLSession::queue_type QueueType;
+	typedef SSLSession::IOSType IOSType;
+	typedef SSLSession::QueueType QueueType;
 
 	typedef boost::asio::ip::tcp::acceptor AcceptorType;
 	typedef boost::asio::ip::tcp TCPType;

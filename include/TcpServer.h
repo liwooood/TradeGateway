@@ -29,8 +29,8 @@ public:
 	typedef boost::asio::ip::tcp::acceptor AcceptorType;
 	typedef boost::asio::ip::tcp TCPType;
 
-	typedef TcpSession::ios_type IOSType;
-	typedef TcpSession::queue_type QueueType;
+	typedef TcpSession::IOSType IOSType;
+	typedef TcpSession::QueueType QueueType;
 
 private:
 	IOServicePool& iosPool;
@@ -54,6 +54,7 @@ public:
 private:
 	void StartAccept();
 	void OnAccept(const boost::system::error_code& error, TcpSessionPtr session);
+	//void OnAccept(const boost::system::error_code& error, ISessionPtr session);
 	
 
 public:

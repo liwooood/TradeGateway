@@ -72,7 +72,7 @@ void SSLServer::StartAccept()
 //	m_session.reset(new SSLSession(ios_pool_.get(), queue_, m_msgType, context_));
 	SSLSessionPtr session = boost::factory<SSLSessionPtr>()(iosPool.get(), queue, msgType, context);
 
-	acceptor.async_accept(session->socket(), 
+	acceptor.async_accept(session->getSocket(), 
 		boost::bind(&SSLServer::OnAccept, 
 		this, 
 		boost::asio::placeholders::error, 

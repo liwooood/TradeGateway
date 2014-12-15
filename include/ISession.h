@@ -26,6 +26,10 @@ public:
 
 	
 	virtual void write(IMessage* resp) = 0;
+	// 关闭柜台连接
+	void CloseCounterConnect();
+	// 得到柜台连接
+	IBusiness& GetCounterConnect(int counterType);
 
 protected:
 	// 单会话单连接模式
@@ -51,10 +55,7 @@ protected:
 	virtual void OnWriteMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp) = 0;
 
 	
-	// 关闭柜台连接
-	void CloseCounterConnect();
-	// 得到柜台连接
-	IBusiness& GetCounterConnect(int counterType);
+	
 };
 
 #endif

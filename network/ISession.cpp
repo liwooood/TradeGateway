@@ -24,7 +24,7 @@ void ISession::CloseCounterConnect()
 	jz.CloseConnect();
 	dd.CloseConnect();
 	jsd.CloseConnect();
-	//test.CloseConnect();
+	test.CloseConnect();
 }
 
 // 根据参数，返回对应的柜台连接
