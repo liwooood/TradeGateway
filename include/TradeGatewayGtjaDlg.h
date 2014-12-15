@@ -105,14 +105,12 @@ private:
 	CString m_sLogMqThreadPool;
 	CString m_sLogShowThreadPool;
 
-	//io_service_pool iospool;
-	io_service_pool * piospool_http;
 
-	io_service_pool * iospool_tcp_old;
-	io_service_pool * iospool_ssl_old;
+	IOServicePool * iospool_tcp_old;
+	IOServicePool * iospool_ssl_old;
 	
-	io_service_pool * iospool_tcp_new;
-	io_service_pool * iospool_ssl_new;
+	IOServicePool * iospool_tcp_new;
+	IOServicePool * iospool_ssl_new;
 
 	// ÍøÂç²ã
 	TcpServer * pTcpOldServer;

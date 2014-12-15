@@ -5,16 +5,16 @@
 #include "FileLog.h"
 
 
-SSLServer::SSLServer(unsigned short port, queue_type& q, int msgType, int n)
-		:
-		ios_pool_(*boost::factory<io_service_pool*>()(n))
-		,queue_(q)
-		,acceptor_(ios_pool_.get(),boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
-		,context_(boost::asio::ssl::context::sslv23)
-		,m_session()
+SSLServer::SSLServer(unsigned short port, QueueType& q, int msgType, int ioThreadNum)
+		:iosPool(*boost::factory<IOServicePool*>()(ioThreadNum))
+		,queue(q)
+		,acceptor(iosPool.get(),boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+		,context(boost::asio::ssl::context::sslv23)
+		//,m_session()
 {
-	m_msgType = msgType;
-	acceptor_.set_option(acceptor_type::reuse_address(true));
+	this->msgType = msgType;
+
+	acceptor.set_option(AcceptorType::reuse_address(true));
 
 /*
 context_.set_options(
@@ -26,43 +26,95 @@ context_.set_options(
     context_.use_private_key_file("server.pem", boost::asio::ssl::context::pem);
     context_.use_tmp_dh_file("dh512.pem");
 */
+	/*
 	if (gConfigManager::instance().m_nAuth)
 	{
 		context_.set_verify_mode(boost::asio::ssl::context::verify_peer  | boost::asio::ssl::context::verify_fail_if_no_peer_cert);
 		context_.load_verify_file(gConfigManager::instance().m_sPath  + "\\ca.crt");
 	}
 		  
-		  
+		  */
 
-	context_.use_certificate_file(gConfigManager::instance().m_sPath + "\\server.crt", boost::asio::ssl::context::pem);
-	context_.use_private_key_file(gConfigManager::instance().m_sPath + "\\serverkey.pem", boost::asio::ssl::context::pem);
+	context.use_certificate_file(gConfigManager::instance().m_sPath + "\\server.crt", boost::asio::ssl::context::pem);
+	context.use_private_key_file(gConfigManager::instance().m_sPath + "\\serverkey.pem", boost::asio::ssl::context::pem);
 
-	start_accept();
+	StartAccept();
 }
 
-SSLServer::SSLServer(io_service_pool& ios, unsigned short port, queue_type& q, int msgType)
-		:ios_pool_(ios)
-		,queue_(q)
-		,acceptor_(ios_pool_.get(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
-		,context_(boost::asio::ssl::context::sslv23)
-		,m_session()
+SSLServer::SSLServer(IOServicePool& ios, unsigned short port, QueueType& q, int msgType)
+		:iosPool(ios)
+		,queue(q)
+		,acceptor(iosPool.get(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+		,context(boost::asio::ssl::context::sslv23)
+		//,m_session()
 {
-	m_msgType = msgType;
-	acceptor_.set_option(acceptor_type::reuse_address(true));
+	this->msgType = msgType;
 
+	acceptor.set_option(AcceptorType::reuse_address(true));
 
+	/*
 	if (gConfigManager::instance().m_nAuth)
 	{
 		context_.set_verify_mode(boost::asio::ssl::context::verify_peer  | boost::asio::ssl::context::verify_fail_if_no_peer_cert);
 		context_.load_verify_file(gConfigManager::instance().m_sPath  + "\\ca.crt");
 	}
+	*/
 
-	context_.use_certificate_file(gConfigManager::instance().m_sPath + "\\server.crt", boost::asio::ssl::context::pem);
-	context_.use_private_key_file(gConfigManager::instance().m_sPath + "\\serverkey.pem", boost::asio::ssl::context::pem);
+	context.use_certificate_file(gConfigManager::instance().m_sPath + "\\server.crt", boost::asio::ssl::context::pem);
+	context.use_private_key_file(gConfigManager::instance().m_sPath + "\\serverkey.pem", boost::asio::ssl::context::pem);
 
-	start_accept();
+	StartAccept();
 }
 
+
+void SSLServer::StartAccept()
+{
+//	m_session.reset(new SSLSession(ios_pool_.get(), queue_, m_msgType, context_));
+	SSLSessionPtr session = boost::factory<SSLSessionPtr>()(iosPool.get(), queue, msgType, context);
+
+	acceptor.async_accept(session->socket(), 
+		boost::bind(&SSLServer::OnAccept, 
+		this, 
+		boost::asio::placeholders::error, 
+		session));
+}
+
+// sess不要和session冲突
+void SSLServer::OnAccept(const boost::system::error_code& error, SSLSessionPtr session)
+{
+	StartAccept();
+
+	if (error)
+	{
+		gFileLog::instance().error("network", "SSLServer OnAccept，错误代码:" + boost::lexical_cast<std::string>(error.value()) + "，错误消息:" + error.message());
+
+		session->close();	
+	}
+	else
+	{
+		session->start();
+	}
+}
+
+
+void SSLServer::start()
+{
+	iosPool.start();
+}
+
+
+
+void SSLServer::run()
+{
+	iosPool.run();
+}
+
+void SSLServer::stop()
+{
+	iosPool.stop();
+}
+
+/*
 bool SSLServer::verify_certificate(bool preverified, boost::asio::ssl::verify_context& ctx)
 {
 	// The verify callback can be used to check whether the certificate that is
@@ -83,57 +135,10 @@ bool SSLServer::verify_certificate(bool preverified, boost::asio::ssl::verify_co
 	return preverified;
 }
 
-void SSLServer::start()
-{
-	ios_pool_.start();
-}
-
-
-void SSLServer::stop()
-{
-	ios_pool_.stop();
-}
-
-
-void SSLServer::run()
-{
-	ios_pool_.run();
-}
-
-void SSLServer::start_accept()
-{
-	m_session.reset(new SSLSession(ios_pool_.get(), queue_, m_msgType, context_));
-
-	acceptor_.async_accept( m_session->socket(), 
-		boost::bind(&SSLServer::accept_handler, 
-		this, 
-		boost::asio::placeholders::error, 
-		m_session));
-}
-
-// sess不要和session冲突
-void SSLServer::accept_handler(const boost::system::error_code& error, SSLSessionPtr session)
-{
-	if (error)
-	{
-		gFileLog::instance().Log("SSLServer accept_handler，错误代码:" + boost::lexical_cast<std::string>(error.value()) + "，错误消息:" + error.message());
-
-		//delete session;
-		
-	}
-	else
-	{
-		session->start();
-		
-	}
-
-	start_accept();
-}
-
-
 std::string SSLServer::get_password()
 {
 	return "chenhf2011";
 }
 
 
+*/

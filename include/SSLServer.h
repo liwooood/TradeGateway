@@ -1,5 +1,5 @@
-#ifndef _SSL_SERVER_H_
-#define _SSL_SERVER_H_
+#ifndef SSL_SERVER_H
+#define SSL_SERVER_H
 
 
 #include <iostream>
@@ -21,34 +21,40 @@
 class SSLServer
 {
 public:
-	typedef SSLSession::ios_type ios_type;
-	typedef boost::asio::ip::tcp::acceptor acceptor_type;
-	typedef SSLSession::queue_type queue_type;
+	typedef SSLSession::ios_type IOSType;
+	typedef SSLSession::queue_type QueueType;
+
+	typedef boost::asio::ip::tcp::acceptor AcceptorType;
+	typedef boost::asio::ip::tcp TCPType;
 
 private:
-	io_service_pool& ios_pool_;
-	acceptor_type acceptor_;
-	queue_type& queue_;
-	boost::asio::ssl::context context_;
+	IOServicePool& iosPool;
+	QueueType& queue;
 
+	AcceptorType acceptor;
+	
+	boost::asio::ssl::context context;
+
+	int msgType;
+	//SSLSessionPtr m_session;
 	
 public:
-	SSLServer( unsigned short port, queue_type& q, int msgType, int n=4);
-	SSLServer(io_service_pool& ios, unsigned short port, queue_type& q, int msgType);
+	SSLServer( unsigned short port, QueueType& q, int msgType, int n=4);
+	SSLServer(IOServicePool& ios, unsigned short port, QueueType& q, int msgType);
 	void start();
 	void run();
 	void stop();
 
-	bool verify_certificate(bool preverified,      boost::asio::ssl::verify_context& ctx);
-	std::string get_password();
+	//bool verify_certificate(bool preverified,      boost::asio::ssl::verify_context& ctx);
+	//std::string get_password();
 	
-	int m_msgType;
+	
 
 private:
-	void start_accept();
-	void accept_handler(const boost::system::error_code& error, SSLSessionPtr session);
+	void StartAccept();
+	void OnAccept(const boost::system::error_code& error, SSLSessionPtr session);
 	
-	SSLSessionPtr m_session;
+	
 };
 
 #endif

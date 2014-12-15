@@ -119,27 +119,6 @@
     <Filter Include="网络层\网络服务">
       <UniqueIdentifier>{1bf9b355-b3ab-48cf-975e-e5a85b6a2a77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="网络层\网络服务\SSL">
-      <UniqueIdentifier>{9269f51b-2f40-42b7-add0-37f29c08727a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络服务\SSL\SSL证书">
-      <UniqueIdentifier>{bf2ce67b-397e-4284-b861-cd67f3992eb8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络服务\TCP">
-      <UniqueIdentifier>{41fc8b71-479f-4a16-beab-029675894ec0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络服务\需要删除">
-      <UniqueIdentifier>{2b75c881-96da-4c9b-b637-6864736b989f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络服务\需要删除\HTTP old">
-      <UniqueIdentifier>{32a22d36-dbda-46e8-960b-639a7539612d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络服务\需要删除\SSL old">
-      <UniqueIdentifier>{c560affd-45df-43d7-aba3-eceddcfe5b17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\网络服务\需要删除\TCP old">
-      <UniqueIdentifier>{d66611b8-3af3-41ef-aeb6-edbd7e4ba920}</UniqueIdentifier>
-    </Filter>
     <Filter Include="网络层\会话层">
       <UniqueIdentifier>{867ac25b-95e3-480c-b8c9-ad6188fef087}</UniqueIdentifier>
     </Filter>
@@ -229,6 +208,9 @@
     </Filter>
     <Filter Include="日志\文件日志">
       <UniqueIdentifier>{e5e5bfd0-3e24-4d16-a2a0-cad712087b73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="网络层\网络服务\SSL证书">
+      <UniqueIdentifier>{bf2ce67b-397e-4284-b861-cd67f3992eb8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -358,12 +340,6 @@
     <ClInclude Include="include\errcode.h">
       <Filter>错误信息</Filter>
     </ClInclude>
-    <ClInclude Include="include\TcpServer.h">
-      <Filter>网络层\网络服务\TCP</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SSLServer.h">
-      <Filter>网络层\网络服务\SSL</Filter>
-    </ClInclude>
     <ClInclude Include="include\QueueThreadSafe.h">
       <Filter>线程安全Queue</Filter>
     </ClInclude>
@@ -409,11 +385,17 @@
     <ClInclude Include="include\TcpSession.h">
       <Filter>网络层\会话层</Filter>
     </ClInclude>
-    <ClInclude Include="include\IOServicePool.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
     <ClInclude Include="include\FileLog.h">
       <Filter>调试输出</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SSLServer.h">
+      <Filter>网络层\网络服务</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TcpServer.h">
+      <Filter>网络层\网络服务</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IOServicePool.h">
+      <Filter>网络层\网络服务</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -479,12 +461,6 @@
     </ClCompile>
     <ClCompile Include="network\ssl\pkgheader.pb.cc">
       <Filter>网络层\网络消息\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="network\ssl_tcp\SSLServer.cpp">
-      <Filter>网络层\网络服务\SSL</Filter>
-    </ClCompile>
-    <ClCompile Include="network\ssl_tcp\TcpServer.cpp">
-      <Filter>网络层\网络服务\TCP</Filter>
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\TradeServer.cpp">
       <Filter>业务层</Filter>
@@ -552,6 +528,12 @@
     <ClCompile Include="network\ssl_tcp\TcpSession.cpp">
       <Filter>网络层\会话层</Filter>
     </ClCompile>
+    <ClCompile Include="network\ssl_tcp\SSLServer.cpp">
+      <Filter>网络层\网络服务</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ssl_tcp\TcpServer.cpp">
+      <Filter>网络层\网络服务</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\TradeGatewayGtja.ico">
@@ -568,19 +550,19 @@
       <Filter>主框架\资源文件</Filter>
     </None>
     <None Include="bin\ca.crt">
-      <Filter>网络层\网络服务\SSL\SSL证书</Filter>
+      <Filter>网络层\网络服务\SSL证书</Filter>
     </None>
     <None Include="bin\client.crt">
-      <Filter>网络层\网络服务\SSL\SSL证书</Filter>
+      <Filter>网络层\网络服务\SSL证书</Filter>
     </None>
     <None Include="bin\clientkey.pem">
-      <Filter>网络层\网络服务\SSL\SSL证书</Filter>
+      <Filter>网络层\网络服务\SSL证书</Filter>
     </None>
     <None Include="bin\server.crt">
-      <Filter>网络层\网络服务\SSL\SSL证书</Filter>
+      <Filter>网络层\网络服务\SSL证书</Filter>
     </None>
     <None Include="bin\serverkey.pem">
-      <Filter>网络层\网络服务\SSL\SSL证书</Filter>
+      <Filter>网络层\网络服务\SSL证书</Filter>
     </None>
     <None Include="log\tradelog.bat">
       <Filter>日志\日志消息</Filter>
@@ -699,15 +681,6 @@
     </Text>
     <Text Include="network\http\flash交易密码处理规则.txt">
       <Filter>业务层\需要删除\HTTP</Filter>
-    </Text>
-    <Text Include="network\tcp\tcp_server_old.h.txt">
-      <Filter>网络层\网络服务\需要删除\TCP old</Filter>
-    </Text>
-    <Text Include="network\http\http_server.h.txt">
-      <Filter>网络层\网络服务\需要删除\HTTP old</Filter>
-    </Text>
-    <Text Include="network\ssl\ssl_server.h.txt">
-      <Filter>网络层\网络服务\需要删除\SSL old</Filter>
     </Text>
     <Text Include="network\tcp\trade_server_tcp_old.h.txt">
       <Filter>业务层\需要删除\Tcp old</Filter>

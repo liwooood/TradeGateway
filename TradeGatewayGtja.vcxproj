@@ -192,23 +192,14 @@
     <ClInclude Include="log\mq\LogConnectPool.h" />
     <ClInclude Include="log\tradelog.pb.h" />
     <Text Include="log\日志开发说明.txt" />
-    <Text Include="network\http\http_server.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
     <Text Include="network\http\trade_server_http.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
     <ClInclude Include="network\ssl\pkgheader.pb.h" />
-    <Text Include="network\ssl\ssl_server.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
     <Text Include="network\ssl\ssl_session.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
     <Text Include="network\ssl\trade_server_ssl.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
-    <Text Include="network\tcp\tcp_server_old.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
     <Text Include="network\tcp\tcp_session_old.h.txt">

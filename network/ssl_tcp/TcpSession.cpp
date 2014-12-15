@@ -44,7 +44,7 @@ TcpSession::ios_type& TcpSession::io_service()
 void TcpSession::close()
 {
 	// 关闭柜台连接
-	CloseCounterConnect();
+//	CloseCounterConnect();
 
 	boost::system::error_code ignored_ec;
 

@@ -6,8 +6,8 @@
 
 
 
-TcpServer::TcpServer(unsigned short port, QueueType& q, int msgType, int n):
-	  iosPool(*boost::factory<IOServicePool*>()(n)),
+TcpServer::TcpServer(unsigned short port, QueueType& q, int msgType, int ioThreadNum):
+	  iosPool(*boost::factory<IOServicePool*>()(ioThreadNum)),
 	  queue(q),
 	  acceptor(iosPool.get(), TCPType::endpoint(TCPType::v4(), port))
 	  //,session()
