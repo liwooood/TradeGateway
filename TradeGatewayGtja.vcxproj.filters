@@ -62,9 +62,6 @@
     <Filter Include="日志\日志消息">
       <UniqueIdentifier>{1f20a1ab-135a-4eec-894f-b78fb0f37373}</UniqueIdentifier>
     </Filter>
-    <Filter Include="日志\文件日志">
-      <UniqueIdentifier>{e5e5bfd0-3e24-4d16-a2a0-cad712087b73}</UniqueIdentifier>
-    </Filter>
     <Filter Include="线程池ThreadPool">
       <UniqueIdentifier>{9dbc99d7-d101-450a-82e5-659947d5c14f}</UniqueIdentifier>
     </Filter>
@@ -145,12 +142,6 @@
     </Filter>
     <Filter Include="网络层\会话层">
       <UniqueIdentifier>{867ac25b-95e3-480c-b8c9-ad6188fef087}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\会话层\Tcp">
-      <UniqueIdentifier>{9cd5498a-f7e0-4ccd-b65e-1270034a5886}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="网络层\会话层\SSL">
-      <UniqueIdentifier>{00468bfb-8e41-44d5-b723-7396293a92c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="网络层\会话层\需要删除">
       <UniqueIdentifier>{8e34f7e6-5421-4f99-8440-6e53bb5b5b15}</UniqueIdentifier>
@@ -236,6 +227,9 @@
     <Filter Include="网络层\网络消息\protobuf">
       <UniqueIdentifier>{dc0f81dd-291e-44f8-9a46-44c19b051098}</UniqueIdentifier>
     </Filter>
+    <Filter Include="日志\文件日志">
+      <UniqueIdentifier>{e5e5bfd0-3e24-4d16-a2a0-cad712087b73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -246,9 +240,6 @@
     </ClInclude>
     <ClInclude Include="cache\CacheData.h">
       <Filter>缓存</Filter>
-    </ClInclude>
-    <ClInclude Include="output\FileLog.h">
-      <Filter>调试输出</Filter>
     </ClInclude>
     <ClInclude Include="ConnectPool\BusinessSystem.h">
       <Filter>业务层\柜台连接池</Filter>
@@ -358,9 +349,6 @@
     <ClInclude Include="include\ConnectPool.h">
       <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
-    <ClInclude Include="include\SSLSession.h">
-      <Filter>网络层\会话层\SSL</Filter>
-    </ClInclude>
     <ClInclude Include="include\IMessage.h">
       <Filter>网络层\网络消息</Filter>
     </ClInclude>
@@ -370,17 +358,11 @@
     <ClInclude Include="include\errcode.h">
       <Filter>错误信息</Filter>
     </ClInclude>
-    <ClInclude Include="include\io_service_pool.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
     <ClInclude Include="include\TcpServer.h">
       <Filter>网络层\网络服务\TCP</Filter>
     </ClInclude>
     <ClInclude Include="include\SSLServer.h">
       <Filter>网络层\网络服务\SSL</Filter>
-    </ClInclude>
-    <ClInclude Include="include\TcpSession.h">
-      <Filter>网络层\会话层\Tcp</Filter>
     </ClInclude>
     <ClInclude Include="include\QueueThreadSafe.h">
       <Filter>线程安全Queue</Filter>
@@ -420,6 +402,18 @@
     </ClInclude>
     <ClInclude Include="include\MsgHeader.h">
       <Filter>网络层\网络消息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SSLSession.h">
+      <Filter>网络层\会话层</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TcpSession.h">
+      <Filter>网络层\会话层</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IOServicePool.h">
+      <Filter>网络层</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileLog.h">
+      <Filter>调试输出</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -486,12 +480,6 @@
     <ClCompile Include="network\ssl\pkgheader.pb.cc">
       <Filter>网络层\网络消息\protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="network\ssl_tcp\SSLSession.cpp">
-      <Filter>网络层\会话层\SSL</Filter>
-    </ClCompile>
-    <ClCompile Include="network\ssl_tcp\TcpSession.cpp">
-      <Filter>网络层\会话层\Tcp</Filter>
-    </ClCompile>
     <ClCompile Include="network\ssl_tcp\SSLServer.cpp">
       <Filter>网络层\网络服务\SSL</Filter>
     </ClCompile>
@@ -557,6 +545,12 @@
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\CustomMessage.cpp">
       <Filter>网络层\网络消息</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ssl_tcp\SSLSession.cpp">
+      <Filter>网络层\会话层</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ssl_tcp\TcpSession.cpp">
+      <Filter>网络层\会话层</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

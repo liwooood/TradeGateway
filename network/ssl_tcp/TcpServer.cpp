@@ -5,47 +5,55 @@
 #include "FileLog.h"
 
 
-TcpServer::TcpServer(io_service_pool& ios, unsigned short port, queue_type& q, int msgType):
-	ios_pool_(ios),
-	queue_(q),
-	acceptor_(ios_pool_.get(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
-	,m_session()
+
+TcpServer::TcpServer(unsigned short port, QueueType& q, int msgType, int n):
+	  iosPool(*boost::factory<IOServicePool*>()(n)),
+	  queue(q),
+	  acceptor(iosPool.get(), TCPType::endpoint(TCPType::v4(), port))
+	  //,session()
 {
-	m_msgType = msgType;
-	acceptor_.set_option(acceptor_type::reuse_address(true));
-	start_accept();
+	this->msgType = msgType;
+	
+	acceptor.set_option(AcceptorType::reuse_address(true));
+	// 设置其它选项
+
+	StartAccept();
 }
 
 
-TcpServer::TcpServer(unsigned short port, queue_type& q, int msgType, int n):
-	  ios_pool_(*boost::factory<io_service_pool*>()(n)),
-	  queue_(q),
-	  acceptor_(ios_pool_.get(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
-	  ,m_session()
+TcpServer::TcpServer(IOServicePool& ios, unsigned short port, QueueType& q, int msgType):
+	iosPool(ios),
+	queue(q),
+	acceptor(iosPool.get(), TCPType::endpoint(TCPType::v4(), port))
+	//,m_session()
 {
-	m_msgType = msgType;
-	acceptor_.set_option(acceptor_type::reuse_address(true));
-	start_accept();
+	this->msgType = msgType;
+
+	acceptor.set_option(AcceptorType::reuse_address(true));
+
+	StartAccept();
 }
 
-
-void TcpServer::start_accept()
+void TcpServer::StartAccept()
 {
-	m_session.reset(new TcpSession(ios_pool_.get(), queue_, m_msgType));
+	//session.reset(new TcpSession(ios_pool_.get(), queue_, m_msgType));
+	TcpSessionPtr session = boost::factory<TcpSessionPtr>()(iosPool.get(), queue, msgType);
 
-		acceptor_.async_accept( m_session->socket(), 
-			boost::bind(&TcpServer::accept_handler, 
+		acceptor.async_accept( session->socket(), 
+			boost::bind(&TcpServer::OnAccept, 
 			this, 
 			boost::asio::placeholders::error, 
-			m_session));
+			session));
 
 }
 // sess不要和session冲突
-void TcpServer::accept_handler(const boost::system::error_code& error, TcpSessionPtr session)
+void TcpServer::OnAccept(const boost::system::error_code& error, TcpSessionPtr session)
 {
+	StartAccept();
+
 	if (error)
 	{
-		gFileLog::instance().Log("TcpServer accept_handler，错误代码:" + boost::lexical_cast<std::string>(error.value()) + "，错误消息:" + error.message());
+		gFileLog::instance().error("network", "TcpServer OnAccept，错误代码:" + boost::lexical_cast<std::string>(error.value()) + "，错误消息:" + error.message());
 
 		session->close();
 
@@ -58,22 +66,22 @@ void TcpServer::accept_handler(const boost::system::error_code& error, TcpSessio
 		session->start();
 	}
 
-	start_accept();
+	
 }
 
 
 void TcpServer::start()
 {
-	ios_pool_.start();
+	iosPool.start();
 }
 
 void TcpServer::run()
 {
-	ios_pool_.run();
+	iosPool.run();
 }
 
 void TcpServer::stop()
 {
-	ios_pool_.stop();
+	iosPool.stop();
 }
 

@@ -85,3 +85,6 @@ void FileLog::Log(std::string log, int outputLevel, std::string file)
 	CloseHandle(hFile);
 
 }
+void FileLog::error(std::string fileName, std::string log)
+{
+}

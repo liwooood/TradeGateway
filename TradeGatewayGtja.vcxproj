@@ -156,10 +156,11 @@
     <ClInclude Include="include\CustomMessage.h" />
     <ClInclude Include="include\DingDian.h" />
     <ClInclude Include="include\errcode.h" />
+    <ClInclude Include="include\FileLog.h" />
     <ClInclude Include="include\IBusiness.h" />
     <ClInclude Include="include\IConnect.h" />
     <ClInclude Include="include\IMessage.h" />
-    <ClInclude Include="include\io_service_pool.h" />
+    <ClInclude Include="include\IOServicePool.h" />
     <ClInclude Include="include\ISession.h" />
     <ClInclude Include="include\QueueThreadSafe.h" />
     <ClInclude Include="include\MiniDump.h" />
@@ -216,7 +217,6 @@
     <Text Include="network\tcp\trade_server_tcp_old.h.txt">
       <FileType>CppHeader</FileType>
     </Text>
-    <ClInclude Include="output\FileLog.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StatusData.h" />
     <ClInclude Include="stdafx.h" />

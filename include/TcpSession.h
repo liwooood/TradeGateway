@@ -1,5 +1,5 @@
-#ifndef _TCP_SESSION_H_
-#define _TCP_SESSION_H_
+#ifndef TCP_SESSION_H
+#define TCP_SESSION_H
 
 #include <iostream>
 #include <string>
@@ -18,9 +18,10 @@
 #include "TradeBusinessHS.h"
 #include "TradeBusinessJZ.h"
 #include "TradeBusinessDD.h"
-#include "DingDian.h"
 #include "TradeBusinessJSD.h"
 //#include "TCPClientSync.h"
+
+#include "ISession.h"
 
 class IMessage;
 
@@ -32,8 +33,7 @@ http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/example/cpp03/ssl/serve
 
 http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/example/cpp03/http/server2/connection.hpp
 */
-//class TcpSession : public boost::enable_shared_from_this<TcpSession>, public ISession
-class TcpSession : public boost::enable_shared_from_this<TcpSession>
+class TcpSession : public boost::enable_shared_from_this<TcpSession>, public ISession
 {
 public:
 	typedef boost::asio::ip::tcp::socket socket_type;
@@ -84,19 +84,12 @@ public:
 
 	// 建立线程，发送心跳消息，调用业务连接的心跳自定义实现方法，保持活动
 
-	// 柜台连接
-	TradeBusinessHS counterT2;
-	TradeBusinessJZ counterSzkingdom;
-	TradeBusinessDD counterApex;
-	TradeBusinessJSD counterAGC;
-	//CTCPClientSync counterXinYi;
 
 	// 消息类型
 	int m_msgType;
 
 	
-	// 关闭柜台连接
-	void CloseCounterConnect();
+	
 	// 得到柜台连接
 	IBusiness& GetCounterConnect(int counterType);
 

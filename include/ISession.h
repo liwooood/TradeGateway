@@ -27,7 +27,7 @@ public:
 	
 	virtual void write(IMessage* resp) = 0;
 
-private:
+protected:
 	// 单会话单连接模式
 	TradeBusinessHS hs;
 	TradeBusinessJZ jz;

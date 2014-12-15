@@ -25,10 +25,9 @@ TcpSession::TcpSession( ios_type& ios, queue_type& q, int msgType):
 {
 	m_msgType = msgType;
 }
+
 TcpSession::~TcpSession()
-{
-	TRACE("~TcpSession()\n");
-	
+{	
 }
 
 
@@ -282,16 +281,12 @@ void TcpSession::handle_write_msg(const boost::system::error_code& error, size_t
 }
 
 
-void TcpSession::CloseCounterConnect()
-{
-	
-}
 
 // 根据参数，返回对应的柜台连接
 IBusiness& TcpSession::GetCounterConnect(int counterType)
 {
 	
-
+	/*
 	if(counterType == COUNTER_TYPE_HS_T2)
 	{
 	
@@ -319,4 +314,5 @@ IBusiness& TcpSession::GetCounterConnect(int counterType)
 	else
 	{
 	}	
+	*/
 }

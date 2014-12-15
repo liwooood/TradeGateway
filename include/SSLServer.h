@@ -14,7 +14,7 @@
 #include <boost/asio/ssl.hpp>
 
 #include "SSLSession.h"
-#include "io_service_pool.h"
+#include "IOServicePool.h"
 
 #include "ConfigManager.h"
 
