@@ -1,5 +1,5 @@
-#ifndef _WORKER_
-#define _WORKER_
+#ifndef WORKER_THREADPOOL_H
+#define WORKER_THREADPOOL_H
 
 #include <boost/assert.hpp>
 #include <boost/bind.hpp>

@@ -59,7 +59,7 @@ void TcpServer::OnAccept(const boost::system::error_code& error, TcpSessionPtr s
 
 	if (error)
 	{
-		gFileLog::instance().error("network", "TcpServer OnAccept，错误代码:" + boost::lexical_cast<std::string>(error.value()) + "，错误消息:" + error.message());
+		gFileLog::instance().error(logFile, "TcpServer OnAccept，错误代码:" + boost::lexical_cast<std::string>(error.value()) + "，错误消息:" + error.message());
 
 		session->close();
 
