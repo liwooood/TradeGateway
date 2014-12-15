@@ -59,7 +59,7 @@ private:
 
 
 public:
-	TcpSession(IOSType& ios, QueueType& q, int msgType);
+	TcpSession(IOSType& ios, QueueType& q, int msgType, int port);
 	~TcpSession();
 
 	SocketType& getSocket();

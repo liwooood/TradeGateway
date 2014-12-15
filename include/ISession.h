@@ -41,6 +41,8 @@ protected:
 
 	// 消息类型
 	int msgType;
+	int port;
+	std::string logFile;
 
 	virtual void start()=0;
 	virtual void close()=0;

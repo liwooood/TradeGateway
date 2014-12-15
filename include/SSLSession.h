@@ -48,9 +48,10 @@ private:
 
 	// 消息类型
 	int msgType;
+	
 
 public:
-	SSLSession(IOSType& ios, QueueType& q, int msgType, boost::asio::ssl::context& context);
+	SSLSession(IOSType& ios, QueueType& q, int msgType, int port, boost::asio::ssl::context& context);
 	~SSLSession();
 
 	SocketType::lowest_layer_type& getSocket();

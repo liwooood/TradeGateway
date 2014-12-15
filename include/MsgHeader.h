@@ -1,5 +1,5 @@
-#ifndef MSG_HEADER_H
-#define MSG_HEADER_H
+#ifndef CUSTOM_MESSAGE_HEADER_H
+#define CUSTOM_MESSAGE_HEADER_H
 /*
 直接采用二进制协议
 行情和交易统一

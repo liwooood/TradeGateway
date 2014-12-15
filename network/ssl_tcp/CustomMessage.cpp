@@ -9,7 +9,7 @@ CustomMessage::CustomMessage(int msgType)
 
 	msgHeader.resize(msgHeaderSize);
 
-	msgType = msgType;
+	this->msgType = msgType;
 }
 
 

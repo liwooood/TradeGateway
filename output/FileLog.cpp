@@ -17,17 +17,18 @@ FileLog::~FileLog(void)
 }
 
 
-void FileLog::Log(std::string log, int outputLevel, std::string file)
+void FileLog::Log(std::string log, int logLevel, std::string logFile)
 {
 	TRACE("调试内容输出：%s\n", log.c_str());
 
 	// 如果是运行模式，直接返回，不记录日志文件
 	// 0error, 1warn, 2info, 3debug
-	if (gConfigManager::instance().nRunMode == 1 && outputLevel != 0)
+	if (logLevel < gConfigManager::instance().nRunMode)
 		return;
 
 	// 创建目录
 	std::string sLogDir = gConfigManager::instance().m_sLogFilePath;
+
 	boost::filesystem::path p(sLogDir);
 	if (!boost::filesystem::exists(p))
 	{
@@ -35,10 +36,10 @@ void FileLog::Log(std::string log, int outputLevel, std::string file)
 	}
 
 	std::string sLogFileName = "";
-	if (file.empty())
-		sLogFileName = sLogDir + "\\tradegateway";
+	if (logFile.empty())
+		sLogFileName = sLogDir + "\\证券网关日志";
 	else
-		sLogFileName = sLogDir + "\\" + file;
+		sLogFileName = sLogDir + "\\" + logFile;
 
 	sLogFileName += "_";
 
@@ -74,17 +75,36 @@ void FileLog::Log(std::string log, int outputLevel, std::string file)
 	std::stringstream ss;
 	ss << "时间：" <<  sBeginTime  << "\n";
 	ss << "内容：" << log << "\n";
+	std::string s = ss.str();
 
 	DWORD dwBytesWritten = 0;
+	
 
-	std::string s = ss.str();
-	WriteFile(hFile, s.c_str(), s.length(), &dwBytesWritten, NULL);
+	WriteFile(hFile, s.c_str(), s.size(), &dwBytesWritten, NULL);
 
 	
 
 	CloseHandle(hFile);
 
 }
-void FileLog::error(std::string fileName, std::string log)
+
+
+void FileLog::debug(std::string logFile, std::string log)
 {
+	Log(log, LOG_LEVEL_DEBUG, logFile);
+}
+
+void FileLog::info(std::string logFile, std::string log)
+{
+	Log(log, LOG_LEVEL_INFO, logFile);
+}
+
+void FileLog::warn(std::string logFile, std::string log)
+{
+	Log(log, LOG_LEVEL_WARN, logFile);
+}
+
+void FileLog::error(std::string logFile, std::string log)
+{
+	Log(log, LOG_LEVEL_ERROR, logFile);
 }

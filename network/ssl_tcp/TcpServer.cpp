@@ -13,11 +13,15 @@ TcpServer::TcpServer(unsigned short port, QueueType& q, int msgType, int ioThrea
 	  //,session()
 {
 	this->msgType = msgType;
+	this->port = port;
+	logFile = "network_" + boost::lexical_cast<std::string>(port);
 	
 	acceptor.set_option(AcceptorType::reuse_address(true));
 	// 设置其它选项
 
 	StartAccept();
+
+
 }
 
 
@@ -28,6 +32,8 @@ TcpServer::TcpServer(IOServicePool& ios, unsigned short port, QueueType& q, int 
 	//,m_session()
 {
 	this->msgType = msgType;
+	this->port = port;
+	logFile = "network_" + boost::lexical_cast<std::string>(port);
 
 	acceptor.set_option(AcceptorType::reuse_address(true));
 
@@ -37,7 +43,7 @@ TcpServer::TcpServer(IOServicePool& ios, unsigned short port, QueueType& q, int 
 void TcpServer::StartAccept()
 {
 	//session.reset(new TcpSession(ios_pool_.get(), queue_, m_msgType));
-	TcpSessionPtr session = boost::factory<TcpSessionPtr>()(iosPool.get(), queue, msgType);
+	TcpSessionPtr session = boost::factory<TcpSessionPtr>()(iosPool.get(), queue, msgType, port);
 
 		acceptor.async_accept(session->getSocket(), 
 			boost::bind(&TcpServer::OnAccept, 

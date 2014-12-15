@@ -39,7 +39,9 @@ private:
 	AcceptorType acceptor;
 	
 	int msgType;
+	int port;
 	//TcpSessionPtr session;
+	std::string logFile;
 
 
 public:

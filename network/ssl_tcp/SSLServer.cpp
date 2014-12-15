@@ -13,6 +13,8 @@ SSLServer::SSLServer(unsigned short port, QueueType& q, int msgType, int ioThrea
 		//,m_session()
 {
 	this->msgType = msgType;
+	this->port = port;
+	logFile = "network_" + boost::lexical_cast<std::string>(port);
 
 	acceptor.set_option(AcceptorType::reuse_address(true));
 
@@ -49,6 +51,9 @@ SSLServer::SSLServer(IOServicePool& ios, unsigned short port, QueueType& q, int 
 		//,m_session()
 {
 	this->msgType = msgType;
+	this->port = port;
+
+	logFile = "network_" + boost::lexical_cast<std::string>(port);
 
 	acceptor.set_option(AcceptorType::reuse_address(true));
 
@@ -70,7 +75,7 @@ SSLServer::SSLServer(IOServicePool& ios, unsigned short port, QueueType& q, int 
 void SSLServer::StartAccept()
 {
 //	m_session.reset(new SSLSession(ios_pool_.get(), queue_, m_msgType, context_));
-	SSLSessionPtr session = boost::factory<SSLSessionPtr>()(iosPool.get(), queue, msgType, context);
+	SSLSessionPtr session = boost::factory<SSLSessionPtr>()(iosPool.get(), queue, msgType, port, context);
 
 	acceptor.async_accept(session->getSocket(), 
 		boost::bind(&SSLServer::OnAccept, 

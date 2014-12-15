@@ -18,7 +18,7 @@
 
 
 
-SSLSession::SSLSession(IOSType& ios, QueueType& q, int msgType, boost::asio::ssl::context& context)
+SSLSession::SSLSession(IOSType& ios, QueueType& q, int msgType, int port, boost::asio::ssl::context& context)
 	:socket(ios, context), 
 	strand(ios), 
 	queue(q)
@@ -27,6 +27,8 @@ SSLSession::SSLSession(IOSType& ios, QueueType& q, int msgType, boost::asio::ssl
 	//socket_.set_verify_callback(boost::bind(&ssl_session::verify_certificate, this, _1, _2));
 
 	this->msgType = msgType;
+	this->port = port;
+	logFile = "network_" + boost::lexical_cast<std::string>(port);
 
 	
 }

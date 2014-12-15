@@ -27,7 +27,7 @@ private:
 	
 
 public:
-	bool DecoderMsgHeader();
+	virtual bool DecoderMsgHeader();
 };
 
 

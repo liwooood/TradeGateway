@@ -37,6 +37,8 @@ private:
 
 	int msgType;
 	//SSLSessionPtr m_session;
+	int port;
+	std::string logFile;
 	
 public:
 	SSLServer( unsigned short port, QueueType& q, int msgType, int n=4);

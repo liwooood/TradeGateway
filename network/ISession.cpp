@@ -18,15 +18,6 @@ ISession::~ISession(void)
 }
 
 
-void ISession::CloseCounterConnect()
-{
-	hs.CloseConnect();
-	jz.CloseConnect();
-	dd.CloseConnect();
-	jsd.CloseConnect();
-	test.CloseConnect();
-}
-
 // 根据参数，返回对应的柜台连接
 IBusiness& ISession::GetCounterConnect(int counterType)
 {
@@ -59,4 +50,14 @@ IBusiness& ISession::GetCounterConnect(int counterType)
 	{
 	}	
 	
+}
+
+
+void ISession::CloseCounterConnect()
+{
+	hs.CloseConnect();
+	jz.CloseConnect();
+	dd.CloseConnect();
+	jsd.CloseConnect();
+	test.CloseConnect();
 }

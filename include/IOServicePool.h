@@ -40,17 +40,17 @@ private:
 
 public:
 	//n应该设置为cpu核心数
-	explicit IOServicePool(int n=4)
+	explicit IOServicePool(int IOThreadNum=4)
 		:nextIOService(0)
 	{
-		BOOST_ASSERT(n > 0);
-		init(n);
+		BOOST_ASSERT(IOThreadNum > 0);
+		init(IOThreadNum);
 	}
 
 private:
-	void init(int n)
+	void init(int IOThreadNum)
 	{
-		for (int i=0; i<n; ++i)
+		for (int i=0; i<IOThreadNum; ++i)
 		{
 			ioservices.push_back(boost::factory<IOSType*>()());
 

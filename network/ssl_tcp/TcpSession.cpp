@@ -19,12 +19,14 @@
 
 TcpSession::MemPoolType TcpSession::memPool;
 
-TcpSession::TcpSession(IOSType& ios, QueueType& q, int msgType):
+TcpSession::TcpSession(IOSType& ios, QueueType& q, int msgType, int port):
 	socket(ios), 
 	strand(ios), 
 	queue(q)
 {
 	this->msgType = msgType;
+	this->port = port;
+	logFile = "network_" + boost::lexical_cast<std::string>(port);
 }
 
 TcpSession::~TcpSession()
