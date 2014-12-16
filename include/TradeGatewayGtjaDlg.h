@@ -4,19 +4,10 @@
 #pragma once
 
 #include "IOServicePool.h"
-
-// ÍøÂç²ã
-//#include "network/ssl/ssl_server.h"
-//#include "network/tcp/tcp_server_old.h"
-//#include "network/http/http_server.h"
-
 #include "TcpServer.h"
 #include "SSLServer.h"
 
-// ÒµÎñ²ã
-//#include "./network/ssl/trade_server_ssl.h"
-//#include "./network/tcp/trade_server_tcp_old.h"
-//#include "./network/http/trade_server_http.h"
+
 
 #include "TradeServer.h"
 
@@ -105,17 +96,15 @@ private:
 	CString m_sLogMqThreadPool;
 	CString m_sLogShowThreadPool;
 
-
+	// ÍøÂç²ã
 	IOServicePool * iospool_tcp_old;
 	IOServicePool * iospool_ssl_old;
-	
 	IOServicePool * iospool_tcp_new;
 	IOServicePool * iospool_ssl_new;
 
-	// ÍøÂç²ã
+	
 	TcpServer * pTcpOldServer;
 	SSLServer * pSslOldServer;
-
 	TcpServer * pTcpNewServer;
 	SSLServer * pSslNewServer;
 	
@@ -123,7 +112,6 @@ private:
 	// ÒµÎñ²ã
 	TradeServer * pTradeServerTcpOld;
 	TradeServer * pTradeServerSslOld;
-	
 	TradeServer * pTradeServerTcpNew; // new ssl & tcp 
 	TradeServer * pTradeServerSslNew; // new ssl & tcp 
 
@@ -146,4 +134,5 @@ public:
 	//afx_msg void OnBnClickedStartup();
 	afx_msg void OnBnClickedAbout();
 	
+
 };

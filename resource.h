@@ -65,7 +65,6 @@
 #define IDC_SSL_ONLINE5                 1047
 #define IDC_NEWSSL_MAX_SESSIONS         1047
 #define IDC_BUSI_RETRY2                 1048
-#define IDC_SSL_ONLINE6                 1048
 #define IDC_WEBSOCKET_MAX_SESSIONS      1048
 #define IDC_BUSI_RETRY3                 1049
 #define IDC_SSL_MAX_USERS               1049

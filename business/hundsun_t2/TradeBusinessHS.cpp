@@ -44,8 +44,7 @@ TradeBusinessHS::TradeBusinessHS(int ConnectNo, Counter counter)
 	fmt % m_nID % m_Counter.m_sIP % m_Counter.m_nPort;
 	m_sServerInfo = fmt.str();
 
-	connectTimeout = gConfigManager::instance().m_nConnectPoolConnectTimeout * 1000;
-	readWriteTimeout = gConfigManager::instance().m_nConnectPoolReadWriteTimeout * 1000;
+	
 }
 
 

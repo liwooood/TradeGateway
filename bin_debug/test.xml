@@ -12,8 +12,9 @@
 
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证 8.仿真柜台-->
       <CounterType>8</CounterType>
-      
-     
+
+      <!--业务模式 0柜台连接池模式 1会话模式，金仕达模式只能使用会话模式-->
+      <CounterMode>0</CounterMode>
 
       <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
       <connect_timeout>1</connect_timeout>
@@ -24,6 +25,7 @@
 
       <!--委托方式-->
       <entrust></entrust>
+      
       <!--柜员代码，顶点专用-->
       <gydm></gydm>
       
@@ -94,7 +96,8 @@
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证 8.仿真柜台-->
       <CounterType>8</CounterType>
 
-
+      <!--业务模式 0柜台连接池模式 1会话模式，金仕达模式只能使用会话模式-->
+      <CounterMode>0</CounterMode>
 
       <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
       <connect_timeout>1</connect_timeout>
@@ -137,11 +140,16 @@
     <id>test2</id>
     <desc>仿真柜台2</desc>
     <BusinessType>
+      
+      
       <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签 -->
       <type>0</type>
 
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证 8仿真柜台-->
       <CounterType>8</CounterType>
+
+      <!--业务模式 0柜台连接池模式 1会话模式，金仕达模式只能使用会话模式-->
+      <CounterMode>0</CounterMode>
       
       <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
       <connect_timeout>1</connect_timeout>
@@ -151,6 +159,7 @@
 
       <!--委托方式-->
       <entrust></entrust>
+      
       <!--柜员代码，顶点专用-->
       <gydm></gydm>
       

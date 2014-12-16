@@ -81,27 +81,27 @@ EXSTYLE WS_EX_APPWINDOW
 CAPTION "中软万维证券网关"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    LTEXT           "TLS网关",IDC_SSL_ADDR,7,7,159,8
+    LTEXT           "TLS网关",IDC_SSL_ADDR,7,7,164,8
     LTEXT           "运行状态",IDC_SSL_STATUS,171,7,70,8
     LTEXT           "在线连接数",IDC_SSL_SESSIONS,251,7,66,8
-    LTEXT           "新TCP网关",IDC_NEWTCP_ADDR,7,49,158,8
-    LTEXT           "运行状态",IDC_NEWTCP_STATUS,171,49,73,8
-    LTEXT           "在线连接数",IDC_NEWTCP_SESSIONS,251,49,75,8
-    LTEXT           "TCP网关",IDC_TCP_ADDR,7,28,152,8
+    LTEXT           "新TCP网关",IDC_NEWTCP_ADDR,7,71,164,8
+    LTEXT           "运行状态",IDC_NEWTCP_STATUS,171,71,73,8
+    LTEXT           "在线连接数",IDC_NEWTCP_SESSIONS,251,71,75,8
+    LTEXT           "TCP网关",IDC_TCP_ADDR,7,28,164,8
     LTEXT           "运行状态",IDC_TCP_STATUS,171,28,73,8
     LTEXT           "在线连接数",IDC_TCP_SESSIONS,251,28,68,8
     PUSHBUTTON      "打开日志目录",IDC_OPEN_LOG,180,169,50,14
     LTEXT           "最高连接数",IDC_SSL_MAX_SESSIONS,345,7,66,8
-    LTEXT           "最高连接数",IDC_NEWTCP_MAX_SESSIONS,345,49,66,8
+    LTEXT           "最高连接数",IDC_NEWTCP_MAX_SESSIONS,345,71,66,8
     LTEXT           "最高连接数",IDC_TCP_MAX_SESSIONS,345,28,66,8
     PUSHBUTTON      "退出",IDC_EXIT,436,169,50,14
     PUSHBUTTON      "清除缓存",IDC_CLEAR_CACHE,258,169,50,14
     PUSHBUTTON      "版本信息",IDC_CHANGELOG,100,169,50,14
     PUSHBUTTON      "配置注册表",IDC_SETUP_REG,345,169,50,14
-    LTEXT           "新TLS网关",IDC_NEWSSL_ADDR,7,71,158,8
-    LTEXT           "运行状态",IDC_NEWSSL_STATUS,171,71,73,8
-    LTEXT           "在线连接数",IDC_NEWSSL_SESSIONS,251,71,75,8
-    LTEXT           "最高连接数",IDC_NEWSSL_MAX_SESSIONS,345,71,66,8
+    LTEXT           "新TLS网关",IDC_NEWSSL_ADDR,7,49,164,8
+    LTEXT           "运行状态",IDC_NEWSSL_STATUS,171,49,73,8
+    LTEXT           "在线连接数",IDC_NEWSSL_SESSIONS,251,49,75,8
+    LTEXT           "最高连接数",IDC_NEWSSL_MAX_SESSIONS,345,49,66,8
     LTEXT           "WebSocket网关",IDC_WEBSOCKET_ADDR,7,90,158,8
     LTEXT           "运行状态",IDC_WEBSOCKET_STATUS,171,90,73,8
     LTEXT           "在线连接数",IDC_WEBSOCKET_SESSIONS,251,90,75,8
@@ -109,12 +109,12 @@ BEGIN
     LTEXT           "最高登录用户数",IDC_SSL_MAX_USERS,511,7,87,8
     LTEXT           "登录用户数",IDC_SSL_USERS,436,7,66,8
     LTEXT           "登录用户数",IDC_TCP_USERS,436,28,66,8
-    LTEXT           "登录用户数",IDC_NEWTCP_USERS,436,49,66,8
-    LTEXT           "登录用户数",IDC_NEWSSL_USERS,436,71,66,8
+    LTEXT           "登录用户数",IDC_NEWTCP_USERS,436,71,66,8
+    LTEXT           "登录用户数",IDC_NEWSSL_USERS,436,49,66,8
     LTEXT           "登录用户数",IDC_WEBSOCKET_USERS,436,90,66,8
     LTEXT           "最高登录用户数",IDC_TCP_MAX_USERS,511,28,87,8
-    LTEXT           "最高登录用户数",IDC_NEWTCP_MAX_USERS,511,49,87,8
-    LTEXT           "最高登录用户数",IDC_NEWSSL_MAX_USERS,511,71,87,8
+    LTEXT           "最高登录用户数",IDC_NEWTCP_MAX_USERS,511,71,87,8
+    LTEXT           "最高登录用户数",IDC_NEWSSL_MAX_USERS,511,49,87,8
     LTEXT           "最高登录用户数",IDC_WEBSOCKET_MAX_USERS,511,90,87,8
 END
 

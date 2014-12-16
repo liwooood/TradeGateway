@@ -23,7 +23,7 @@ void FileLog::Log(std::string log, int logLevel, std::string logFile)
 
 	// 如果是运行模式，直接返回，不记录日志文件
 	// 0error, 1warn, 2info, 3debug
-	if (logLevel < gConfigManager::instance().nRunMode)
+	if (logLevel < gConfigManager::instance().m_nLogLevel)
 		return;
 
 	// 创建目录

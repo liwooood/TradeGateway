@@ -76,6 +76,7 @@ bool ConnectPool::CreateConnPool()
 			{
 				m_pool.push(pConn);
 				m_nID++;
+
 				count++;
 			}
 			else

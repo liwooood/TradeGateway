@@ -142,7 +142,6 @@
     <ClInclude Include="business\SunGuard\sywg.h" />
     <ClInclude Include="business\szkingdom_win\Encrypt.h" />
     <ClInclude Include="cache\CacheData.h" />
-    <ClInclude Include="config\ConfigManager.h" />
     <ClInclude Include="ConnectDD.h" />
     <ClInclude Include="ConnectHS.h" />
     <ClInclude Include="ConnectJSD.h" />
@@ -154,6 +153,7 @@
     <ClInclude Include="include\BusinessType.h" />
     <ClInclude Include="include\CallbackImpl.h" />
     <ClInclude Include="include\common.h" />
+    <ClInclude Include="include\ConfigManager.h" />
     <ClInclude Include="include\ConnectManager.h" />
     <ClInclude Include="include\ConnectPool.h" />
     <ClInclude Include="include\ConnectT2.h" />

@@ -1,5 +1,5 @@
-#ifndef _CONFIG_MANAGER_H_
-#define _CONFIG_MANAGER_H_
+#ifndef CONFIG_MANAGER_H
+#define CONFIG_MANAGER_H
 
 #include <map>
 #include <string>
@@ -63,14 +63,10 @@ public:
 	// 压缩大小
 	int zlib;
 
-	// 运行模式
-	int nRunMode;
+	
 
 	// 柜台
-	int m_nConnectPoolEnable;
-	int m_nConnectPoolConnectTimeout;
-	int m_nConnectPoolReadWriteTimeout;
-	std::vector<Counter> m_ConnectPoolCounters;
+	
 	int m_nConnectPoolMin;
 	int m_nConnectPoolMax;
 	int m_nConnectPoolIncrease;
@@ -114,7 +110,7 @@ public:
 	int m_nLogFileThreadPool;
 
 
-
+	
 
 	// 界面日志
 	int m_nLogGuiEnable;
@@ -132,7 +128,7 @@ public:
 	int m_nLogMqMax;
 	int m_nLogMqIncrease;
 	std::vector<std::string> m_vLogMqServer;
-
+	
 
 	
 private:

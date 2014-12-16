@@ -187,9 +187,6 @@
     <ClInclude Include="cache\CacheData.h">
       <Filter>缓存</Filter>
     </ClInclude>
-    <ClInclude Include="config\ConfigManager.h">
-      <Filter>配置文件</Filter>
-    </ClInclude>
     <ClInclude Include="business\SunGuard\sywg.h">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
     </ClInclude>
@@ -381,6 +378,9 @@
     </ClInclude>
     <ClInclude Include="include\ConnectPool.h">
       <Filter>柜台连接池\连接</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ConfigManager.h">
+      <Filter>配置文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

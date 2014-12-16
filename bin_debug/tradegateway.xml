@@ -38,50 +38,26 @@
       <sendthreadpool>16</sendthreadpool>
     </tcp_new>
 
+    <websocket>
+      <enable>0</enable>
+      <port>5004</port>
+      <workerthreadpool>16</workerthreadpool>
+      <sendthreadpool>16</sendthreadpool>
+    </websocket>
     
 
     <!-- 大于以下设置会被压缩 -->
     <zlib>1024</zlib>
 
-    <!-- 运行状态：0.debug 1.run-->
-    <RunMode>0</RunMode>
-
+  
   </communication>
 
   <Counter_Common>
     <!--恒生T2异步模式特殊处理-->
     <connectpool>
-      <!--是否启用-->
-      <enable>0</enable>
-      
-      <min>1</min>
-      <increase>1</increase>
-      <max>1</max>
-
-      <!--单位为秒-->
-      <connect_timeout>1</connect_timeout>
-      <readwrite_timeout>10</readwrite_timeout>
-      
-      <server>
-        <enable>1</enable>
-        <servername></servername>
-        <ip>10.103.2.224</ip>
-        <port>21000</port>
-        <username>KCXP00</username>
-        <password>888888</password>
-        <req>req_zb</req>
-        <res>ans_zb</res>
-      </server>
-      <server>
-        <enable>1</enable>
-        <servername></servername>
-        <ip>10.103.2.225</ip>
-        <port>21000</port>
-        <username>KCXP00</username>
-        <password>888888</password>
-        <req>req_zb</req>
-        <res>ans_zb</res>
-      </server>
+      <min>2</min>
+      <increase>5</increase>
+      <max>100</max>
     </connectpool>
 
     <!-- 连接柜台重试次数 -->
@@ -111,17 +87,17 @@
     <file>
       <enable>1</enable>
       <path>d:\tradegateway\log</path>
-      <threadpool>1</threadpool>
+      <threadpool>16</threadpool>
     </file>
 
-	<!-- 未实现-->
+	<!-- 暂未实现-->
     <gui>
       <enable>0</enable>
       <showcount>20</showcount>
       <threadpool>8</threadpool>
     </gui>
 
-	<!--未实现-->
+	<!--暂未实现-->
     <mq>
       <enable>0</enable>
       <threadpool>8</threadpool>
@@ -133,7 +109,7 @@
   </log>
 
   <!--业务系统信息-->
-  <system>gtja.xml</system>
+  <system>test.xml</system>
 
   
 </config>

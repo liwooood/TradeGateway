@@ -7,8 +7,7 @@
 #include <iostream>
 #include <fstream>
 
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
+
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
@@ -134,67 +133,13 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	node = doc.select_single_node("/config/communication/zlib");
 	zlib = boost::lexical_cast<int>(node.node().child_value());
 
-	node = doc.select_single_node("/config/communication/RunMode");
-	nRunMode = boost::lexical_cast<int>(node.node().child_value());
+	
 
 
 	// 柜台共用
-	node = doc.select_single_node("/config/Counter_Common/connectpool/enable");
-	m_nConnectPoolEnable = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/Counter_Common/connectpool/connect_timeout");
-	m_nConnectPoolConnectTimeout = boost::lexical_cast<int>(node.node().child_value());
-
-	node = doc.select_single_node("/config/Counter_Common/connectpool/readwrite_timeout");
-	m_nConnectPoolReadWriteTimeout = boost::lexical_cast<int>(node.node().child_value());
+	
 
 	
-				
-				
-				pugi::xpath_node_set counter_nodes = doc.select_nodes("/config/Counter_Common/connectpool/server");
-				pugi::xpath_node_set::const_iterator it_counter;
-				for (it_counter = counter_nodes.begin(); it_counter != counter_nodes.end(); ++it_counter)
-				{
-					pugi::xpath_node node = *it_counter;
-
-					node_value = node.node().child_value("enable");
-					int enable = boost::lexical_cast<int>(node_value);
-					if (enable == 0)
-						continue;
-
-					Counter counter;
-
-					node_value = node.node().child_value("servername");
-					counter.m_sServerName = node_value;
-					
-
-					node_value = node.node().child_value("ip");
-					TRACE("柜台 = %s\n", node_value.c_str());
-					counter.m_sIP = node_value;
-
-					node_value = node.node().child_value("port");
-					counter.m_nPort = boost::lexical_cast<int>(node_value);
-
-					node_value = node.node().child_value("username");
-					counter.m_sUserName = node_value;
-
-					node_value = node.node().child_value("password");
-					counter.m_sPassword = node_value;
-
-					node_value = node.node().child_value("req");
-					counter.m_sReq = node_value;
-
-					node_value = node.node().child_value("res");
-					counter.m_sRes = node_value;
-
-					counter.m_nConnectTimeout = m_nConnectPoolConnectTimeout;
-					counter.m_nRecvTimeout = m_nConnectPoolReadWriteTimeout;
-					counter.m_nCounterType = COUNTER_TYPE_HS_T2;
-
-					m_ConnectPoolCounters.push_back(counter);///////////////////////////
-				} // end for counter
-
-				//gConnectPool.SetCounterServer(m_ConnectPoolCounters);
 
 	node = doc.select_single_node("/config/Counter_Common/connectpool/min");
 	m_nConnectPoolMin = boost::lexical_cast<int>(node.node().child_value());
@@ -236,7 +181,7 @@ bool ConfigManager::LoadConfig(std::string sPath)
 	m_nLogFileThreadPool = boost::lexical_cast<int>(node.node().child_value());
 
 	
-
+	/*
 	node = doc.select_single_node("/config/log/gui/enable");
 	m_nLogGuiEnable = boost::lexical_cast<int>(node.node().child_value());
 	node = doc.select_single_node("/config/log/gui/showcount");
@@ -269,7 +214,7 @@ bool ConfigManager::LoadConfig(std::string sPath)
 		m_vLogMqServer.push_back(mqserver);
 		
 	}
-
+	*/
 
 	node = doc.select_single_node("/config/system");
 	std::string systemFile = m_sPath + "\\" + node.node().child_value();
@@ -303,7 +248,7 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 		std::string sysid = node.node().child_value("id");
 		system.id = sysid;
 
-		TRACE("system id = %s\n", sysid.c_str());
+		//TRACE("system id = %s\n", sysid.c_str());
 		std::string desc = node.node().child_value("desc");
 
 		
@@ -313,7 +258,7 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 		boost::format fmt("/config/system[%1%]/BusinessType");
 		fmt % i;
 		node_path = fmt.str();
-		TRACE("查询业务类型 = %s\n", node_path.c_str());
+		//TRACE("查询业务类型 = %s\n", node_path.c_str());
 		pugi::xpath_node_set busitype_nodes = doc.select_nodes(node_path.c_str());
 		
 		int j=0;
@@ -326,27 +271,22 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 
 			std::string type = node.node().child_value("type");
 			int BusiType = boost::lexical_cast<int>(type);
-			TRACE("业务类型 id = %d\n", BusiType);
+			//TRACE("业务类型 id = %d\n", BusiType);
 
 			
-			int CounterType = boost::lexical_cast<int>(node.node().child_value("CounterType"));
-			TRACE("柜台类型 id = %d\n", CounterType);
+			int counterType = boost::lexical_cast<int>(node.node().child_value("CounterType"));
+			//TRACE("柜台类型 id = %d\n", CounterType);
 
-			std::string tmp = node.node().child_value("t2_async_mode");
-			int asyncMode = 0;
-			if (!tmp.empty())
-				asyncMode = boost::lexical_cast<int>(tmp);
+			int counterMode = boost::lexical_cast<int>(node.node().child_value("CounterMode"));
 			
-
 			int m_nConnectTimeout = boost::lexical_cast<int>(node.node().child_value("connect_timeout"));
-	
-			int m_nIdleTimeout = boost::lexical_cast<int>(node.node().child_value("idle_timeout"));
 	
 			int m_nRecvTimeout = boost::lexical_cast<int>(node.node().child_value("recv_timeout"));
 
+			std::string entrustMode = node.node().child_value("entrust");
+
 			std::string gydm = node.node().child_value("gydm");
-			std::string wtfs_mobile = node.node().child_value("wtfs_mobile");
-			std::string wtfs_web = node.node().child_value("wtfs_web");
+			
 
 
 			// 读业务类型下面所有可用的营业部
@@ -355,7 +295,7 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 			boost::format fmt("/config/system[%1%]/BusinessType[%2%]/branch");
 			fmt % i %j;
 			node_path = fmt.str();
-			TRACE("查询营业部 = %s\n", node_path.c_str());
+			//TRACE("查询营业部 = %s\n", node_path.c_str());
 			pugi::xpath_node_set branch_nodes = doc.select_nodes(node_path.c_str());
 			pugi::xpath_node_set::const_iterator it_branch;
 			int m=0;
@@ -369,14 +309,14 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 					continue;
 
 				std::string branchList = node.node().child_value("branch_list");
-				TRACE("营业部是否启用 = %s %d\n", branchList.c_str(), enable);
+				//TRACE("营业部是否启用 = %s %d\n", branchList.c_str(), enable);
 
 				// 读营业部下面所有可用的柜台
 				std::vector<Counter> counters;
 				boost::format fmt("/config/system[%1%]/BusinessType[%2%]/branch[%3%]/server");
 				fmt % i % j % m;
 				node_path = fmt.str();
-				TRACE("查询柜台 = %s\n", node_path.c_str());
+				//TRACE("查询柜台 = %s\n", node_path.c_str());
 				pugi::xpath_node_set counter_nodes = doc.select_nodes(node_path.c_str());
 				pugi::xpath_node_set::const_iterator it_counter;
 				for (it_counter = counter_nodes.begin(); it_counter != counter_nodes.end(); ++it_counter)
@@ -390,16 +330,26 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 
 					Counter counter;
 
-					node_value = node.node().child_value("servername");
-					counter.m_sServerName = node_value;
-					
-
 					node_value = node.node().child_value("ip");
-					TRACE("柜台 = %s\n", node_value.c_str());
 					counter.m_sIP = node_value;
 
 					node_value = node.node().child_value("port");
 					counter.m_nPort = boost::lexical_cast<int>(node_value);
+
+					counter.m_nCounterType = counterType;
+
+					counter.m_nConnectTimeout = m_nConnectTimeout;
+
+					counter.m_nRecvTimeout = m_nRecvTimeout;
+
+					// 委托方式
+				
+					counter.entrustMode= entrustMode;
+					
+
+					//以下信息金证柜台专用
+					node_value = node.node().child_value("servername");
+					counter.m_sServerName = node_value;
 
 					node_value = node.node().child_value("username");
 					counter.m_sUserName = node_value;
@@ -413,19 +363,12 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 					node_value = node.node().child_value("res");
 					counter.m_sRes = node_value;
 
-					counter.m_nCounterType = CounterType;
-					counter.m_nConnectTimeout = m_nConnectTimeout;
-
-					counter.m_nRecvTimeout = m_nRecvTimeout;
+					
 
 					// 顶点专用
-					
 					counter.m_sGydm = gydm;
 
-					// 委托方式
 					
-					//counter.m_sWtfs_mobile = wtfs_mobile;
-					//counter.m_sWtfs_web = wtfs_web;
 
 					counters.push_back(counter);///////////////////////////
 				} // end for counter
@@ -438,8 +381,8 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 				branch.servers = counters;
 
 				busiType.branches[branchList] = branch;
-				busiType.counterType = CounterType;
-				busiType.asyncMode = asyncMode;
+				busiType.counterType = counterType;
+				busiType.counterMode = counterMode;
 			} // end for branch
 
 			
