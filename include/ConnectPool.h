@@ -1,5 +1,5 @@
-#ifndef _CONNECT_POOL_H_
-#define _CONNECT_POOL_H_
+#ifndef CONNECT_POOL_H
+#define CONNECT_POOL_H
 
 #include <vector>
 
@@ -13,12 +13,17 @@
 class ConnectPool
 {
 private:
+	std::vector<Counter> m_vCounter;
+
+
 	// 直接整合std::deque比较好
 	typedef QueueThreadSafe<IConnect*> conn_queue_type;
 	conn_queue_type m_pool;
+
+	//不使用队列，下次改
 	//std::vector<conn_queue_type> pool;
 
-	std::vector<Counter> m_vCounter;
+	
 	int m_nID; // 连接序列号
 	bool m_bCreatePool;
 
@@ -41,6 +46,6 @@ public:
 
 };
 
-extern ConnectPool gConnectPool;
+
 
 #endif

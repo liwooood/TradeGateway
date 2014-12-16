@@ -194,7 +194,7 @@ bool ConfigManager::LoadConfig(std::string sPath)
 					m_ConnectPoolCounters.push_back(counter);///////////////////////////
 				} // end for counter
 
-				gConnectPool.SetCounterServer(m_ConnectPoolCounters);
+				//gConnectPool.SetCounterServer(m_ConnectPoolCounters);
 
 	node = doc.select_single_node("/config/Counter_Common/connectpool/min");
 	m_nConnectPoolMin = boost::lexical_cast<int>(node.node().child_value());
@@ -415,7 +415,7 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 
 					counter.m_nCounterType = CounterType;
 					counter.m_nConnectTimeout = m_nConnectTimeout;
-					counter.m_nIdleTimeout = m_nIdleTimeout;
+
 					counter.m_nRecvTimeout = m_nRecvTimeout;
 
 					// 顶点专用
@@ -424,8 +424,8 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 
 					// 委托方式
 					
-					counter.m_sWtfs_mobile = wtfs_mobile;
-					counter.m_sWtfs_web = wtfs_web;
+					//counter.m_sWtfs_mobile = wtfs_mobile;
+					//counter.m_sWtfs_web = wtfs_web;
 
 					counters.push_back(counter);///////////////////////////
 				} // end for counter

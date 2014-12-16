@@ -89,21 +89,6 @@
     <Filter Include="业务层">
       <UniqueIdentifier>{72295626-05d9-4950-bd20-2a53a3a60e5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="业务层\需要删除">
-      <UniqueIdentifier>{37bca63f-52b0-498d-bc40-234189cf6abe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\需要删除\ssl old">
-      <UniqueIdentifier>{8f512f90-67d9-4cd0-93f9-61e5108ac270}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\需要删除\HTTP">
-      <UniqueIdentifier>{6f796214-1c22-4b2d-98f2-2ee0ce1ca3a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\需要删除\Tcp old">
-      <UniqueIdentifier>{e213d09b-23d7-43e8-8788-facd06f1068d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台连接池">
-      <UniqueIdentifier>{7136fcfd-ff1c-4f68-a54b-5c73a557861b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="第三方库\Zlib">
       <UniqueIdentifier>{ede17966-2a39-4557-8423-3f2ee643f40c}</UniqueIdentifier>
     </Filter>
@@ -122,9 +107,6 @@
     <Filter Include="业务层\柜台系统\顶点">
       <UniqueIdentifier>{1bd17284-b664-4c6d-b16b-646b9c676689}</UniqueIdentifier>
     </Filter>
-    <Filter Include="业务层\柜台系统\新意">
-      <UniqueIdentifier>{0c5d470e-69bf-475a-8d45-bffde1689acb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="业务层\柜台系统\金仕达AGC/WGX">
       <UniqueIdentifier>{1ef065c2-a8da-43d4-9e49-02c24ec2b7a7}</UniqueIdentifier>
     </Filter>
@@ -137,26 +119,14 @@
     <Filter Include="业务层\柜台系统\金仕达AGC/WGX\AGC配置文件\release">
       <UniqueIdentifier>{253f4c2a-c7fd-4f0f-916b-00639a62a2bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="业务层\柜台系统\金证linux">
-      <UniqueIdentifier>{4496f4b7-e8d0-4508-ae70-141e73cd7dab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\同花顺认证">
-      <UniqueIdentifier>{92cf354c-948d-4bfa-9be0-6a89aabda041}</UniqueIdentifier>
-    </Filter>
     <Filter Include="业务层\柜台系统\金证windows">
       <UniqueIdentifier>{a07689f2-f438-45a4-8f73-4f0abd1f1c2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\中信验签">
-      <UniqueIdentifier>{74cdcb46-80be-4928-97ad-bb83aa645d59}</UniqueIdentifier>
     </Filter>
     <Filter Include="公共类型">
       <UniqueIdentifier>{abe94155-997f-4241-b0f0-81f35a48a81b}</UniqueIdentifier>
     </Filter>
     <Filter Include="文档">
       <UniqueIdentifier>{01414a86-b515-4f95-82d9-d074a90dfd09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\恒生CommX">
-      <UniqueIdentifier>{1d9588fa-f777-42e1-9431-c01714ba1185}</UniqueIdentifier>
     </Filter>
     <Filter Include="错误信息">
       <UniqueIdentifier>{5c289177-ec8b-4508-8411-9e5b5abe3e98}</UniqueIdentifier>
@@ -194,6 +164,18 @@
     <Filter Include="网络层\SSL证书">
       <UniqueIdentifier>{bf2ce67b-397e-4284-b861-cd67f3992eb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="柜台连接池">
+      <UniqueIdentifier>{7136fcfd-ff1c-4f68-a54b-5c73a557861b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="柜台连接池\连接">
+      <UniqueIdentifier>{83a3971f-e616-4544-8cd3-3a8ae67ab647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\柜台系统\仿真柜台">
+      <UniqueIdentifier>{0c5d470e-69bf-475a-8d45-bffde1689acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="柜台连接池\配置信息">
+      <UniqueIdentifier>{f90e10cc-6b49-494a-8c88-1d3bf601d067}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -205,26 +187,11 @@
     <ClInclude Include="cache\CacheData.h">
       <Filter>缓存</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectPool\BusinessSystem.h">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectPool\BusinessType.h">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectPool\ConnectManager.h">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectPool\Counter.h">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClInclude>
     <ClInclude Include="config\ConfigManager.h">
       <Filter>配置文件</Filter>
     </ClInclude>
     <ClInclude Include="business\SunGuard\sywg.h">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectPool\Branch.h">
-      <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
     <ClInclude Include="log\FileLogManager.h">
       <Filter>日志\文件日志</Filter>
@@ -298,9 +265,6 @@
     <ClInclude Include="resource.h">
       <Filter>主框架</Filter>
     </ClInclude>
-    <ClInclude Include="include\IConnect.h">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClInclude>
     <ClInclude Include="include\CallbackImpl.h">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClInclude>
@@ -309,9 +273,6 @@
     </ClInclude>
     <ClInclude Include="include\MyBotan.h">
       <Filter>加解密</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ConnectPool.h">
-      <Filter>业务层\柜台连接池</Filter>
     </ClInclude>
     <ClInclude Include="include\IMessage.h">
       <Filter>网络层\网络消息</Filter>
@@ -362,7 +323,7 @@
       <Filter>调试输出</Filter>
     </ClInclude>
     <ClInclude Include="include\TradeBusinessTest.h">
-      <Filter>业务层\柜台系统\新意</Filter>
+      <Filter>业务层\柜台系统\仿真柜台</Filter>
     </ClInclude>
     <ClInclude Include="include\IOServicePool.h">
       <Filter>网络层</Filter>
@@ -381,6 +342,45 @@
     </ClInclude>
     <ClInclude Include="include\TcpSession.h">
       <Filter>网络层</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectJZ.h">
+      <Filter>柜台连接池\连接</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectJSD.h">
+      <Filter>柜台连接池\连接</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectHS.h">
+      <Filter>柜台连接池\连接</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectDD.h">
+      <Filter>柜台连接池\连接</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectTest.h">
+      <Filter>柜台连接池\连接</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ConnectManager.h">
+      <Filter>柜台连接池</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Branch.h">
+      <Filter>柜台连接池\配置信息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BusinessSystem.h">
+      <Filter>柜台连接池\配置信息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BusinessType.h">
+      <Filter>柜台连接池\配置信息</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Counter.h">
+      <Filter>柜台连接池\配置信息</Filter>
+    </ClInclude>
+    <ClInclude Include="MapThreadSafe.h">
+      <Filter>线程安全Map</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IConnect.h">
+      <Filter>柜台连接池\连接</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ConnectPool.h">
+      <Filter>柜台连接池\连接</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -405,26 +405,14 @@
     <ClCompile Include="output\FileLog.cpp">
       <Filter>调试输出</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectPool\BusinessSystem.cpp">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectPool\BusinessType.cpp">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClCompile>
     <ClCompile Include="ConnectPool\ConnectManager.cpp">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectPool\Counter.cpp">
-      <Filter>业务层\柜台连接池</Filter>
+      <Filter>柜台连接池</Filter>
     </ClCompile>
     <ClCompile Include="config\ConfigManager.cpp">
       <Filter>配置文件</Filter>
     </ClCompile>
     <ClCompile Include="business\IBusiness.cpp">
       <Filter>业务层\柜台系统</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectPool\Branch.cpp">
-      <Filter>业务层\柜台连接池</Filter>
     </ClCompile>
     <ClCompile Include="network\IMessage.cpp">
       <Filter>网络层\网络消息</Filter>
@@ -465,9 +453,6 @@
     <ClCompile Include="business\apexsoft\DingDian.cpp">
       <Filter>业务层\柜台系统\顶点</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectPool\ConnectPool.cpp">
-      <Filter>业务层\柜台连接池</Filter>
-    </ClCompile>
     <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp">
       <Filter>业务层\柜台系统\恒生T2\异步</Filter>
     </ClCompile>
@@ -505,7 +490,7 @@
       <Filter>网络层\网络消息</Filter>
     </ClCompile>
     <ClCompile Include="business\xinyi\TradeBusinessTest.cpp">
-      <Filter>业务层\柜台系统\新意</Filter>
+      <Filter>业务层\柜台系统\仿真柜台</Filter>
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\SSLServer.cpp">
       <Filter>网络层</Filter>
@@ -521,6 +506,42 @@
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\TcpSession.cpp">
       <Filter>网络层</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectJZ.cpp">
+      <Filter>柜台连接池\连接</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectJSD.cpp">
+      <Filter>柜台连接池\连接</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectHS.cpp">
+      <Filter>柜台连接池\连接</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectDD.cpp">
+      <Filter>柜台连接池\连接</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectTest.cpp">
+      <Filter>柜台连接池\连接</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\Branch.cpp">
+      <Filter>柜台连接池\配置信息</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\BusinessSystem.cpp">
+      <Filter>柜台连接池\配置信息</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\BusinessType.cpp">
+      <Filter>柜台连接池\配置信息</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\Counter.cpp">
+      <Filter>柜台连接池\配置信息</Filter>
+    </ClCompile>
+    <ClCompile Include="MapThreadSafe.cpp">
+      <Filter>线程安全Map</Filter>
+    </ClCompile>
+    <ClCompile Include="IConnect.cpp">
+      <Filter>柜台连接池\连接</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\ConnectPool.cpp">
+      <Filter>柜台连接池\连接</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -588,6 +609,9 @@
     <None Include="bin_release\wer.reg">
       <Filter>注册表</Filter>
     </None>
+    <None Include="文档\交易系统说明.docx">
+      <Filter>文档</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="bin_release\tradegateway.xml">
@@ -641,6 +665,9 @@
     <Xml Include="bin_debug\gtja.xml">
       <Filter>配置文件\debug</Filter>
     </Xml>
+    <Xml Include="bin_debug\test.xml">
+      <Filter>配置文件\debug</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Text Include="lib\ICU\icu.txt">
@@ -666,27 +693,6 @@
     </Text>
     <Text Include="sywg代码备份.txt">
       <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
-    </Text>
-    <Text Include="network\http\flash交易密码处理规则.txt">
-      <Filter>业务层\需要删除\HTTP</Filter>
-    </Text>
-    <Text Include="network\tcp\trade_server_tcp_old.h.txt">
-      <Filter>业务层\需要删除\Tcp old</Filter>
-    </Text>
-    <Text Include="network\tcp\trade_server_tcp_old.cpp.txt">
-      <Filter>业务层\需要删除\Tcp old</Filter>
-    </Text>
-    <Text Include="network\ssl\trade_server_ssl.cpp.txt">
-      <Filter>业务层\需要删除\ssl old</Filter>
-    </Text>
-    <Text Include="network\ssl\trade_server_ssl.h.txt">
-      <Filter>业务层\需要删除\ssl old</Filter>
-    </Text>
-    <Text Include="network\http\trade_server_http.h.txt">
-      <Filter>业务层\需要删除\HTTP</Filter>
-    </Text>
-    <Text Include="network\http\trade_server_http.cpp.txt">
-      <Filter>业务层\需要删除\HTTP</Filter>
     </Text>
     <Text Include="bin_release\ChangeLog.txt">
       <Filter>配置文件\release</Filter>

@@ -143,16 +143,21 @@
     <ClInclude Include="business\szkingdom_win\Encrypt.h" />
     <ClInclude Include="cache\CacheData.h" />
     <ClInclude Include="config\ConfigManager.h" />
-    <ClInclude Include="ConnectPool\Branch.h" />
-    <ClInclude Include="ConnectPool\BusinessSystem.h" />
-    <ClInclude Include="ConnectPool\BusinessType.h" />
+    <ClInclude Include="ConnectDD.h" />
+    <ClInclude Include="ConnectHS.h" />
+    <ClInclude Include="ConnectJSD.h" />
+    <ClInclude Include="ConnectJZ.h" />
     <Text Include="bin_release\ChangeLog.txt" />
-    <ClInclude Include="ConnectPool\ConnectManager.h" />
-    <ClInclude Include="ConnectPool\Counter.h" />
+    <ClInclude Include="ConnectTest.h" />
+    <ClInclude Include="include\Branch.h" />
+    <ClInclude Include="include\BusinessSystem.h" />
+    <ClInclude Include="include\BusinessType.h" />
     <ClInclude Include="include\CallbackImpl.h" />
     <ClInclude Include="include\common.h" />
+    <ClInclude Include="include\ConnectManager.h" />
     <ClInclude Include="include\ConnectPool.h" />
     <ClInclude Include="include\ConnectT2.h" />
+    <ClInclude Include="include\Counter.h" />
     <ClInclude Include="include\CustomMessage.h" />
     <ClInclude Include="include\DingDian.h" />
     <ClInclude Include="include\errcode.h" />
@@ -193,16 +198,8 @@
     <ClInclude Include="log\mq\LogConnectPool.h" />
     <ClInclude Include="log\tradelog.pb.h" />
     <Text Include="log\日志开发说明.txt" />
-    <Text Include="network\http\trade_server_http.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
+    <ClInclude Include="MapThreadSafe.h" />
     <ClInclude Include="network\ssl\pkgheader.pb.h" />
-    <Text Include="network\ssl\trade_server_ssl.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
-    <Text Include="network\tcp\trade_server_tcp_old.h.txt">
-      <FileType>CppHeader</FileType>
-    </Text>
     <ClInclude Include="resource.h" />
     <ClInclude Include="StatusData.h" />
     <ClInclude Include="stdafx.h" />
@@ -227,12 +224,18 @@
     <ClCompile Include="business\xinyi\TradeBusinessTest.cpp" />
     <ClCompile Include="cache\CacheData.cpp" />
     <ClCompile Include="config\ConfigManager.cpp" />
+    <ClCompile Include="IConnect.cpp" />
+    <ClCompile Include="ConnectDD.cpp" />
+    <ClCompile Include="ConnectHS.cpp" />
+    <ClCompile Include="ConnectJSD.cpp" />
+    <ClCompile Include="ConnectJZ.cpp" />
     <ClCompile Include="ConnectPool\Branch.cpp" />
     <ClCompile Include="ConnectPool\BusinessSystem.cpp" />
     <ClCompile Include="ConnectPool\BusinessType.cpp" />
     <ClCompile Include="ConnectPool\ConnectManager.cpp" />
     <ClCompile Include="ConnectPool\ConnectPool.cpp" />
     <ClCompile Include="ConnectPool\Counter.cpp" />
+    <ClCompile Include="ConnectTest.cpp" />
     <ClCompile Include="encrypt\MyBotan.cpp" />
     <ClCompile Include="encrypt\testbotan.cpp" />
     <ClCompile Include="include\XML\pugixml.cpp" />
@@ -241,24 +244,16 @@
     <ClCompile Include="log\mq\LogConnect.cpp" />
     <ClCompile Include="log\mq\LogConnectPool.cpp" />
     <ClCompile Include="log\tradelog.pb.cc" />
+    <ClCompile Include="MapThreadSafe.cpp" />
     <ClCompile Include="network\IMessage.cpp" />
-    <Text Include="network\http\trade_server_http.cpp.txt">
-      <FileType>CppCode</FileType>
-    </Text>
     <ClCompile Include="network\ISession.cpp" />
     <ClCompile Include="network\ssl\pkgheader.pb.cc" />
-    <Text Include="network\ssl\trade_server_ssl.cpp.txt">
-      <FileType>CppCode</FileType>
-    </Text>
     <ClCompile Include="network\ssl_tcp\CustomMessage.cpp" />
     <ClCompile Include="network\ssl_tcp\SSLServer.cpp" />
     <ClCompile Include="network\ssl_tcp\SSLSession.cpp" />
     <ClCompile Include="network\ssl_tcp\TcpServer.cpp" />
     <ClCompile Include="network\ssl_tcp\TcpSession.cpp" />
     <ClCompile Include="network\ssl_tcp\TradeServer.cpp" />
-    <Text Include="network\tcp\trade_server_tcp_old.cpp.txt">
-      <FileType>CppCode</FileType>
-    </Text>
     <ClCompile Include="output\FileLog.cpp" />
     <ClCompile Include="src\import_lib.cpp" />
     <ClCompile Include="src\MiniDump.cpp" />
@@ -289,6 +284,7 @@
     <None Include="bin\clientkey.pem" />
     <None Include="bin\server.crt" />
     <None Include="bin\serverkey.pem" />
+    <None Include="文档\交易系统说明.docx" />
     <None Include="文档\系统设计文档\业务时序图.vsdx" />
     <None Include="文档\系统设计文档\恒生T2异步模式.vsdx" />
     <None Include="文档\系统设计文档\日志功能.vsdx" />
@@ -312,6 +308,7 @@
     <Xml Include="bin_debug\kingdom_win_filterfunc.xml" />
     <Xml Include="bin_debug\njzq.xml" />
     <Xml Include="bin_debug\sywg.xml" />
+    <Xml Include="bin_debug\test.xml" />
     <Xml Include="bin_debug\tradegateway.xml">
       <SubType>Designer</SubType>
     </Xml>
@@ -331,7 +328,6 @@
     <Text Include="lib\ICU\icu.txt" />
     <Text Include="lib\OpenSSL\OpenSSL.txt" />
     <Text Include="lib\ProtoBuf\ProtoBuf.txt" />
-    <Text Include="network\http\flash交易密码处理规则.txt" />
     <Text Include="sywg代码备份.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

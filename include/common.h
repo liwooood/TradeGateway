@@ -15,7 +15,7 @@
 #define COUNTER_TYPE_DINGDIAN 5
 #define COUNTER_TYPE_JSD 6
 #define COUNTER_TYPE_XINYI 7
-
+#define COUNTER_TYPE_TEST 8
 
 // 业务类型
 //<!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->

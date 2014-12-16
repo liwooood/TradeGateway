@@ -258,6 +258,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	if (sysVer.compare("iphone")==0 || sysVer.compare("aphone") == 0)
 	{
 		//gFileLog::instance().Log("set wtfs:"+m_pConn->m_Counter->m_sWtfs_mobile);
+		/*
 		Fix_SetWTFS(session, m_Counter->m_sWtfs_mobile.c_str());
 
 		std::string wtfs;
@@ -267,13 +268,14 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 			wtfs = "aphone委托方式=" + m_Counter->m_sWtfs_mobile;
 
 		//gFileLog::instance().Log(wtfs);
+		*/
 	}
 	else
 	{
 		
-		Fix_SetWTFS(session, m_Counter->m_sWtfs_web.c_str());
+	//	Fix_SetWTFS(session, m_Counter->m_sWtfs_web.c_str());
 
-		std::string wtfs = "web委托方式=" + m_Counter->m_sWtfs_mobile;
+//		std::string wtfs = "web委托方式=" + m_Counter->m_sWtfs_mobile;
 
 		//gFileLog::instance().Log(wtfs);
 	}

@@ -240,7 +240,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	// 得到柜台类型
 	// 一个session，可能连接多种柜台，所以每个请求都要根据业务类型来区分
 	
-	if (!g_ConnectManager.GetCounterTypeAndAsyncMode(sysNo, busiType, nCounterType, asyncMode))
+//	if (!g_ConnectManager.GetCounterTypeAndAsyncMode(sysNo, busiType, nCounterType, asyncMode))
 	{
 		logLevel = Trade::TradeLog::ERROR_LEVEL;
 
@@ -268,7 +268,8 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 	
 		// 得到配置的柜台服务器数
-		int serverCount = g_ConnectManager.GetCounterCount(sysNo, nBusiType, "0000");
+		int serverCount = 0;
+		//g_ConnectManager.GetCounterCount(sysNo, nBusiType, "0000");
 		if (serverCount == 0)
 		{
 		}
@@ -321,7 +322,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 				
 					Counter * counter = NULL;
 					// 得到下一个服务器
-					counter = g_ConnectManager.GetNextCounter(sysNo, nBusiType, "0000");
+//					counter = g_ConnectManager.GetNextCounter(sysNo, nBusiType, "0000");
 					counterIp = counter->m_sIP;
 					counterPort = boost::lexical_cast<std::string>(counter->m_nPort);
 					counterType = boost::lexical_cast<std::string>(counter->m_nCounterType);
@@ -479,7 +480,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		//gFileLog::instance().Log("恒生T2 异步模式");
 
 		// 恒生T2异步模式
-		IConnect * pConn = gConnectPool.GetConnect();
+	//	IConnect * pConn = gConnectPool.GetConnect();
 
 		//Counter counter;
 		//IConnect * pConn = new TradeBusinessT2(0, counter);
@@ -547,7 +548,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			}
 		}
 		*/
-		pConn->Send(request, response, status, errCode, errMsg);
+		//pConn->Send(request, response, status, errCode, errMsg);
 
 		boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
 		runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
@@ -578,7 +579,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			response += SOH;
 		}
 
-		gConnectPool.PushConnect(pConn);
+	//	gConnectPool.PushConnect(pConn);
 	}
 
 

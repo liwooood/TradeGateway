@@ -13,12 +13,12 @@ Branch::~Branch(void)
 
 Counter* Branch::GetNextCounter()
 {
-	currentServerId++;
+	
 
 	if (currentServerId >= servers.size())
 		currentServerId = 0;
 
-	Counter& counter = servers[currentServerId];
+	Counter& counter = servers[currentServerId++];
 
 	return &counter;
 }

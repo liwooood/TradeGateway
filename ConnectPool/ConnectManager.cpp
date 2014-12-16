@@ -5,7 +5,7 @@
 #include "ConnectManager.h"
 #include "ConfigManager.h"
 #include "FileLog.h"
-//#include ".\dingdian\fixapi.h"
+#include "ConnectPool.h"
 
 
 
@@ -20,25 +20,19 @@ CConnectManager::~CConnectManager(void)
 {
 }
 
-
-
-
-
-/*
-Connect* CConnectManager::GetConnect(std::string sysNo, int busiType, std::string sBranchId)
+IConnect* CConnectManager::GetConnect(std::string sysNo, int busiType, std::string sBranchId)
 {
-	Connect* pConn = NULL;
+	IConnect* pConn = NULL;
 
 	// 找不到系统，直接返回
-	std::map<std::string, BusinessSystem>::iterator itSys;
-	itSys = systems.find(sysNo);
+	std::map<std::string, BusinessSystem>::iterator itSys = systems.find(sysNo);
 	if (itSys == systems.end())
 		return NULL;
 
 	// 找不到业务类型返回
 	BusinessSystem& sys = itSys->second;
-	std::map<int, BusinessType >::iterator itBusiType;
-	itBusiType = sys.busis.find(busiType);
+
+	std::map<int, BusinessType>::iterator itBusiType = sys.busis.find(busiType);
 	if (itBusiType == sys.busis.end())
 	{
 		return NULL;
@@ -46,13 +40,15 @@ Connect* CConnectManager::GetConnect(std::string sysNo, int busiType, std::strin
 
 	// 找不到营业部返回
 	BusinessType& bt = itBusiType->second;
-	std::map<std::string, ConnectPool*>::iterator itBranch;
 	bool bFoundBranch = false;
-	for (itBranch = bt.connPool.begin(); itBranch != bt.connPool.end(); itBranch++)
+
+	std::map<std::string, Branch>::iterator itBranch;
+	
+	for (itBranch = bt.branches.begin(); itBranch != bt.branches.end(); itBranch++)
 	{
 		std::string branchList = itBranch->first;
 
-		if (branchList == "0000")
+		if (branchList.compare("0000") == 0)
 		{
 			bFoundBranch = true;
 			break;
@@ -69,14 +65,17 @@ Connect* CConnectManager::GetConnect(std::string sysNo, int busiType, std::strin
 		}
 	}
 
+	// 请求入参中的营业部在配置信息中找不到
 	if (!bFoundBranch)
 	{
 		return NULL;
 	}
 
 	
-	ConnectPool * pool = itBranch->second;
-	if (pool->IsCreatePool())
+	Branch& branch = itBranch->second;
+	ConnectPool* pool = branch.pool;
+	
+	if (pool != NULL)
 	{
 		pConn = pool->GetConnect();
 
@@ -88,16 +87,16 @@ Connect* CConnectManager::GetConnect(std::string sysNo, int busiType, std::strin
 
 			return NULL;
 		}
-		else
-		{
-			pConn = pool->GetConnect();
-		}		
+		
+		
+		pConn = pool->GetConnect();
+				
 	}
 
 	return pConn;
 }
 
-void CConnectManager::PushConnect(Connect * pConn, std::string sysNo, int busiType, std::string sBranchId)
+void CConnectManager::PushConnect(IConnect * pConn, std::string sysNo, int busiType, std::string sBranchId)
 {
 	if (pConn == NULL)
 		return;
@@ -107,25 +106,25 @@ void CConnectManager::PushConnect(Connect * pConn, std::string sysNo, int busiTy
 
 
 	// 找不到系统，直接返回
-	std::map<std::string, BusinessSystem>::iterator itSys;
-	itSys = systems.find(sysNo);
+	std::map<std::string, BusinessSystem>::iterator itSys = systems.find(sysNo);
 	if (itSys == systems.end())
 		return;
+	BusinessSystem& sys = itSys->second;
+
 
 	// 找不到业务类型返回
-	BusinessSystem& sys = itSys->second;
-	std::map<int, BusinessType >::iterator itBusiType;
-	itBusiType = sys.busis.find(busiType);
+	std::map<int, BusinessType >::iterator itBusiType = sys.busis.find(busiType);
 	if (itBusiType == sys.busis.end())
 	{
 		return;
 	}
+	BusinessType& bt = itBusiType->second;
+
 
 	// 找不到营业部返回
-	BusinessType& bt = itBusiType->second;
-	std::map<std::string, ConnectPool*>::iterator itBranch;
+	std::map<std::string, Branch>::iterator itBranch;
 	bool bFoundBranch = false;
-	for (itBranch = bt.connPool.begin(); itBranch != bt.connPool.end(); itBranch++)
+	for (itBranch = bt.branches.begin(); itBranch != bt.branches.end(); itBranch++)
 	{
 		std::string branchList = itBranch->first;
 
@@ -151,8 +150,9 @@ void CConnectManager::PushConnect(Connect * pConn, std::string sysNo, int busiTy
 		return;
 	}
 
-	
-	ConnectPool * pool = itBranch->second;
+	Branch& branch = itBranch->second;
+
+	ConnectPool * pool = branch.pool;
 	pool->PushConnect(pConn);
 
 }
@@ -171,11 +171,13 @@ void CConnectManager::CloseConnPool()
 		{
 			BusinessType& bt = itBusiType->second;
 
-			std::map<std::string, ConnectPool*>::iterator itBranch;
-			for (itBranch = bt.connPool.begin(); itBranch != bt.connPool.end(); itBranch++)
+			std::map<std::string, Branch>::iterator itBranch;
+			for (itBranch = bt.branches.begin(); itBranch != bt.branches.end(); itBranch++)
 			{
-				ConnectPool * pConnPool = itBranch->second;
-				if (pConnPool != NULL && pConnPool->IsCreatePool())
+				Branch& branch = itBranch->second;
+				ConnectPool * pConnPool = branch.pool;
+
+				if (pConnPool != NULL && pConnPool->IsCreatePoolSuccess())
 				{
 					pConnPool->CloseConnPool();
 					delete pConnPool;
@@ -185,8 +187,9 @@ void CConnectManager::CloseConnPool()
 		}
 	}
 }
-*/
 
+
+	/*
 // 根据系统编号、业务类型、营业部，找到下一个柜台信息
 Counter* CConnectManager::GetNextCounter(std::string sysNo, int busiType, std::string sBranchId)
 {
@@ -331,3 +334,4 @@ bool CConnectManager::GetCounterTypeAndAsyncMode(std::string& SystemNo, std::str
 
 	return true;
 }
+*/

@@ -16,6 +16,8 @@
 #include "common.h"
 #include "tradelog.pb.h"
 #include "Counter.h"
+#include "IConnect.h"
+
 
 class IBusiness
 {
@@ -55,6 +57,10 @@ protected:
 
 	std::vector<std::string> keys;
 	int num;
+
+	// ¹ñÌ¨Á¬½Ó
+	IConnect * counterConnect;
+
 
 public:
 	IBusiness(void);

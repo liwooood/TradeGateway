@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+
+  <system>
+    <!--业务系统编号-->
+    <id>test1</id>
+    <desc>仿真柜台1</desc>
+    
+    <BusinessType>
+      <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
+      <type>0</type>
+
+      <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证 8.仿真柜台-->
+      <CounterType>8</CounterType>
+      
+     
+
+      <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
+      <connect_timeout>1</connect_timeout>
+      
+      <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
+      <recv_timeout>10</recv_timeout>
+
+
+      <!--委托方式-->
+      <entrust></entrust>
+      <!--柜员代码，顶点专用-->
+      <gydm></gydm>
+      
+      <branch>
+        <enable>1</enable>
+        <!-- 营业部列表 -->
+        <branch_list>0000</branch_list>
+
+        <server>
+          <enable>1</enable>
+          <ip>127.0.0.1</ip>
+          <port>6000</port>
+          <!--以下信息金证柜台专用-->
+          <servername></servername>
+          <username></username>
+          <password></password>
+          <req></req>
+          <res></res>
+        </server>
+        
+        <server>
+          <enable>1</enable>
+          <ip>127.0.0.1</ip>
+          <port>6000</port>
+          <!--以下信息金证柜台专用-->
+          <servername></servername>
+          <username></username>
+          <password></password>
+          <req></req>
+          <res></res>
+        </server>
+      </branch>
+
+      <branch>
+        <enable>0</enable>
+        <branch_list>0000</branch_list>
+        
+        <server>
+          <enable>1</enable>
+          <ip>127.0.0.1</ip>
+          <port>6000</port>
+          <!--以下信息金证柜台专用-->
+          <servername></servername>
+          <username></username>
+          <password></password>
+          <req></req>
+          <res></res>
+        </server>
+        
+        <server>
+          <enable>1</enable>
+          <ip>127.0.0.1</ip>
+          <port>6000</port>
+          <!--以下信息金证柜台专用-->
+          <servername></servername>
+          <username></username>
+          <password></password>
+          <req></req>
+          <res></res>
+        </server>
+      </branch>
+    </BusinessType>
+    
+    <BusinessType>
+      <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
+      <type>2</type>
+
+      <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证 8.仿真柜台-->
+      <CounterType>8</CounterType>
+
+
+
+      <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
+      <connect_timeout>1</connect_timeout>
+
+      <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
+      <recv_timeout>10</recv_timeout>
+
+
+      <!--委托方式-->
+      <entrust></entrust>
+      
+      <!--柜员代码，顶点专用-->
+      <gydm></gydm>
+
+      <branch>
+        <enable>1</enable>
+        <!-- 营业部列表 -->
+        <branch_list>0000</branch_list>
+
+        <server>
+          <enable>1</enable>
+          <ip>127.0.0.1</ip>
+          <port>6000</port>
+          <!--以下信息金证柜台专用-->
+          <servername></servername>
+          <username></username>
+          <password></password>
+          <req></req>
+          <res></res>
+        </server>
+
+        
+      </branch>
+
+     
+    </BusinessType>
+  </system>
+
+  <system>
+    <id>test2</id>
+    <desc>仿真柜台2</desc>
+    <BusinessType>
+      <!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签 -->
+      <type>0</type>
+
+      <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证 8仿真柜台-->
+      <CounterType>8</CounterType>
+      
+      <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
+      <connect_timeout>1</connect_timeout>
+
+      <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
+      <recv_timeout>10</recv_timeout>
+
+      <!--委托方式-->
+      <entrust></entrust>
+      <!--柜员代码，顶点专用-->
+      <gydm></gydm>
+      
+      <branch>
+        <enable>1</enable>
+        <!--根据营业部列表分配柜台服务器-->
+	  <!--"0000"代表所有营业部,-->
+        <branch_list>0000</branch_list>
+        
+        <server>
+          <enable>1</enable>
+          <ip>127.0.0.1</ip>
+          <port>6000</port>
+          <!--以下信息金证柜台专用-->
+          <servername></servername>
+          <username></username>
+          <password></password>
+          <req></req>
+          <res></res>
+        </server>
+        
+      </branch>
+    </BusinessType>
+  </system>
+
+</config>

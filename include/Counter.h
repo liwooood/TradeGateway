@@ -1,5 +1,5 @@
-#ifndef _COUNTER_H_
-#define _COUNTER_H_
+#ifndef COUNTER_H
+#define COUNTER_H
 
 #include <string>
 
@@ -14,22 +14,27 @@ public:
 	~Counter(void);
 
 	int m_nCounterType; // 柜台类型
-
 	std::string m_sIP;
 	int m_nPort;
+	int m_nConnectTimeout; // 柜台连接超时时间
+	int m_nRecvTimeout; // 请求处理超时时间
+	std::string entrustMode; // 委托方式
+	
+
+	//以下信息金证专用
 	std::string m_sServerName;
 	std::string m_sUserName;
 	std::string m_sPassword;
 	std::string m_sReq;
 	std::string m_sRes;
 
-	int m_nConnectTimeout; // 柜台连接超时时间
-	int m_nRecvTimeout; // 请求处理超时时间
+	// 顶点柜台，柜员代码
+	std::string m_sGydm; 
 
-	int m_nIdleTimeout; // 柜台连接后，没有请求，自动中断连接时间
-	std::string m_sGydm; // 顶点柜台，柜员代码
-	std::string m_sWtfs_mobile;
-	std::string m_sWtfs_web;
+
+	
+	//std::string m_sWtfs_mobile;
+	//std::string m_sWtfs_web;
 
 };
 #endif

@@ -1,5 +1,5 @@
-#ifndef _BUSINESS_SYTEM_H
-#define _BUSINESS_SYTEM_H
+#ifndef BUSINESS_SYTEM_H
+#define BUSINESS_SYTEM_H
 
 #include <string>
 #include <map>
@@ -18,7 +18,7 @@ public:
 	std::string desc;
 
 
-	std::map<int/*业务类型*/, BusinessType > busis;
+	std::map<int/*业务类型*/, BusinessType> busis;
 
 };
 

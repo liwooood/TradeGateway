@@ -9,6 +9,8 @@
 #include <boost/thread.hpp>
 
 #include "QueueThreadSafe.h"
+#include "FileLog.h"
+
 
 template<typename Queue>
 class WorkerThreadPool
@@ -96,6 +98,7 @@ private:
 			if (!func || !func(msg))
 			{
 				// 严重错误，需要记录日志
+				gFileLog::instance().error("工作线程池", "退出线程");
 				break;
 			}
 		}

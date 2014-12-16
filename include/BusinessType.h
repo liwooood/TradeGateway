@@ -1,5 +1,5 @@
-#ifndef _BUSINESS_TYPE_
-#define _BUSINESS_TYPE_
+#ifndef BUSINESS_TYPE_H
+#define BUSINESS_TYPE_H
 
 #include <string>
 #include <map>
@@ -19,9 +19,11 @@ public:
 	int counterType;
 	int asyncMode;
 
-	//std::map<std::string, ConnectPool*> connPool;
+	//存放柜台连接
+	//std::map<std::string/*营业部列表id*/, ConnectPool*> connPool;
 
-	std::map<std::string/*营业部id*/, Branch> branches;
+	// 存放柜台信息
+	std::map<std::string/*营业部列表id*/, Branch> branches;
 };
 
 #endif
