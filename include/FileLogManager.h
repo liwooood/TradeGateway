@@ -15,10 +15,6 @@
 #include "common.h"
 
 
-/*
-开发计划
-要以共享方式打开文件
-*/
 
 class FileLogManager
 {
@@ -31,21 +27,12 @@ private:
 
 	bool file_log(Trade::TradeLog log);
 
-	// 过滤字段
-	std::map<std::string, std::string> m_mDingDian_FilterField;
-	std::map<std::string, std::string> m_mT2_FilterField;
-	std::map<std::string, std::string> m_mKingdom_FilterField;
-	std::map<std::string, std::string> m_mAGC_FilterField;
-	std::map<std::string, std::string> m_mXinyi_FilterField;
+	
 	void GetFilterMap(std::string& request, std::map<std::string, std::string>& mapFieldFilter, std::map<std::string, std::string>& reqmap);
 	void LoadFieldFilter(std::string& sFieldFilterXML, std::map<std::string, std::string>& mapFieldFilter);
 
-	// 过滤功能号
-	std::map<std::string, FUNCTION_DESC> m_mDingDian_FilterFunc;
 	
-	std::map<std::string, FUNCTION_DESC> m_mKingdom_FilterFunc;
-	std::map<std::string, FUNCTION_DESC> m_mAGC_FilterFunc;
-	std::map<std::string, FUNCTION_DESC> m_mXinyi_FilterFunc;
+
 	void LoadFuncFilter(std::string& sFuncFilterXML, std::map<std::string, FUNCTION_DESC>& mapFuncFilter);
 
 public:
@@ -62,8 +49,19 @@ public:
 	void LoadFieldFilter();
 	void LoadFuncFilter();
 	
-	// business t2会用到， 临时
+	// 过滤字段
+	std::map<std::string, std::string> m_mDingDian_FilterField;
+	std::map<std::string, std::string> m_mT2_FilterField;
+	std::map<std::string, std::string> m_mKingdom_FilterField;
+	std::map<std::string, std::string> m_mAGC_FilterField;
+	std::map<std::string, std::string> m_mTest_FilterField;
+	// 过滤功能号
+	std::map<std::string, FUNCTION_DESC> m_mDingDian_FilterFunc;
 	std::map<std::string, FUNCTION_DESC> m_mT2_FilterFunc;
+	std::map<std::string, FUNCTION_DESC> m_mKingdom_FilterFunc;
+	std::map<std::string, FUNCTION_DESC> m_mAGC_FilterFunc;
+	std::map<std::string, FUNCTION_DESC> m_mTest_FilterFunc;
+	
 };
 typedef boost::detail::thread::singleton<FileLogManager> gFileLogManager;
 

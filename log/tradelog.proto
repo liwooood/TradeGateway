@@ -15,6 +15,7 @@ message TradeLog
 	required string sysNo = 1;
 	required string busiType = 2;
 	required string sysVer = 3;
+	// 客户号
 	required string account = 4;
 	// 客户端ip
 	required string ip = 21;

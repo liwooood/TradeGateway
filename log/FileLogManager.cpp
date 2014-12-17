@@ -55,7 +55,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	std::string funcid = log.funcid();
 
 	// 心跳不记录
-	if (funcid == "999999")
+	if (funcid.empty() || funcid.compare("999999")==0)
 	{
 		return true;
 	}
@@ -127,8 +127,48 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 		}
 	}
 
+	// 金仕达
+	if (counterType == COUNTER_TYPE_JSD)
+	{
+		// 如果启用了过滤查询功能号
+		if (gConfigManager::instance().m_nFilterFuncId)
+		{
+			std::map<std::string, FUNCTION_DESC>::iterator it = m_mAGC_FilterFunc.find(funcid);
+			if (it != m_mAGC_FilterFunc.end())
+			{
+				// 过滤查询功能号
+				if (it->second.isQuery)
+				{
+					//log.destroy();
+					
+					return true;
+				}
+			}
+		}
+	}
+
+	// 仿真柜台
+	if (counterType == COUNTER_TYPE_TEST || counterType == COUNTER_TYPE_XINYI)
+	{
+		// 如果启用了过滤查询功能号
+		if (gConfigManager::instance().m_nFilterFuncId)
+		{
+			std::map<std::string, FUNCTION_DESC>::iterator it = m_mTest_FilterFunc.find(funcid);
+			if (it != m_mTest_FilterFunc.end())
+			{
+				// 过滤查询功能号
+				if (it->second.isQuery)
+				{
+					//log.destroy();
+					
+					return true;
+				}
+			}
+		}
+	}
+
 	std::string request = log.request();
-	std::map<std::string, std::string> reqmap;
+	std::map<std::string, std::string> reqmap; // 存放过滤的请求
 
 	// 过滤字段
 	if (counterType == COUNTER_TYPE_HS_T2)
@@ -147,9 +187,9 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	{
 		GetFilterMap(request, m_mAGC_FilterField, reqmap);
 	}
-	else if (counterType == COUNTER_TYPE_XINYI) // xinyi
+	else if (counterType == COUNTER_TYPE_XINYI || counterType == COUNTER_TYPE_TEST) // xinyi
 	{
-		GetFilterMap(request, m_mXinyi_FilterField, reqmap);
+		GetFilterMap(request, m_mTest_FilterField, reqmap);
 	}
 
 	
@@ -211,6 +251,10 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	else
 		sLogFileName += account;
 
+	// 功能号
+	sLogFileName += "_" + funcid;
+
+	/*
 	//日志级别
 	switch (log.level())
 	{
@@ -228,6 +272,16 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 		break;
 	default:
 		sLogFileName += "_nolevel.log";
+	}
+	*/
+
+	if (log.status() == 0)
+	{
+		sLogFileName += "_error";
+	}
+	else
+	{
+		sLogFileName += "_success";
 	}
 
 	/*
@@ -347,7 +401,7 @@ void FileLogManager::GetFilterMap(std::string& request, std::map<std::string, st
 		
 
 		if (keyvalue.empty())
-			break;
+			continue;
 
 		std::size_t found = keyvalue.find_first_of("=");
 		
@@ -382,16 +436,24 @@ void FileLogManager::LoadFieldFilter()
 	std::string xmlfile = "";
 	
 	// 顶点
-	xmlfile = gConfigManager::instance().m_sPath + "\\apex_filterfield.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_DD.xml";
 	LoadFieldFilter(xmlfile, m_mDingDian_FilterField);
 
 	// 恒生T2
-	xmlfile = gConfigManager::instance().m_sPath + "\\hundsun_t2_filterfield.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_HS.xml";
 	LoadFieldFilter(xmlfile, m_mT2_FilterField);
 
 	// 金证
-	xmlfile = gConfigManager::instance().m_sPath + "\\kingdom_win_filterfield.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_JZ.xml";
 	LoadFieldFilter(xmlfile, m_mKingdom_FilterField);
+
+	// 金仕达
+	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_JSD.xml";
+	LoadFieldFilter(xmlfile, m_mAGC_FilterField);
+
+	// 仿真柜台
+	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_Test.xml";
+	LoadFieldFilter(xmlfile, m_mTest_FilterField);
 
 }
 
@@ -401,16 +463,24 @@ void FileLogManager::LoadFuncFilter()
 	std::string xmlfile = "";
 	
 	// 顶点
-	xmlfile = gConfigManager::instance().m_sPath + "\\apex_filterfunc.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterFunc_DD.xml";
 	LoadFuncFilter(xmlfile, m_mDingDian_FilterFunc);
 
 	// 恒生T2
-	xmlfile = gConfigManager::instance().m_sPath + "\\hundsun_t2_filterfunc.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterFunc_HS.xml";
 	LoadFuncFilter(xmlfile, m_mT2_FilterFunc);
 
 	// 金证
-	xmlfile = gConfigManager::instance().m_sPath + "\\kingdom_win_filterfunc.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterFunc_JZ.xml";
 	LoadFuncFilter(xmlfile, m_mKingdom_FilterFunc);
+
+	// 金仁达
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterFunc_JSD.xml";
+	LoadFuncFilter(xmlfile, m_mAGC_FilterFunc);
+
+	// 仿真柜台
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterFunc_Test.xml";
+	LoadFuncFilter(xmlfile, m_mTest_FilterFunc);
 }
 
 // 从xml定义文件中读取需要过滤的敏感字段

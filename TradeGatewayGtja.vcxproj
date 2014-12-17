@@ -162,6 +162,7 @@
     <ClInclude Include="include\DingDian.h" />
     <ClInclude Include="include\errcode.h" />
     <ClInclude Include="include\FileLog.h" />
+    <ClInclude Include="include\FileLogManager.h" />
     <ClInclude Include="include\IBusiness.h" />
     <ClInclude Include="include\IConnect.h" />
     <ClInclude Include="include\IMessage.h" />
@@ -193,7 +194,6 @@
     <ClInclude Include="include\XML\rapidxml_print.hpp" />
     <ClInclude Include="include\XML\rapidxml_utils.hpp" />
     <ClInclude Include="log\DistributedLogManager.h" />
-    <ClInclude Include="log\FileLogManager.h" />
     <ClInclude Include="log\mq\LogConnect.h" />
     <ClInclude Include="log\mq\LogConnectPool.h" />
     <ClInclude Include="log\tradelog.pb.h" />
@@ -297,15 +297,17 @@
     <Xml Include="bin_debug\agc.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="bin_debug\apex_filterfield.xml" />
-    <Xml Include="bin_debug\apex_filterfunc.xml" />
+    <Xml Include="bin_debug\FilterField_DD.xml" />
+    <Xml Include="bin_debug\FilterField_HS.xml" />
+    <Xml Include="bin_debug\FilterField_JSD.xml" />
+    <Xml Include="bin_debug\FilterField_JZ.xml" />
+    <Xml Include="bin_debug\FilterField_Test.xml" />
+    <Xml Include="bin_debug\FilterFunc_DD.xml" />
+    <Xml Include="bin_debug\FilterFunc_HS.xml" />
+    <Xml Include="bin_debug\FilterFunc_JSD.xml" />
+    <Xml Include="bin_debug\FilterFunc_JZ.xml" />
+    <Xml Include="bin_debug\FilterFunc_Test.xml" />
     <Xml Include="bin_debug\gtja.xml" />
-    <Xml Include="bin_debug\hundsun_t2_filterfield.xml" />
-    <Xml Include="bin_debug\hundsun_t2_filterfunc.xml" />
-    <Xml Include="bin_debug\kingdom_win_filterfield.xml">
-      <SubType>Designer</SubType>
-    </Xml>
-    <Xml Include="bin_debug\kingdom_win_filterfunc.xml" />
     <Xml Include="bin_debug\njzq.xml" />
     <Xml Include="bin_debug\sywg.xml" />
     <Xml Include="bin_debug\test.xml" />

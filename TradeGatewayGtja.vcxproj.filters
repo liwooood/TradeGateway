@@ -98,30 +98,6 @@
     <Filter Include="网络层\网络消息">
       <UniqueIdentifier>{0f35af1c-396e-43f7-a3be-5a6dfd2cbe44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="业务层\柜台系统">
-      <UniqueIdentifier>{18b11df6-e161-47db-8ec1-72c9fba73dea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\恒生T2">
-      <UniqueIdentifier>{7c86cff7-a507-40ec-b078-f55c74d4c493}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\顶点">
-      <UniqueIdentifier>{1bd17284-b664-4c6d-b16b-646b9c676689}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\金仕达AGC/WGX">
-      <UniqueIdentifier>{1ef065c2-a8da-43d4-9e49-02c24ec2b7a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\金仕达AGC/WGX\AGC配置文件">
-      <UniqueIdentifier>{f2ca4b09-368b-488e-b0f1-ff7ee186ff9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\金仕达AGC/WGX\AGC配置文件\debug">
-      <UniqueIdentifier>{4eb5b1df-b3ac-43a1-812e-813892a92142}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\金仕达AGC/WGX\AGC配置文件\release">
-      <UniqueIdentifier>{253f4c2a-c7fd-4f0f-916b-00639a62a2bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\金证windows">
-      <UniqueIdentifier>{a07689f2-f438-45a4-8f73-4f0abd1f1c2b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="公共类型">
       <UniqueIdentifier>{abe94155-997f-4241-b0f0-81f35a48a81b}</UniqueIdentifier>
     </Filter>
@@ -133,12 +109,6 @@
     </Filter>
     <Filter Include="注册表">
       <UniqueIdentifier>{5140f9ba-0a49-496d-8c2c-5b29e7daa878}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\恒生T2\同步">
-      <UniqueIdentifier>{829bcd0e-0b38-4aa3-a424-b2d15422954a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="业务层\柜台系统\恒生T2\异步">
-      <UniqueIdentifier>{dd02e4d4-6220-4f5f-b408-a428b9dadafc}</UniqueIdentifier>
     </Filter>
     <Filter Include="内存泄漏vld">
       <UniqueIdentifier>{f2585c0a-32a4-4a51-82c2-127918099a17}</UniqueIdentifier>
@@ -170,11 +140,41 @@
     <Filter Include="柜台连接池\连接">
       <UniqueIdentifier>{83a3971f-e616-4544-8cd3-3a8ae67ab647}</UniqueIdentifier>
     </Filter>
-    <Filter Include="业务层\柜台系统\仿真柜台">
-      <UniqueIdentifier>{0c5d470e-69bf-475a-8d45-bffde1689acb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="柜台连接池\配置信息">
       <UniqueIdentifier>{f90e10cc-6b49-494a-8c88-1d3bf601d067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\仿真柜台">
+      <UniqueIdentifier>{0c5d470e-69bf-475a-8d45-bffde1689acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\恒生T2">
+      <UniqueIdentifier>{7c86cff7-a507-40ec-b078-f55c74d4c493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\恒生T2\同步">
+      <UniqueIdentifier>{829bcd0e-0b38-4aa3-a424-b2d15422954a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\恒生T2\异步">
+      <UniqueIdentifier>{dd02e4d4-6220-4f5f-b408-a428b9dadafc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\金仕达AGC/WGX">
+      <UniqueIdentifier>{1ef065c2-a8da-43d4-9e49-02c24ec2b7a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\金仕达AGC/WGX\AGC配置文件">
+      <UniqueIdentifier>{f2ca4b09-368b-488e-b0f1-ff7ee186ff9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\金仕达AGC/WGX\AGC配置文件\debug">
+      <UniqueIdentifier>{4eb5b1df-b3ac-43a1-812e-813892a92142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\金仕达AGC/WGX\AGC配置文件\release">
+      <UniqueIdentifier>{253f4c2a-c7fd-4f0f-916b-00639a62a2bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\金证windows">
+      <UniqueIdentifier>{a07689f2-f438-45a4-8f73-4f0abd1f1c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\顶点">
+      <UniqueIdentifier>{1bd17284-b664-4c6d-b16b-646b9c676689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="客户端版本管理">
+      <UniqueIdentifier>{3963840a-c9ab-4f62-8cd7-3aa35c6dd03c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -188,10 +188,7 @@
       <Filter>缓存</Filter>
     </ClInclude>
     <ClInclude Include="business\SunGuard\sywg.h">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
-    </ClInclude>
-    <ClInclude Include="log\FileLogManager.h">
-      <Filter>日志\文件日志</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClInclude>
     <ClInclude Include="log\mq\LogConnect.h">
       <Filter>日志\分布式日志</Filter>
@@ -209,19 +206,19 @@
       <Filter>网络层\网络消息\protobuf</Filter>
     </ClInclude>
     <ClInclude Include="business\szkingdom_win\Encrypt.h">
-      <Filter>业务层\柜台系统\金证windows</Filter>
+      <Filter>业务层\金证windows</Filter>
     </ClInclude>
     <ClInclude Include="business\SunGuard\AGC.h">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClInclude>
     <ClInclude Include="agc_encrypt.h">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClInclude>
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h">
-      <Filter>业务层\柜台系统\恒生T2</Filter>
+      <Filter>业务层\恒生T2</Filter>
     </ClInclude>
     <ClInclude Include="business\apexsoft\DingDian.h">
-      <Filter>业务层\柜台系统\顶点</Filter>
+      <Filter>业务层\顶点</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniDump.h">
       <Filter>CrashDump</Filter>
@@ -245,10 +242,7 @@
       <Filter>第三方库\XML\RapidXML</Filter>
     </ClInclude>
     <ClInclude Include="include\ConnectT2.h">
-      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
-    </ClInclude>
-    <ClInclude Include="include\IBusiness.h">
-      <Filter>业务层\柜台系统</Filter>
+      <Filter>业务层\恒生T2\异步</Filter>
     </ClInclude>
     <ClInclude Include="include\TradeGatewayGtja.h">
       <Filter>主框架</Filter>
@@ -263,7 +257,7 @@
       <Filter>主框架</Filter>
     </ClInclude>
     <ClInclude Include="include\CallbackImpl.h">
-      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+      <Filter>业务层\恒生T2\异步</Filter>
     </ClInclude>
     <ClInclude Include="include\TradeServer.h">
       <Filter>业务层</Filter>
@@ -284,19 +278,19 @@
       <Filter>线程池ThreadPool</Filter>
     </ClInclude>
     <ClInclude Include="include\TradeBusinessJZ.h">
-      <Filter>业务层\柜台系统\金证windows</Filter>
+      <Filter>业务层\金证windows</Filter>
     </ClInclude>
     <ClInclude Include="include\DingDian.h">
-      <Filter>业务层\柜台系统\顶点</Filter>
+      <Filter>业务层\顶点</Filter>
     </ClInclude>
     <ClInclude Include="include\TradeBusinessJSD.h">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClInclude>
     <ClInclude Include="include\TradeBusinessHS.h">
-      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
+      <Filter>业务层\恒生T2\同步</Filter>
     </ClInclude>
     <ClInclude Include="include\TradeBusinessDD.h">
-      <Filter>业务层\柜台系统\顶点</Filter>
+      <Filter>业务层\顶点</Filter>
     </ClInclude>
     <ClInclude Include="StatusData.h">
       <Filter>会话管理</Filter>
@@ -320,7 +314,7 @@
       <Filter>调试输出</Filter>
     </ClInclude>
     <ClInclude Include="include\TradeBusinessTest.h">
-      <Filter>业务层\柜台系统\仿真柜台</Filter>
+      <Filter>业务层\仿真柜台</Filter>
     </ClInclude>
     <ClInclude Include="include\IOServicePool.h">
       <Filter>网络层</Filter>
@@ -382,6 +376,12 @@
     <ClInclude Include="include\ConfigManager.h">
       <Filter>配置文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\IBusiness.h">
+      <Filter>业务层</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileLogManager.h">
+      <Filter>日志\文件日志</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -411,9 +411,6 @@
     <ClCompile Include="config\ConfigManager.cpp">
       <Filter>配置文件</Filter>
     </ClCompile>
-    <ClCompile Include="business\IBusiness.cpp">
-      <Filter>业务层\柜台系统</Filter>
-    </ClCompile>
     <ClCompile Include="network\IMessage.cpp">
       <Filter>网络层\网络消息</Filter>
     </ClCompile>
@@ -439,25 +436,25 @@
       <Filter>业务层</Filter>
     </ClCompile>
     <ClCompile Include="business\szkingdom_win\Encrypt.cpp">
-      <Filter>业务层\柜台系统\金证windows</Filter>
+      <Filter>业务层\金证windows</Filter>
     </ClCompile>
     <ClCompile Include="business\SunGuard\AGC.cpp">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClCompile>
     <ClCompile Include="business\SunGuard\Des.cpp">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClCompile>
     <ClCompile Include="business\SunGuard\Crc.cpp">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClCompile>
     <ClCompile Include="business\apexsoft\DingDian.cpp">
-      <Filter>业务层\柜台系统\顶点</Filter>
+      <Filter>业务层\顶点</Filter>
     </ClCompile>
     <ClCompile Include="business\hundsun_t2\CallbackImpl.cpp">
-      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+      <Filter>业务层\恒生T2\异步</Filter>
     </ClCompile>
     <ClCompile Include="business\hundsun_t2\ConnectT2.cpp">
-      <Filter>业务层\柜台系统\恒生T2\异步</Filter>
+      <Filter>业务层\恒生T2\异步</Filter>
     </ClCompile>
     <ClCompile Include="src\MiniDump.cpp">
       <Filter>CrashDump</Filter>
@@ -469,16 +466,16 @@
       <Filter>第三方库\XML\pugixml</Filter>
     </ClCompile>
     <ClCompile Include="business\szkingdom_win\TradeBusinessJZ.cpp">
-      <Filter>业务层\柜台系统\金证windows</Filter>
+      <Filter>业务层\金证windows</Filter>
     </ClCompile>
     <ClCompile Include="business\SunGuard\TradeBusinessJSD.cpp">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClCompile>
     <ClCompile Include="business\hundsun_t2\TradeBusinessHS.cpp">
-      <Filter>业务层\柜台系统\恒生T2\同步</Filter>
+      <Filter>业务层\恒生T2\同步</Filter>
     </ClCompile>
     <ClCompile Include="business\apexsoft\TradeBusinessDD.cpp">
-      <Filter>业务层\柜台系统\顶点</Filter>
+      <Filter>业务层\顶点</Filter>
     </ClCompile>
     <ClCompile Include="StatusData.cpp">
       <Filter>会话管理</Filter>
@@ -490,7 +487,7 @@
       <Filter>网络层\网络消息</Filter>
     </ClCompile>
     <ClCompile Include="business\xinyi\TradeBusinessTest.cpp">
-      <Filter>业务层\柜台系统\仿真柜台</Filter>
+      <Filter>业务层\仿真柜台</Filter>
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\SSLServer.cpp">
       <Filter>网络层</Filter>
@@ -542,6 +539,9 @@
     </ClCompile>
     <ClCompile Include="ConnectPool\ConnectPool.cpp">
       <Filter>柜台连接池\连接</Filter>
+    </ClCompile>
+    <ClCompile Include="business\IBusiness.cpp">
+      <Filter>业务层</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -604,7 +604,7 @@
       <Filter>文档</Filter>
     </None>
     <None Include="bin\tradeparam.map">
-      <Filter>业务层\柜台系统\顶点</Filter>
+      <Filter>业务层\顶点</Filter>
     </None>
     <None Include="bin_release\wer.reg">
       <Filter>注册表</Filter>
@@ -620,32 +620,14 @@
     <Xml Include="bin_debug\tradegateway.xml">
       <Filter>配置文件\debug</Filter>
     </Xml>
-    <Xml Include="bin_debug\apex_filterfunc.xml">
-      <Filter>日志\过滤查询功能号</Filter>
-    </Xml>
-    <Xml Include="bin_debug\hundsun_t2_filterfunc.xml">
-      <Filter>日志\过滤查询功能号</Filter>
-    </Xml>
-    <Xml Include="bin_debug\kingdom_win_filterfunc.xml">
-      <Filter>日志\过滤查询功能号</Filter>
-    </Xml>
-    <Xml Include="bin_debug\apex_filterfield.xml">
-      <Filter>日志\过滤敏感字段</Filter>
-    </Xml>
-    <Xml Include="bin_debug\hundsun_t2_filterfield.xml">
-      <Filter>日志\过滤敏感字段</Filter>
-    </Xml>
-    <Xml Include="bin_debug\kingdom_win_filterfield.xml">
-      <Filter>日志\过滤敏感字段</Filter>
-    </Xml>
     <Xml Include="bin_debug\agc.xml">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX\AGC配置文件\debug</Filter>
+      <Filter>业务层\金仕达AGC/WGX\AGC配置文件\debug</Filter>
     </Xml>
     <Xml Include="bin_release\agc.xml">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX\AGC配置文件\release</Filter>
+      <Filter>业务层\金仕达AGC/WGX\AGC配置文件\release</Filter>
     </Xml>
     <Xml Include="bin\OutputDomain.xml">
-      <Filter>业务层\柜台系统\顶点</Filter>
+      <Filter>业务层\顶点</Filter>
     </Xml>
     <Xml Include="bin_release\sywg.xml">
       <Filter>配置文件\release</Filter>
@@ -668,6 +650,36 @@
     <Xml Include="bin_debug\test.xml">
       <Filter>配置文件\debug</Filter>
     </Xml>
+    <Xml Include="bin_debug\FilterField_DD.xml">
+      <Filter>日志\过滤敏感字段</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterField_HS.xml">
+      <Filter>日志\过滤敏感字段</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterField_JSD.xml">
+      <Filter>日志\过滤敏感字段</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterField_JZ.xml">
+      <Filter>日志\过滤敏感字段</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterField_Test.xml">
+      <Filter>日志\过滤敏感字段</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterFunc_DD.xml">
+      <Filter>日志\过滤查询功能号</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterFunc_HS.xml">
+      <Filter>日志\过滤查询功能号</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterFunc_JZ.xml">
+      <Filter>日志\过滤查询功能号</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterFunc_JSD.xml">
+      <Filter>日志\过滤查询功能号</Filter>
+    </Xml>
+    <Xml Include="bin_debug\FilterFunc_Test.xml">
+      <Filter>日志\过滤查询功能号</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Text Include="lib\ICU\icu.txt">
@@ -689,10 +701,10 @@
       <Filter>第三方库\ProtoBuf</Filter>
     </Text>
     <Text Include="business\szkingdom\业务加解密.txt">
-      <Filter>业务层\柜台系统\金证windows</Filter>
+      <Filter>业务层\金证windows</Filter>
     </Text>
     <Text Include="sywg代码备份.txt">
-      <Filter>业务层\柜台系统\金仕达AGC/WGX</Filter>
+      <Filter>业务层\金仕达AGC/WGX</Filter>
     </Text>
     <Text Include="bin_release\ChangeLog.txt">
       <Filter>配置文件\release</Filter>
