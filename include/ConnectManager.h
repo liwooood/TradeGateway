@@ -9,7 +9,7 @@
 #include "BusinessSystem.h"
 #include "BusinessType.h"
 #include "Counter.h"
-#include "IConnect.h"
+#include "IBusiness.h"
 
 
 
@@ -24,14 +24,16 @@ public:
 	std::map<std::string/*系统编号*/, BusinessSystem> systems;
 
 	// 加mutex控制
-	IConnect* GetConnect(std::string sysNo, int busiType, std::string sBranchId);
-	void PushConnect(IConnect * pConn, std::string sysNo, int busiType, std::string sBranchId);
+	IBusiness* GetConnect(std::string sysNo, int busiType, std::string sBranchId);
+	void PushConnect(IBusiness * pConn, std::string sysNo, int busiType, std::string sBranchId);
 	void CloseConnPool();
+
+	bool GetCounterTypeAndAsyncMode(std::string& systemNo, std::string& businessType, int& counterType, int& counterMode);
 
 	/*
 	Counter* GetNextCounter(std::string system, int business, std::string branch);
 	int GetCounterCount(std::string system, int business, std::string branch);
-	bool GetCounterTypeAndAsyncMode(std::string& SystemNo, std::string& busiType, int& counterType, int& asyncMode);
+	
 	*/
 };
 

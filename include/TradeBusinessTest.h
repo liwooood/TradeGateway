@@ -29,16 +29,14 @@ class TradeBusinessTest : public IBusiness
 {
 public:
 	TradeBusinessTest();
+	TradeBusinessTest(int connId, Counter counter);
 	~TradeBusinessTest(void);
 
 	virtual bool CreateConnect();
-	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg);
 	virtual void CloseConnect();
-
-	//void SetConnectTimeout(int seconds);
-	//void SetReadWriteTimeout(int seconds);
-	// 心跳功能，由于后台业务不同，所以封装
-	bool HeartBeat();
+	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg);
+	
+	
 	
 
 private:
@@ -52,10 +50,8 @@ private:
 
 	int Send(const char * buf, int len, int flags);
 	int Recv(char* buf, int len, int flags);
-	//std::string decompress(std::string data);
-
+	
 private:
 	SOCKET sockfd;
-	
 };
 #endif

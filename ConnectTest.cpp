@@ -12,11 +12,8 @@ ConnectTest::~ConnectTest(void)
 {
 }
 
-bool ConnectTest::CreateConnect()
-{
-	return false;
-}
 
-void ConnectTest::CloseConnect()
+SOCKET ConnectTest::GetConnect()
 {
+	return sockfd;
 }

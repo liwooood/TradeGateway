@@ -34,6 +34,12 @@ TradeBusinessJSD::TradeBusinessJSD(void)
 
 }
 
+TradeBusinessJSD::TradeBusinessJSD(int connId, Counter counter)
+{
+	this->connId = connId;
+	this->counter = counter;
+}
+
 
 TradeBusinessJSD::~TradeBusinessJSD(void)
 {

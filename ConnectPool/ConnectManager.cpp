@@ -20,9 +20,9 @@ CConnectManager::~CConnectManager(void)
 {
 }
 
-IConnect* CConnectManager::GetConnect(std::string sysNo, int busiType, std::string sBranchId)
+IBusiness* CConnectManager::GetConnect(std::string sysNo, int busiType, std::string sBranchId)
 {
-	IConnect* pConn = NULL;
+	IBusiness* pConn = NULL;
 
 	// 找不到系统，直接返回
 	std::map<std::string, BusinessSystem>::iterator itSys = systems.find(sysNo);
@@ -96,7 +96,7 @@ IConnect* CConnectManager::GetConnect(std::string sysNo, int busiType, std::stri
 	return pConn;
 }
 
-void CConnectManager::PushConnect(IConnect * pConn, std::string sysNo, int busiType, std::string sBranchId)
+void CConnectManager::PushConnect(IBusiness * pConn, std::string sysNo, int busiType, std::string sBranchId)
 {
 	if (pConn == NULL)
 		return;
@@ -301,15 +301,15 @@ int CConnectManager::GetCounterCount(std::string sysNo, int busiType, std::strin
 
 	return branch.GetCounterCount();
 }
-
+*/
 
 // 根据系统编号和业务类型，找到对应的柜台类型
-bool CConnectManager::GetCounterTypeAndAsyncMode(std::string& SystemNo, std::string& busiType, int& counterType, int& asyncMode)
+bool CConnectManager::GetCounterTypeAndAsyncMode(std::string& systemNo, std::string& businessType, int& counterType, int& counterMode)
 {
-	int bt = boost::lexical_cast<int>(busiType);
+	
 
 	std::map<std::string, BusinessSystem>::iterator it;
-	it = systems.find(SystemNo);
+	it = systems.find(systemNo);
 	if (it == systems.end())
 	{
 		return false;
@@ -321,7 +321,7 @@ bool CConnectManager::GetCounterTypeAndAsyncMode(std::string& SystemNo, std::str
 
 	std::map<int, BusinessType>::iterator it2;
 
-	
+	int bt = boost::lexical_cast<int>(businessType);
 	it2 = bs.busis.find(bt);
 	if (it2 == bs.busis.end())
 	{
@@ -330,8 +330,7 @@ bool CConnectManager::GetCounterTypeAndAsyncMode(std::string& SystemNo, std::str
 
 	counterType = it2->second.counterType;
 	
-	asyncMode = it2->second.asyncMode;
+	counterMode = it2->second.counterMode;
 
 	return true;
 }
-*/

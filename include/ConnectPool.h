@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "QueueThreadSafe.h"
-#include "IConnect.h"
+#include "IBusiness.h"
 
 #include "common.h"
 #include "Counter.h"
@@ -17,7 +17,7 @@ private:
 
 
 	// 直接整合std::deque比较好
-	typedef QueueThreadSafe<IConnect*> conn_queue_type;
+	typedef QueueThreadSafe<IBusiness*> conn_queue_type;
 	conn_queue_type m_pool;
 
 	//不使用队列，下次改
@@ -37,8 +37,8 @@ public:
 	bool IncreaseConnPool();
 	void CloseConnPool();
 
-	IConnect* GetConnect();
-	void PushConnect(IConnect * pConn);
+	IBusiness* GetConnect();
+	void PushConnect(IBusiness * pConn);
 
 
 	

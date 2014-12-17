@@ -22,6 +22,17 @@
 class IBusiness
 {
 protected:
+	// 连接相关
+	Counter counter;
+	
+	int connId; // 在连接池中的连接序号
+
+	// 不同的柜台，写不同的日志
+	int counterType;
+	std::string logFile;
+
+
+	// 业务相关
 	std::string SOH;
 	bool m_bConnected;
 	Counter * m_Counter;
@@ -58,33 +69,33 @@ protected:
 	std::vector<std::string> keys;
 	int num;
 
-	// 柜台连接
-	IConnect * counterConnect;
-
+	
+	IConnect* pConn;
 
 public:
 	IBusiness(void);
+
+
+	// 连接相关
+	virtual bool CreateConnect() = 0;
+	virtual void CloseConnect() = 0;
+	virtual std::string GetConnectInfo();
+
+	// 业务相关
+	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg) = 0;
 	
 
 	
-
+	bool ParseRequest(std::string& request);
+	
 	
 	virtual void SetCounter(Counter * counter);
 	virtual Counter * GetCounter();
 	virtual bool IsConnected();
-
-
-	virtual bool CreateConnect() = 0;
-	virtual void CloseConnect() = 0;
-	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg) = 0;
-
-
-	bool ParseRequest(std::string& request);
+	
 	bool FilterRequestField(std::string& key);
 	void RetNoRecordRes(std::string& response, int& status);
 	void GenResponse(int nErrCode, std::string sErrMsg, std::string& response, int& status, std::string& errCode, std::string& errMsg);
-	
-
 	int ConvertIntToBusiType(int val);
 };
 

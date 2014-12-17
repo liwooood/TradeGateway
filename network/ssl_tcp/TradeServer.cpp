@@ -115,8 +115,6 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	std::string SOH = "\x01";
 
 
-	// 以下都是日志所需的信息
-	IMessage * resp = NULL;
 
 	Trade::TradeLog::LogLevel logLevel = Trade::TradeLog::INFO_LEVEL;
 
@@ -138,14 +136,13 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	std::string counterPort = "";
 	std::string counterType = "";
 	int nCounterType = COUNTER_TYPE_UNKNOWN;
-	
 	std::string counterServer = "";
-	int asyncMode = 0;
+	int counterMode;
 
-	
 	boost::posix_time::ptime ptBeginTime;
 	std::string beginTime = "";
 	int runtime = 0;
+
 
 	// utf8
 	std::string request_utf8 = req->GetMsgContentString();
@@ -157,14 +154,35 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	std::string errCode = "";
 	std::string errMsg = "";
 
+
+	
+	// 以下都是日志所需的信息
+	IMessage * resp = NULL;
+
+	
+	
+	// 开始时间
+	ptBeginTime = boost::posix_time::microsec_clock::local_time();
+	beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
+
+	
+	
+
+	
+
 	if (m_MsgType == MSG_TYPE_TCP_OLD)
 	{
 		gatewayIp = gConfigManager::instance().m_sIp;
 		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nTcpPort);
+		clientIp = req->GetTcpSession()->getSocket().remote_endpoint().address().to_v4().to_string();
 	}
 
 	if (m_MsgType == MSG_TYPE_SSL_PB)
 	{
+		gatewayIp = gConfigManager::instance().m_sIp;
+		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nSslPort);
+		clientIp = req->GetSslSession()->getSocket().remote_endpoint().address().to_v4().to_string();
+
 		// 只有移动端需要转换字符集
 		UErrorCode errcode = U_ZERO_ERROR;
 		char dest[20480];
@@ -172,43 +190,29 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		// 从utf8转成gbk
 		int ret = ucnv_convert("gbk", "utf8", dest, sizeof(dest), request_utf8.c_str(), -1, &errcode);
 		request = dest;
-		//gFileLog::instance().Log(request_utf8, 0, "utf8");
-		//gFileLog::instance().Log(request, 0, "gbk");
-
-		gatewayIp = gConfigManager::instance().m_sIp;
-		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nSslPort);
-
-		//quote::PkgHeader pbHeader;
-		//pbHeader.ParseFromArray(req->GetMsgHeader().data(), req->GetMsgHeaderSize());
 	}
 
 	if (m_MsgType == MSG_TYPE_TCP_NEW)
 	{
 		gatewayIp = gConfigManager::instance().m_sIp;
 		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nTcpNewPort);
+		clientIp = req->GetTcpSession()->getSocket().remote_endpoint().address().to_v4().to_string();
 	}
 
 	if (m_MsgType == MSG_TYPE_SSL_NEW)
 	{
 		gatewayIp = gConfigManager::instance().m_sIp;
 		gatewayPort = boost::lexical_cast<std::string>(gConfigManager::instance().m_nSslNewPort);
+		clientIp = req->GetSslSession()->getSocket().remote_endpoint().address().to_v4().to_string();
 	}
-
 	gatewayServer = gatewayIp + ":" + gatewayPort;
 	// 定义结束
 							
-	// 开始时间
-	ptBeginTime = boost::posix_time::microsec_clock::local_time();
-	beginTime = boost::gregorian::to_iso_extended_string(ptBeginTime.date()) + " " + boost::posix_time::to_simple_string(ptBeginTime.time_of_day());;
-
+	
 
 	// 分析请求
-	if (!GetSysNoAndBusiType(request, sysNo, busiType, sysVer, account, funcId, clientIp))
+	if (!GetSysNoAndBusiType(request, sysNo, busiType, sysVer, account, funcId, errCode, errMsg))
 	{
-		logLevel = Trade::TradeLog::ERROR_LEVEL;
-
-		errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
-		errMsg = gError::instance().GetErrMsg(PARAM_ERROR);
 
 		response = "1" + SOH + "2" + SOH;
 		response += "cssweb_code";
@@ -220,32 +224,25 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		response += errMsg;
 		response += SOH;
 
-		goto finish;
+		goto FINISH;
 	}
-
-	nBusiType = boost::lexical_cast<int>(busiType);
-
 	
-	// 客户端心跳功能
-	if (nFuncId == FUNCTION_HEARTBEAT)
+	// 监控代理心跳功能
+	if (funcId == "999999")
 	{
 		response = "heartbeat";
 
-		goto finish;
+		goto FINISH;
 	}
 
-	
-
-
-	// 得到柜台类型
-	// 一个session，可能连接多种柜台，所以每个请求都要根据业务类型来区分
-	
-//	if (!g_ConnectManager.GetCounterTypeAndAsyncMode(sysNo, busiType, nCounterType, asyncMode))
+	try
 	{
-		logLevel = Trade::TradeLog::ERROR_LEVEL;
-
-		errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
-		errMsg = gError::instance().GetErrMsg(PARAM_ERROR);
+		nBusiType = boost::lexical_cast<int>(busiType);
+	}
+	catch(std::exception& exp)
+	{
+		errCode = PARAM_FORMAT_ERROR;
+		errMsg = gError::instance().GetErrMsg(PARAM_FORMAT_ERROR) + "cssweb_busitype";
 
 		response = "1" + SOH + "2" + SOH;
 		response += "cssweb_code";
@@ -257,12 +254,46 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		response += errMsg;
 		response += SOH;
 
-		goto finish;
+		goto FINISH;
+	}
+
+	
+	if (!g_ConnectManager.GetCounterTypeAndAsyncMode(sysNo, busiType, nCounterType, counterMode))
+	{
+		logLevel = Trade::TradeLog::ERROR_LEVEL;
+
+		errCode = boost::lexical_cast<std::string>(CONFIG_ERROR);
+		errMsg = gError::instance().GetErrMsg(CONFIG_ERROR);
+
+		response = "1" + SOH + "2" + SOH;
+		response += "cssweb_code";
+		response += SOH;
+		response += "cssweb_msg";
+		response += SOH;
+		response += errCode;
+		response += SOH;
+		response += errMsg;
+		response += SOH;
+
+		goto FINISH;
 	}
 
 
-	if (asyncMode == 0)
+	if (counterMode == COUNTER_MODE_CONNPOOL)
 	{
+		IBusiness *pBusiness = g_ConnectManager.GetConnect(sysNo, nBusiType, "0000");
+		if (pBusiness == NULL)
+		{
+		}
+		
+
+		pBusiness->Send(request, response, status, errCode, errMsg);
+
+		g_ConnectManager.PushConnect(pBusiness, sysNo, nBusiType, "0000");
+	}
+	else
+	{
+	/*	
 		//可以用以下语句代替冗长的写法
 		//IBusiness& business = req->GetSslSession()->GetCounterConnect(nCounterType);
 
@@ -278,11 +309,11 @@ bool TradeServer::ProcessRequest(IMessage* req)
 
 		// 连接需要处理负载均衡和故障切换
 		// 业务重试还需要考虑吗？
-		/*
-		* 如果没有连接，建立连接，处理请求
-		* 如果建立连接失败，轮询每一个服务器，如果所有服务器连接失败，返回错误
-		* 当前连接失效，send调用失败，重试
-		*/
+		
+		// 如果没有连接，建立连接，处理请求
+		// 如果建立连接失败，轮询每一个服务器，如果所有服务器连接失败，返回错误
+		// 当前连接失效，send调用失败，重试
+		
 
 
 	
@@ -474,116 +505,12 @@ bool TradeServer::ProcessRequest(IMessage* req)
 			}// end if
 
 		} // end for retry
-	}
-	else
-	{
-		//gFileLog::instance().Log("恒生T2 异步模式");
-
-		// 恒生T2异步模式
-	//	IConnect * pConn = gConnectPool.GetConnect();
-
-		//Counter counter;
-		//IConnect * pConn = new TradeBusinessT2(0, counter);
-
-		/*
-		// 发送请求
-		// 注意返回值和同步模式不同，同步模式返回false代表网络错误需要重试， 异步模式返回false只代表业务处理错误
-		if (!pConn->Send(request))
-		{
-			T2_ASYNC_RET ret = pConn->GetSendResponse();
-			status = ret.status;
-			response = ret.response;
-			errCode = ret.errCode;
-			errMsg = ret.errMsg;
-
-			response = "1";
-			response += SOH;
-			response += "2";
-			response += SOH;
-
-			response += "cssweb_code";
-			response += SOH;
-			response += "cssweb_msg";
-			response += SOH;
-					
-			response += errCode;
-			response += SOH;
-			response += errMsg;
-			response += SOH;
-		}
-		else
-		{
-			// 阻塞， 等待业务层处理完成，并触发完成事件信号
-			DWORD dwResult = pConn->WaitResponseEvent();
-
-			if (dwResult == WAIT_TIMEOUT)
-			{
-				status = 0;
-				errCode = "2000";
-				errMsg = "接收柜台应答超时";
-
-				response = "1";
-				response += SOH;
-				response += "2";
-				response += SOH;
-
-				response += "cssweb_code";
-				response += SOH;
-				response += "cssweb_msg";
-				response += SOH;
-
-				response += errCode;
-				response += SOH;
-				response += errMsg;
-				response += SOH;
-			}
-			else
-			{
-				// 得到应答数据
-				T2_ASYNC_RET ret = pConn->GetAsyncResponse();
-				status = ret.status;
-				response = ret.response;
-				errCode = ret.errCode;
-				errMsg = ret.errMsg;
-			}
-		}
 		*/
-		//pConn->Send(request, response, status, errCode, errMsg);
-
-		boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
-		runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
-
-		if (status == 0)
-		{
-			response = "1";
-			response += SOH;
-			response += "4";
-			response += SOH;
-
-			response += "cssweb_code";
-			response += SOH;
-			response += "cssweb_msg";
-			response += SOH;
-			response += "cssweb_gwInfo";
-			response += SOH;
-			response += "cssweb_counter";
-			response += SOH;
-
-			response += errCode;
-			response += SOH;
-			response += errMsg;
-			response += SOH;
-			response += gatewayServer;
-			response += SOH;
-			response += counterServer;
-			response += SOH;
-		}
-
-	//	gConnectPool.PushConnect(pConn);
 	}
 
 
-finish:
+FINISH:
+
 	if (req->msgType == MSG_TYPE_TCP_OLD)
 	{
 		resp = new TcpMessageOld();
@@ -612,6 +539,7 @@ finish:
 		if (response.size() > gConfigManager::instance().zlib)
 		{
 			std::vector<char> compressedMsgContent;
+
 			boost::iostreams::filtering_streambuf<boost::iostreams::output> compress_out;
 			compress_out.push(boost::iostreams::zlib_compressor());
 			compress_out.push(boost::iostreams::back_inserter(compressedMsgContent));
@@ -629,7 +557,9 @@ finish:
 		else
 		{
 			pbHeader.set_zip(false);
+
 			pbHeader.set_bodysize(response.size());
+
 			// 设置消息内容
 			resp->SetMsgContent(response);
 
@@ -662,6 +592,7 @@ finish:
 		if (response.size() > gConfigManager::instance().zlib)
 		{
 			std::vector<char> compressedMsgContent;
+
 			boost::iostreams::filtering_streambuf<boost::iostreams::output> compress_out;
 			compress_out.push(boost::iostreams::zlib_compressor());
 			compress_out.push(boost::iostreams::back_inserter(compressedMsgContent));
@@ -729,13 +660,17 @@ finish:
 	}
 
 
-	// 拷贝日志消息
+	// 保存截取后的日志消息
 	std::string res = "";
 	if (response.length() > gConfigManager::instance().m_nResponseLen)
 		res = response.substr(0, gConfigManager::instance().m_nResponseLen);
 	else 
 		res = response;
 
+
+	// 生成日志信息
+	boost::posix_time::ptime ptEndTime = boost::posix_time::microsec_clock::local_time();
+	runtime = (ptEndTime - ptBeginTime).total_microseconds();// 微秒数
 
 	req->Log(logLevel, sysNo, sysVer, busiType, funcId, account, clientIp, request, res, status, errCode, errMsg, beginTime, runtime, gatewayIp, gatewayPort, counterIp, counterPort, counterType);
 	resp->log = req->log; 
@@ -751,10 +686,14 @@ finish:
 	return true;
 }
 
-bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, std::string& busiType, std::string& sysVer, std::string& account, std::string& funcId, std::string& clientIp)
+bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, std::string& busiType, std::string& sysVer, std::string& account, std::string& funcId, std::string& errCode, std::string& errMsg)
 {
 	if (request.empty() || request.size() < 10)
+	{
+		errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
+		errMsg = gError::instance().GetErrMsg(PARAM_ERROR) + ",无效的请求串";
 		return false;
+	}
 
 	std::string SOH = "\x01";
 
@@ -770,22 +709,9 @@ bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, 
 
 
 		if (keyvalue.empty())
-			break;
+			continue;
 
-		/*
-		std::vector<std::string> kv;
-		boost::split(kv, keyvalue, boost::is_any_of("="));
-		if (kv.size() < 2)
-			return false;
-
-		std::string key = "";
-		if (!kv[0].empty())
-			key = kv[0];
-
-		std::string value = "";
-		if (!kv[1].empty())
-			value = kv[1];
-			*/
+		
 		std::size_t found = keyvalue.find_first_of("=");
 		
 
@@ -795,33 +721,71 @@ bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, 
 			value = keyvalue.substr(found + 1);
 			
 		}
+		else
+		{
+			return false;
+		}
 
 
 		if (key == "cssweb_sysNo")
+		{
 			sysNo = value;
+			if (sysNo.empty())
+			{
+				errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
+				errMsg = gError::instance().GetErrMsg(PARAM_ERROR) + "cssweb_sysNo";
+				return false;
+			}
+		}
 
 		if (key == "cssweb_busiType")
+		{
 			busiType = value;
+			if (busiType.empty())
+			{
+				errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
+				errMsg = gError::instance().GetErrMsg(PARAM_ERROR) + "cssweb_busiType";
+				return false;
+			}
+		}
 
 		if (key == "cssweb_sysVer")
 		{
 			sysVer = value;
+			if (sysVer.empty())
+			{
+				errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
+				errMsg = gError::instance().GetErrMsg(PARAM_ERROR) + "cssweb_sysVer";
+				return false;
+			}
 		}
 
 		if (key == "cssweb_funcid")
 		{
 			funcId = value;
+			if (funcId.empty())
+			{
+				errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
+				errMsg = gError::instance().GetErrMsg(PARAM_ERROR) + "cssweb_funcid";
+				return false;
+			}
 		}
 		
 		if (key == "cssweb_account")
 		{
 			account = value;
+
+			if (account.empty())
+			{
+				errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
+				errMsg = gError::instance().GetErrMsg(PARAM_ERROR) + "cssweb_account";
+				return false;
+			}
 		}
 
 	}
 
-	if (sysNo.empty() || busiType.empty())
-		return false;
+	
 
 	return true;
 }

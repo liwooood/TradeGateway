@@ -117,6 +117,7 @@ void IMessage::Log(Trade::TradeLog::LogLevel logLevel, std::string sysNo, std::s
 	
 	log.set_enc_request(""); // flash
 	log.set_request(request);
+
 	log.set_status(status);
 	log.set_retcode(errCode);
 	log.set_retmsg(errMsg);

@@ -25,6 +25,12 @@ TradeBusinessJZ::TradeBusinessJZ()
 	handle = NULL;
 }
 
+TradeBusinessJZ::TradeBusinessJZ(int connId, Counter counter)
+{
+	this->connId = connId;
+	this->counter = counter;
+}
+
 TradeBusinessJZ::~TradeBusinessJZ(void)
 {
 }

@@ -41,7 +41,7 @@ private:
 	bool ProcessResponse(IMessage* resp);
 
 
-	bool GetSysNoAndBusiType(std::string& request, std::string& sysNo, std::string& busiType, std::string& sysVer, std::string& account, std::string& funcId, std::string& clientIp);
+	bool GetSysNoAndBusiType(std::string& request, std::string& sysNo, std::string& busiType, std::string& sysVer, std::string& account, std::string& funcId, std::string& errCode, std::string& errMsg);
 
 
 	

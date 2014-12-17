@@ -36,7 +36,10 @@ bool IBusiness::IsConnected()
 	return m_bConnected;
 }
 
-
+std::string IBusiness::GetConnectInfo()
+{
+	return "";
+}
 
 bool IBusiness::ParseRequest(std::string& request)
 {

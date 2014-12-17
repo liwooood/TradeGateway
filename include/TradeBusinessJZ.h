@@ -15,6 +15,7 @@ class TradeBusinessJZ : public IBusiness
 {
 public:
 	TradeBusinessJZ();
+	TradeBusinessJZ(int connId, Counter counter);
 	~TradeBusinessJZ(void);
 
 	virtual bool CreateConnect();

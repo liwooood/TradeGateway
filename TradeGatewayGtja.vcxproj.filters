@@ -137,9 +137,6 @@
     <Filter Include="柜台连接池">
       <UniqueIdentifier>{7136fcfd-ff1c-4f68-a54b-5c73a557861b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="柜台连接池\连接">
-      <UniqueIdentifier>{83a3971f-e616-4544-8cd3-3a8ae67ab647}</UniqueIdentifier>
-    </Filter>
     <Filter Include="柜台连接池\配置信息">
       <UniqueIdentifier>{f90e10cc-6b49-494a-8c88-1d3bf601d067}</UniqueIdentifier>
     </Filter>
@@ -334,21 +331,6 @@
     <ClInclude Include="include\TcpSession.h">
       <Filter>网络层</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectJZ.h">
-      <Filter>柜台连接池\连接</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectJSD.h">
-      <Filter>柜台连接池\连接</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectHS.h">
-      <Filter>柜台连接池\连接</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectDD.h">
-      <Filter>柜台连接池\连接</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectTest.h">
-      <Filter>柜台连接池\连接</Filter>
-    </ClInclude>
     <ClInclude Include="include\ConnectManager.h">
       <Filter>柜台连接池</Filter>
     </ClInclude>
@@ -367,12 +349,6 @@
     <ClInclude Include="MapThreadSafe.h">
       <Filter>线程安全Map</Filter>
     </ClInclude>
-    <ClInclude Include="include\IConnect.h">
-      <Filter>柜台连接池\连接</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ConnectPool.h">
-      <Filter>柜台连接池\连接</Filter>
-    </ClInclude>
     <ClInclude Include="include\ConfigManager.h">
       <Filter>配置文件</Filter>
     </ClInclude>
@@ -381,6 +357,9 @@
     </ClInclude>
     <ClInclude Include="include\FileLogManager.h">
       <Filter>日志\文件日志</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ConnectPool.h">
+      <Filter>柜台连接池</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -504,21 +483,6 @@
     <ClCompile Include="network\ssl_tcp\TcpSession.cpp">
       <Filter>网络层</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectJZ.cpp">
-      <Filter>柜台连接池\连接</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectJSD.cpp">
-      <Filter>柜台连接池\连接</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectHS.cpp">
-      <Filter>柜台连接池\连接</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectDD.cpp">
-      <Filter>柜台连接池\连接</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectTest.cpp">
-      <Filter>柜台连接池\连接</Filter>
-    </ClCompile>
     <ClCompile Include="ConnectPool\Branch.cpp">
       <Filter>柜台连接池\配置信息</Filter>
     </ClCompile>
@@ -534,14 +498,11 @@
     <ClCompile Include="MapThreadSafe.cpp">
       <Filter>线程安全Map</Filter>
     </ClCompile>
-    <ClCompile Include="IConnect.cpp">
-      <Filter>柜台连接池\连接</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectPool\ConnectPool.cpp">
-      <Filter>柜台连接池\连接</Filter>
-    </ClCompile>
     <ClCompile Include="business\IBusiness.cpp">
       <Filter>业务层</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectPool\ConnectPool.cpp">
+      <Filter>柜台连接池</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

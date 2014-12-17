@@ -41,6 +41,12 @@ TradeBusinessDD::TradeBusinessDD()
 	m_hHandle = -1;
 }
 
+TradeBusinessDD::TradeBusinessDD(int connId, Counter counter)
+{
+	this->connId = connId;
+	this->counter = counter;
+}
+
 TradeBusinessDD::~TradeBusinessDD(void)
 {
 }

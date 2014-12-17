@@ -1,124 +1,28 @@
 #include "stdafx.h"
 
-#include <boost/range/iterator_range.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/iostreams/stream.hpp>
-#include <boost/iostreams/filtering_stream.hpp>
-#include <boost/iostreams/filter/zlib.hpp>
-#include <boost/iostreams/device/back_inserter.hpp>
-#include <boost/iostreams/device/array.hpp>
-#include <boost/iostreams/copy.hpp>
-#include <boost/iostreams/filter/zlib.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/iostreams/filter/zlib.hpp>
-#include <boost/bind.hpp>
-#include <boost/lambda/lambda.hpp>
-#include <boost/system/system_error.hpp>
 
 #include "TradeBusinessTest.h"
 
 #include "FileLog.h"
 #include "counter.h"
 #include "ConfigManager.h"
+#include "ConnectTest.h"
+#include "ConnectManager.h"
 
 
 TradeBusinessTest::TradeBusinessTest(void)
 {
-	m_bConnected = false;
+	
+}
+
+TradeBusinessTest::TradeBusinessTest(int connId, Counter counter)
+{
+	this->connId = connId;
+	this->counter = counter;
 }
 
 TradeBusinessTest::~TradeBusinessTest(void)
 {
-}
-
-
-
-// 建立连接
-bool TradeBusinessTest::CreateConnect()
-{
-	int rc = 0;
-	u_long bio = 1;
-	int connectTimeout = m_Counter->m_nConnectTimeout;
-	int readTimeout = m_Counter->m_nRecvTimeout * 1000;
-	int writeTimeout = m_Counter->m_nRecvTimeout * 1000;
-	sockfd = INVALID_SOCKET;
-
-
-	sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (sockfd == INVALID_SOCKET )
-	{
-		return FALSE;
-	}
-	
-	//设置为非阻塞模式
-	bio = 1;
-	rc = ioctlsocket(sockfd, FIONBIO, &bio); 
-	if (rc == SOCKET_ERROR)
-	{
-		closesocket(sockfd);
-		return FALSE;
-	}
-	
-	struct sockaddr_in addr;
-	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = inet_addr(m_Counter->m_sIP.c_str());
-	addr.sin_port = htons(m_Counter->m_nPort);
-
-	rc = connect(sockfd, (const sockaddr *)&addr, sizeof(addr));
-	// 异步模式不用判断
-	if (rc == SOCKET_ERROR)
-	{
-		//closesocket(sockfd);
-		//return FALSE;
-	}
-
-	
-	
-	
-	fd_set writefds;
-	FD_ZERO(&writefds);
-	FD_SET(sockfd, &writefds);
-
-	struct timeval timeout;
-	timeout.tv_sec = connectTimeout;
-	timeout.tv_usec = 0;
-
-	rc = select(0, NULL, &writefds, NULL, &timeout);
-	if (rc == 0)
-	{
-		// timeout
-		closesocket(sockfd);
-		return FALSE;
-	}
-
-	if (rc == SOCKET_ERROR)
-	{
-		closesocket(sockfd);
-		return FALSE;
-	}
-
-	if(!FD_ISSET(sockfd, &writefds))  
-    {  
-		closesocket(sockfd);
-		return FALSE;
-    }  
-
-	 
-	// 设置为阻塞模式
-	bio = 0;
-	rc = ioctlsocket(sockfd, FIONBIO, &bio);
-	if (rc == SOCKET_ERROR)
-	{
-		closesocket(sockfd);
-		return FALSE;
-	}
-
-	// 设置读写超时
-	//rc = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO,(char*)&readTimeout, sizeof(readTimeout));
-    //rc = setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO,(char*)&writeTimeout, sizeof(writeTimeout));
-
-	return TRUE;
 }
 
 
@@ -225,24 +129,15 @@ bool TradeBusinessTest::ReadMsgContent(CustomMessage * pRes)
 	return m_bConnected;
 }
 
-// 关闭连接
-void TradeBusinessTest::CloseConnect()
-{
-	closesocket(sockfd);
-	sockfd = INVALID_SOCKET;
-	
-	m_bConnected = false;
-}
-
-
-
 
 
 bool TradeBusinessTest::Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg)
 {
 	// 临时修改，无论新意服务器业务处理成功，还是失败，都不让TradeServer处理逻辑
 
-	status = 1;
+	ParseRequest(request);
+
+	g_ConnectManager.GetConnect(sysNo, busiType, "0000");
 
 	bool bRet = true;
 	
@@ -269,81 +164,32 @@ bool TradeBusinessTest::Send(std::string& request, std::string& response, int& s
 	bRet = Write(pReq);
 	delete pReq;
 	if (!bRet)
+	{
+		status = 0;
+		errCode = "";
+		errMsg = "写包头或包消息失败";
+
 		return false;
+	}
 
 	// 接收应答
 	CustomMessage* pRes = new CustomMessage(MSG_TYPE_TCP_NEW);
 	bRet = Read(pRes);
 	if (bRet)
 	{
+		status = 1;
 		response = pRes->GetMsgContentString();
 		//std::string response(pRes->GetPkgBody().begin(),pRes->GetPkgBody().end());
 		gFileLog::instance().Log("新意服务器应答内容：" + pRes->GetMsgContentString());
 	}
 	else
 	{
+		status = 0;
+		errCode = "";
+		errMsg = "读包头或包消息失败";
 	}
 	delete pRes;	
 	
-	return bRet;
-}
-
-// 发送心跳包
-bool TradeBusinessTest::HeartBeat()
-{
-	bool bRet = false;
-	/*
-	if (!m_bConnected)
-		return false;
-
-	std::string SOH = "\x01";
-
-	std::string request = "cssweb_funcid=999999" + SOH;
-
-	
-
-	// 开始时间
-	 boost::posix_time::ptime time_sent = boost::posix_time::microsec_clock::universal_time();
-	
-	// 设置读写超时
-	//int nReadWriteTimeout = sConfigManager::instance().m_nReadWriteTimeout;
-	//deadline.expires_from_now( boost::posix_time::seconds(nReadWriteTimeout) );
-
-	// 发送请求
-	CustomMessage * pReq = new CustomMessage();
-
-	
-
-	pReq->SetMsgContent(request);
-	pReq->SetMsgHeader(MSG_TYPE_REQUEST, FUNCTION_HEARTBEAT);
-
-	int temp = pReq->GetMsgHeaderSize();
-
-	bRet = Write(pReq);
-	delete pReq;
-	if (!bRet)
-		return false;
-
-	// 接收应答
-	CustomMessage * pRes = new CustomMessage();
-	bRet = Read(pRes);
-	if (bRet)
-	{
-		//std::string response(pRes->GetPkgBody().begin(),pRes->GetPkgBody().end());
-		gFileLog::instance().Log("应答内容：" + pRes->GetMsgContentString());
-	}
-	else
-	{
-	}
-	delete pRes;	
-
-	// 结束时间
-	boost::posix_time::ptime time_received = boost::posix_time::microsec_clock::universal_time();
-
-	// 运行时间
-	int nRuntime = (time_received - time_sent).total_microseconds();
-	//gFileLog::instance().Log("执行时间：" + boost::lexical_cast<std::string>(nRuntime));
-	*/
 	return bRet;
 }
 
@@ -413,4 +259,105 @@ int TradeBusinessTest::Recv(char* buf, int len, int flags)
 		rc = TRUE;
 
 	return rc;
+}
+
+bool TradeBusinessTest::CreateConnect()
+{
+	int rc = 0;
+
+	u_long bio = 1;
+
+	sockfd = INVALID_SOCKET;
+
+	int connectTimeout = counter.m_nConnectTimeout;
+	int readTimeout = counter.m_nRecvTimeout * 1000;
+	int writeTimeout = counter.m_nRecvTimeout * 1000;
+	
+
+
+	sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (sockfd == INVALID_SOCKET )
+	{
+		return FALSE;
+	}
+	
+	//设置为非阻塞模式
+	bio = 1;
+	rc = ioctlsocket(sockfd, FIONBIO, &bio); 
+	if (rc == SOCKET_ERROR)
+	{
+		closesocket(sockfd);
+		return FALSE;
+	}
+	
+	struct sockaddr_in addr;
+	addr.sin_family = AF_INET;
+	addr.sin_addr.s_addr = inet_addr(counter.m_sIP.c_str());
+	addr.sin_port = htons(counter.m_nPort);
+
+	rc = connect(sockfd, (const sockaddr *)&addr, sizeof(addr));
+	// 异步模式不用判断
+	if (rc == SOCKET_ERROR)
+	{
+		//closesocket(sockfd);
+		//return FALSE;
+	}
+
+	
+	
+	
+	fd_set writefds;
+	FD_ZERO(&writefds);
+	FD_SET(sockfd, &writefds);
+
+	struct timeval timeout;
+	timeout.tv_sec = connectTimeout;
+	timeout.tv_usec = 0;
+
+	rc = select(0, NULL, &writefds, NULL, &timeout);
+	if (rc == 0)
+	{
+		// timeout
+		closesocket(sockfd);
+		return FALSE;
+	}
+
+	if (rc == SOCKET_ERROR)
+	{
+		closesocket(sockfd);
+		return FALSE;
+	}
+
+	if(!FD_ISSET(sockfd, &writefds))  
+    {  
+		closesocket(sockfd);
+		return FALSE;
+    }  
+
+	 
+	// 设置为阻塞模式
+	bio = 0;
+	rc = ioctlsocket(sockfd, FIONBIO, &bio);
+	if (rc == SOCKET_ERROR)
+	{
+		closesocket(sockfd);
+		return FALSE;
+	}
+
+	// 设置读写超时
+	//rc = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO,(char*)&readTimeout, sizeof(readTimeout));
+    //rc = setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO,(char*)&writeTimeout, sizeof(writeTimeout));
+
+	return TRUE;
+}
+
+void TradeBusinessTest::CloseConnect()
+{
+	if (sockfd != INVALID_SOCKET)
+	{
+		closesocket(sockfd);
+		sockfd = INVALID_SOCKET;
+	}
+	
+	//m_bConnected = false;
 }

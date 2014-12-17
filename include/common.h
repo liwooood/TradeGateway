@@ -17,6 +17,10 @@
 #define COUNTER_TYPE_XINYI 7
 #define COUNTER_TYPE_TEST 8
 
+//柜台模式
+#define COUNTER_MODE_CONNPOOL 0
+#define COUNTER_MODE_SESSION 1
+
 // 业务类型
 //<!-- 业务类型：0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签-->
 #define BUSI_TYPE_ALL 0
@@ -27,6 +31,8 @@
 #define BUSI_TYPE_AUTH 5
 #define BUSI_TYPE_OPTION 6
 #define BUSI_TYPE_VERIFY 7
+
+
 
 // 日志过滤功能定义
 typedef struct func

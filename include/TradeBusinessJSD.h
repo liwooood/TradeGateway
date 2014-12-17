@@ -23,6 +23,7 @@ class TradeBusinessJSD : public IBusiness
 {
 public:
 	TradeBusinessJSD(void);
+	TradeBusinessJSD(int connId, Counter counter);
 	~TradeBusinessJSD(void);
 
 public:

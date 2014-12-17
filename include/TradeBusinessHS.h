@@ -28,7 +28,7 @@ private:
 
 public:
 	TradeBusinessHS();
-	TradeBusinessHS(int ConnectNo, Counter counter);
+	TradeBusinessHS(int connId, Counter counter);
 	
 
 	virtual bool CreateConnect();

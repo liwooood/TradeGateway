@@ -436,23 +436,23 @@ void FileLogManager::LoadFieldFilter()
 	std::string xmlfile = "";
 	
 	// 顶点
-	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_DD.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterField_DD.xml";
 	LoadFieldFilter(xmlfile, m_mDingDian_FilterField);
 
 	// 恒生T2
-	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_HS.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterField_HS.xml";
 	LoadFieldFilter(xmlfile, m_mT2_FilterField);
 
 	// 金证
-	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_JZ.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterField_JZ.xml";
 	LoadFieldFilter(xmlfile, m_mKingdom_FilterField);
 
 	// 金仕达
-	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_JSD.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterField_JSD.xml";
 	LoadFieldFilter(xmlfile, m_mAGC_FilterField);
 
 	// 仿真柜台
-	xmlfile = gConfigManager::instance().m_sPath + "\\FiledField_Test.xml";
+	xmlfile = gConfigManager::instance().m_sPath + "\\FilterField_Test.xml";
 	LoadFieldFilter(xmlfile, m_mTest_FilterField);
 
 }

@@ -11,6 +11,8 @@
 #define MSG_HEADER_ERROR 1003
 #define CONFIG_ERROR 1004
 #define BUSI_CRYPT_ERROR 1005
+#define PARAM_FORMAT_ERROR 1006
+
 
 class Error
 {
@@ -22,9 +24,10 @@ public:
 	{
 		err[CONNECT_COUNTER_ERROR] = "连接柜台失败";
 		err[CONNECT_ALL_COUNTER_ERROR] = "连接所有柜台失败";
-		err[PARAM_ERROR] = "参数错误或尚未登录";
+		err[PARAM_ERROR] = "缺少参数";
+		err[PARAM_FORMAT_ERROR] = "参数数据格式错误";
 		err[MSG_HEADER_ERROR] = "消息头错误";
-		err[CONFIG_ERROR] = "配置文件错误";
+		err[CONFIG_ERROR] = "参数和配置文件不匹配";
 		err[BUSI_CRYPT_ERROR] = "业务层加解密错误";
 	}
 

@@ -6,12 +6,12 @@
 #include "ConfigManager.h"
 #include "FileLog.h"
 
-#include "IConnect.h"
-#include "ConnectHS.h"
-#include "ConnectJZ.h"
-#include "ConnectDD.h"
-#include "ConnectJSD.h"
-#include "ConnectTest.h"
+#include "IBusiness.h"
+#include "TradeBusinessHS.h"
+#include "TradeBusinessJZ.h"
+#include "TradeBusinessDD.h"
+#include "TradeBusinessJSD.h"
+#include "TradeBusinessTest.h"
 
 
 
@@ -48,27 +48,27 @@ bool ConnectPool::CreateConnPool()
 		{
 			Counter counter = *pos;
 
-			IConnect * pConn;
+			IBusiness * pConn;
 
 			if (counter.m_nCounterType == COUNTER_TYPE_HS_T2)
 			{
-				pConn = new ConnectHS(m_nID, counter);
+				pConn = new TradeBusinessHS(m_nID, counter);
 			}
 			if (counter.m_nCounterType == COUNTER_TYPE_JZ_WIN)
 			{
-				pConn = new ConnectJZ(m_nID, counter);
+				pConn = new TradeBusinessJZ(m_nID, counter);
 			}
 			if (counter.m_nCounterType == COUNTER_TYPE_DINGDIAN)
 			{
-				pConn = new ConnectDD(m_nID, counter);
+				pConn = new TradeBusinessDD(m_nID, counter);
 			}
 			if (counter.m_nCounterType == COUNTER_TYPE_JSD)
 			{
-				pConn = new ConnectJSD(m_nID, counter);
+				pConn = new TradeBusinessJSD(m_nID, counter);
 			}
 			if (counter.m_nCounterType == COUNTER_TYPE_XINYI || counter.m_nCounterType == COUNTER_TYPE_TEST)
 			{
-				pConn = new ConnectTest(m_nID, counter);
+				pConn = new TradeBusinessTest(m_nID, counter);
 			}
 
 			
@@ -123,27 +123,27 @@ bool ConnectPool::IncreaseConnPool()
 		{
 			Counter counter = *pos;
 
-			IConnect * pConn;
+			IBusiness * pConn;
 
 			if (counter.m_nCounterType == COUNTER_TYPE_HS_T2)
 			{
-				pConn = new ConnectHS(m_nID, counter);
+				pConn = new TradeBusinessHS(m_nID, counter);
 			}
 			if (counter.m_nCounterType == COUNTER_TYPE_JZ_WIN)
 			{
-				pConn = new ConnectJZ(m_nID, counter);
+				pConn = new TradeBusinessJZ(m_nID, counter);
 			}
 			if (counter.m_nCounterType == COUNTER_TYPE_DINGDIAN)
 			{
-				pConn = new ConnectDD(m_nID, counter);
+				pConn = new TradeBusinessDD(m_nID, counter);
 			}
 			if (counter.m_nCounterType == COUNTER_TYPE_JSD)
 			{
-				pConn = new ConnectJSD(m_nID, counter);
+				pConn = new TradeBusinessJSD(m_nID, counter);
 			}
 			if (counter.m_nCounterType == COUNTER_TYPE_XINYI || counter.m_nCounterType == COUNTER_TYPE_TEST)
 			{
-				pConn = new ConnectTest(m_nID, counter);
+				pConn = new TradeBusinessTest(m_nID, counter);
 			}
 
 			if (pConn->CreateConnect())
@@ -185,10 +185,10 @@ bool ConnectPool::IncreaseConnPool()
 
 
 // 获取连接的遍历采用循环方法，不采用随机方法
- IConnect* ConnectPool::GetConnect()
+ IBusiness* ConnectPool::GetConnect()
 {
 	std::string msg;
-	IConnect * pConn = NULL;
+	IBusiness * pConn = NULL;
 
 	
 	if (m_pool.queue.empty())
@@ -214,7 +214,7 @@ bool ConnectPool::IncreaseConnPool()
 	return pConn;
 }
 
-void ConnectPool::PushConnect(IConnect* pConn)
+void ConnectPool::PushConnect(IBusiness* pConn)
 {
 	if (pConn == NULL)
 		return;
@@ -234,9 +234,9 @@ void ConnectPool::CloseConnPool()
 		m_pool.stop();
 
 	
-		for (std::deque<IConnect*>::iterator pos = m_pool.queue.begin(); pos != m_pool.queue.end(); pos++)
+		for (std::deque<IBusiness*>::iterator pos = m_pool.queue.begin(); pos != m_pool.queue.end(); pos++)
 		{
-			IConnect * pConn = *pos;
+			IBusiness * pConn = *pos;
 
 			if (pConn != NULL)
 			{

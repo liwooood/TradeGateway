@@ -15,6 +15,7 @@ class TradeBusinessDD : public IBusiness
 {
 public:
 	TradeBusinessDD();
+	TradeBusinessDD(int connId, Counter counter);
 	~TradeBusinessDD(void);
 
 	virtual bool CreateConnect();
