@@ -25,24 +25,27 @@ public:
 	~ISession(void);
 
 	
-	virtual void write(IMessage* resp) = 0;
+		/*
 	// 关闭柜台连接
 	void CloseCounterConnect();
 	// 得到柜台连接
 	IBusiness& GetCounterConnect(int counterType);
 
-protected:
+
+
 	// 单会话单连接模式
 	TradeBusinessHS hs;
 	TradeBusinessJZ jz;
 	TradeBusinessDD dd;
 	TradeBusinessJSD jsd;
 	TradeBusinessTest test;
+	*/
 
 	// 消息类型
-	int msgType;
-	int port;
-	std::string logFile;
+	//int msgType;
+	//int port;
+	//std::string logFile;
+	//std::string clientIP;
 
 	virtual void start()=0;
 	virtual void close()=0;
@@ -52,7 +55,7 @@ protected:
 	virtual void OnReadHead(const boost::system::error_code& error, size_t transferredBytes, IMessage* req) = 0;
 	virtual void OnReadMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* req) = 0;
 	
-	
+	virtual void write(IMessage* resp) = 0;
 	virtual void OnWriteHead(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp) = 0;
 	virtual void OnWriteMsg(const boost::system::error_code& error, size_t transferredBytes, IMessage* resp) = 0;
 

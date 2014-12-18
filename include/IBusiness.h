@@ -16,7 +16,7 @@
 #include "common.h"
 #include "tradelog.pb.h"
 #include "Counter.h"
-#include "IConnect.h"
+
 
 
 class IBusiness
@@ -35,7 +35,7 @@ protected:
 	// 业务相关
 	std::string SOH;
 	bool m_bConnected;
-	Counter * m_Counter;
+	
 
 
 	std::string sysNo;
@@ -70,7 +70,7 @@ protected:
 	int num;
 
 	
-	IConnect* pConn;
+	
 
 public:
 	IBusiness(void);
@@ -80,17 +80,14 @@ public:
 	virtual bool CreateConnect() = 0;
 	virtual void CloseConnect() = 0;
 	virtual std::string GetConnectInfo();
+	Counter& GetCounter();
 
 	// 业务相关
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg) = 0;
-	
-
-	
 	bool ParseRequest(std::string& request);
 	
 	
-	virtual void SetCounter(Counter * counter);
-	virtual Counter * GetCounter();
+	
 	virtual bool IsConnected();
 	
 	bool FilterRequestField(std::string& key);

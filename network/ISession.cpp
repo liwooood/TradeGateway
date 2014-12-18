@@ -17,7 +17,7 @@ ISession::~ISession(void)
 	
 }
 
-
+/*
 // 根据参数，返回对应的柜台连接
 IBusiness& ISession::GetCounterConnect(int counterType)
 {
@@ -61,3 +61,4 @@ void ISession::CloseCounterConnect()
 	jsd.CloseConnect();
 	test.CloseConnect();
 }
+*/

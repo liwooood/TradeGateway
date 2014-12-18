@@ -336,6 +336,8 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 					node_value = node.node().child_value("port");
 					counter.m_nPort = boost::lexical_cast<int>(node_value);
 
+					counter.serverAddr = counter.m_sIP + ":" + node_value;
+
 					counter.m_nCounterType = counterType;
 
 					counter.m_nConnectTimeout = m_nConnectTimeout;
@@ -373,12 +375,15 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 					counters.push_back(counter);///////////////////////////
 				} // end for counter
 
-			//	ConnectPool * pool = new ConnectPool(counters);
+				
 				//busiType.connPool[branchList] = pool;//////////////////////
 				
 
 				Branch branch;
 				branch.servers = counters;
+				ConnectPool * pool = new ConnectPool(counters);
+				branch.pool = pool;
+
 
 				busiType.branches[branchList] = branch;
 				busiType.counterType = counterType;

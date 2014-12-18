@@ -191,15 +191,12 @@
     <ClInclude Include="log\mq\LogConnect.h" />
     <ClInclude Include="log\mq\LogConnectPool.h" />
     <ClInclude Include="log\tradelog.pb.h" />
-    <Text Include="log\日志开发说明.txt" />
     <ClInclude Include="MapThreadSafe.h" />
     <ClInclude Include="network\ssl\pkgheader.pb.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StatusData.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <Text Include="协议说明.txt" />
-    <Text Include="文档\开发计划.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutDlg.cpp" />

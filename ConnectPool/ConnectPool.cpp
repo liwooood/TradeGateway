@@ -16,10 +16,11 @@
 
 
 
-ConnectPool::ConnectPool()
+ConnectPool::ConnectPool(std::vector<Counter> vCounter)
 {
 	m_nID = 0;
 	m_bCreatePool = false;
+	m_vCounter = vCounter;
 }
 
 ConnectPool::~ConnectPool(void)
@@ -27,10 +28,6 @@ ConnectPool::~ConnectPool(void)
 	
 }
 
-void ConnectPool::SetCounterServer(std::vector<Counter> vCounter)
-{
-	m_vCounter = vCounter;
-}
 
 bool ConnectPool::CreateConnPool()
 {

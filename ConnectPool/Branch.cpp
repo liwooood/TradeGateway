@@ -4,6 +4,7 @@
 Branch::Branch(void)
 {
 	currentServerId = 0;
+	pool = NULL;
 }
 
 

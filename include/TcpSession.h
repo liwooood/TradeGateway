@@ -52,10 +52,11 @@ private:
 
 	static MemPoolType memPool;
 	
-
-
-	// 消息类型
 	int msgType;
+	int port;
+
+	std::string logFile;
+	std::string client;
 
 
 public:

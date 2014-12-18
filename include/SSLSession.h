@@ -46,8 +46,12 @@ private:
 	//static object_pool_type msg_pool_;
 	
 
-	// 消息类型
 	int msgType;
+	int port;
+
+	std::string logFile;
+
+	std::string client;
 	
 
 public:

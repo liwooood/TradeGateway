@@ -69,6 +69,7 @@ void TcpServer::OnAccept(const boost::system::error_code& error, TcpSessionPtr s
 	}
 	else
 	{
+		//session->getSocket().remote_endpoint();
 		session->start();
 	}
 

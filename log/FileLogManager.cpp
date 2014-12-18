@@ -224,8 +224,43 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 	sLogFileName += "\\";
 
 	std::string busiType = log.busitype();
-	if (busiType.empty())
+	//0.通用, 1.证券交易, 2.融资融券, 3.网上开户 4.账户系统, 5.统一认证， 6.期权, 7.验签
+	if(busiType == "0")
+	{
+		busiType = "证券";
+	}
+	else if(busiType == "1")
+	{
+		busiType = "股票";
+	}
+	else if(busiType == "2")
+	{
+		busiType = "融资融券";
+	}
+	else if(busiType == "3")
+	{
+		busiType = "开户";
+	}
+	else if(busiType == "4")
+	{
+		busiType = "账户";
+	}
+	else if(busiType == "5")
+	{
+		busiType = "认证";
+	}
+	else if(busiType == "6")
+	{
+		busiType = "期权";
+	}
+	else if(busiType == "7")
+	{
+		busiType = "验签";
+	}
+	else
+	{
 		busiType = "no_busitype";
+	}
 	sLogFileName += busiType;
 	sLogFileName += "\\";
 
@@ -277,11 +312,11 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 
 	if (log.status() == 0)
 	{
-		sLogFileName += "_error";
+		sLogFileName += "_error.log";
 	}
 	else
 	{
-		sLogFileName += "_success";
+		sLogFileName += "_success.log";
 	}
 
 	/*
@@ -348,7 +383,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 		outfile << "柜台端口：" << log.gtport()<< "\n";
 		
 
-		outfile << "请求密文：" << log.enc_request() << "\n";
+		//outfile << "请求密文：" << log.enc_request() << "\n";
 		// 需要过滤敏感字段
 		outfile << "请求过滤后明文：" <<  sFilterRequest << "\n";
 
@@ -359,7 +394,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 
 		// 需要过滤敏感字段
 		outfile << "应答明文：" << log.response() << "\n";
-		outfile << "应答密文：" << log.enc_response() << "\n";
+		//outfile << "应答密文：" << log.enc_response() << "\n";
 			
 		// 隔一行
 		outfile << "\n";

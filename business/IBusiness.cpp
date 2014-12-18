@@ -21,14 +21,10 @@ IBusiness::IBusiness(void)
 
 
 
-void IBusiness::SetCounter(Counter * counter)
-{
-	this->m_Counter = counter;
-}
 
-Counter* IBusiness::GetCounter()
+Counter& IBusiness::GetCounter()
 {
-	return m_Counter;
+	return counter;
 }
 
 bool IBusiness::IsConnected()

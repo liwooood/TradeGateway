@@ -286,7 +286,7 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		{
 		}
 		
-
+		counterIp = pBusiness->GetCounter().serverAddr;
 		pBusiness->Send(request, response, status, errCode, errMsg);
 
 		g_ConnectManager.PushConnect(pBusiness, sysNo, nBusiType, "0000");

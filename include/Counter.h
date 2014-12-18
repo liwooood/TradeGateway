@@ -16,6 +16,8 @@ public:
 	int m_nCounterType; // 柜台类型
 	std::string m_sIP;
 	int m_nPort;
+	std::string serverAddr;
+
 	int m_nConnectTimeout; // 柜台连接超时时间
 	int m_nRecvTimeout; // 请求处理超时时间
 	std::string entrustMode; // 委托方式

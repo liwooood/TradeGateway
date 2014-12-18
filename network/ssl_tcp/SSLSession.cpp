@@ -51,7 +51,7 @@ boost::asio::ssl::stream<boost::asio::ip::tcp::socket>::lowest_layer_type& SSLSe
 
 void SSLSession::close()
 {
-	CloseCounterConnect();
+	//CloseCounterConnect();
 
 	boost::system::error_code ignored_ec;
 
@@ -63,6 +63,10 @@ void SSLSession::close()
 
 void SSLSession::start()
 {
+	std::string clientIP = shared_from_this()->socket.lowest_layer().remote_endpoint().address().to_v4().to_string();
+	int clientPort = shared_from_this()->socket.lowest_layer().remote_endpoint().port();
+	client = clientIP + ":" + boost::lexical_cast<std::string>(clientPort);
+
 		socket.async_handshake(
 			boost::asio::ssl::stream_base::server,
 			boost::bind(&SSLSession::OnHandShake, shared_from_this(), boost::asio::placeholders::error)
@@ -73,7 +77,7 @@ void SSLSession::OnHandShake(const boost::system::error_code& error)
 {
 	if (error)
 	{
-		gFileLog::instance().error(logFile, "SSLSession 握手失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 握手失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
@@ -120,7 +124,7 @@ void SSLSession::read()
 	int size = req->GetMsgHeaderSize();
 	
 
-	boost::asio::async_read(socket, 
+	boost::asio::async_read(shared_from_this()->socket, 
 		boost::asio::buffer(req->GetMsgHeader(), req->GetMsgHeaderSize()), 
 		boost::asio::transfer_all(),
 		strand.wrap(
@@ -133,7 +137,7 @@ void SSLSession::OnReadHead(const boost::system::error_code& error, size_t trans
 {
 	if (error)
 	{
-		gFileLog::instance().error(logFile, "SSLSession 读包头失败或客户端关闭连接， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 读包头失败或客户端关闭连接， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
@@ -141,7 +145,7 @@ void SSLSession::OnReadHead(const boost::system::error_code& error, size_t trans
 
 	if (transferredBytes != req->GetMsgHeaderSize())
 	{
-		gFileLog::instance().error(logFile, "SSLSession 读包头失败，需要读:" + boost::lexical_cast<std::string>(req->GetMsgHeaderSize()) + ", 实际读:" + boost::lexical_cast<std::string>(transferredBytes) );
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 读包头失败，需要读:" + boost::lexical_cast<std::string>(req->GetMsgHeaderSize()) + ", 实际读:" + boost::lexical_cast<std::string>(transferredBytes) );
 
 		close();
 		return;
@@ -150,7 +154,7 @@ void SSLSession::OnReadHead(const boost::system::error_code& error, size_t trans
 	
 	if (!req->DecoderMsgHeader())
 	{
-		gFileLog::instance().error(logFile, "SSLSession 解码包头失败");
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 解码包头失败");
 
 		close();
 		return;
@@ -159,7 +163,7 @@ void SSLSession::OnReadHead(const boost::system::error_code& error, size_t trans
 	int size = req->GetMsgContentSize();
 	
 
-	boost::asio::async_read(socket, 
+	boost::asio::async_read(shared_from_this()->socket, 
 		boost::asio::buffer(req->GetMsgContent(), req->GetMsgContentSize()),
 		boost::asio::transfer_all(),
 		strand.wrap(
@@ -177,7 +181,7 @@ void SSLSession::OnReadMsg(const boost::system::error_code& error, size_t transf
 	if (error) 
 	{
 	
-		gFileLog::instance().error(logFile, "SSLSession 读包内容失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 读包内容失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
@@ -185,7 +189,7 @@ void SSLSession::OnReadMsg(const boost::system::error_code& error, size_t transf
 
 	if (transferredBytes != req->GetMsgContentSize())
 	{
-		gFileLog::instance().error(logFile, "SSLSession 读包内容失败 需要读:" + boost::lexical_cast<std::string>(req->GetMsgContentSize()) + ", 实际读:" + boost::lexical_cast<std::string>(transferredBytes) );
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 读包内容失败 需要读:" + boost::lexical_cast<std::string>(req->GetMsgContentSize()) + ", 实际读:" + boost::lexical_cast<std::string>(transferredBytes) );
 
 		close();
 		return;
@@ -206,7 +210,7 @@ void SSLSession::write(IMessage* resp)
 {
 	
 
-		boost::asio::async_write(socket,
+		boost::asio::async_write(shared_from_this()->socket,
 			boost::asio::buffer(resp->GetMsgHeader(), resp->GetMsgHeaderSize()),
 			boost::asio::transfer_all(),
 			strand.wrap(
@@ -220,7 +224,7 @@ void SSLSession::OnWriteHead(const boost::system::error_code& error, size_t tran
 {
 	if (error)
 	{
-		gFileLog::instance().error(logFile, "SSLSession 写包头失败，错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 写包头失败，错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
@@ -229,14 +233,14 @@ void SSLSession::OnWriteHead(const boost::system::error_code& error, size_t tran
 
 	if (transferredBytes != resp->GetMsgHeaderSize())
 	{
-		gFileLog::instance().error(logFile, "SSLSession 写包头失败 需要写:" + boost::lexical_cast<std::string>(resp->GetMsgHeaderSize()) + ", 实际写:" + boost::lexical_cast<std::string>(transferredBytes) );
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 写包头失败 需要写:" + boost::lexical_cast<std::string>(resp->GetMsgHeaderSize()) + ", 实际写:" + boost::lexical_cast<std::string>(transferredBytes) );
 
 		close();
 		return;
 	}
 
 	
-		boost::asio::async_write(socket,
+		boost::asio::async_write(shared_from_this()->socket,
 			boost::asio::buffer(resp->GetMsgContent(), resp->GetMsgContentSize()),
 			boost::asio::transfer_all(),
 			strand.wrap(
@@ -253,7 +257,7 @@ void SSLSession::OnWriteMsg(const boost::system::error_code& error, size_t trans
 	if (error)
 	{
 
-		gFileLog::instance().error(logFile, "SSLSession 写包内容失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 写包内容失败， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
 
 		close();
 		return;
@@ -261,7 +265,7 @@ void SSLSession::OnWriteMsg(const boost::system::error_code& error, size_t trans
 
 	if (transferredBytes != resp->GetMsgContentSize())
 	{
-		gFileLog::instance().error(logFile, "SSLSession 写包内容失败 需要写:" + boost::lexical_cast<std::string>(resp->GetMsgContentSize()) + ", 实际写:" + boost::lexical_cast<std::string>(error) );
+		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 写包内容失败 需要写:" + boost::lexical_cast<std::string>(resp->GetMsgContentSize()) + ", 实际写:" + boost::lexical_cast<std::string>(error) );
 
 		close();
 		return;
@@ -272,7 +276,7 @@ void SSLSession::OnWriteMsg(const boost::system::error_code& error, size_t trans
 
 	// 写日志
 	gFileLogManager::instance().push(resp->log);
-	gDistributedLogManager::instance().push(resp->log);
+	//gDistributedLogManager::instance().push(resp->log);
 
 	/*
 	if (resp->GetMsgHeader()->FunctionNo == 0)

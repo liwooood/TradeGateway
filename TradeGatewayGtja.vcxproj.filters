@@ -670,14 +670,5 @@
     <Text Include="bin_release\ChangeLog.txt">
       <Filter>配置文件\release</Filter>
     </Text>
-    <Text Include="文档\开发计划.txt">
-      <Filter>文档</Filter>
-    </Text>
-    <Text Include="log\日志开发说明.txt">
-      <Filter>日志</Filter>
-    </Text>
-    <Text Include="协议说明.txt">
-      <Filter>文档</Filter>
-    </Text>
   </ItemGroup>
 </Project>

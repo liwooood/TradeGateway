@@ -237,7 +237,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	
 	// set gydm
 	//gFileLog::instance().Log("set gydm:" + m_pConn->m_Counter->m_sGydm);
-	Fix_SetGYDM(session, m_Counter->m_sGydm.c_str());
+	Fix_SetGYDM(session, counter.m_sGydm.c_str());
 	
 
 	// set fbdm & dest fbdm
@@ -509,7 +509,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 
 
 	// Ä¬ÈÏÎª30Ãë
-	Fix_SetTimeOut(session, m_Counter->m_nRecvTimeout);
+	Fix_SetTimeOut(session, counter.m_nRecvTimeout);
 
 	nRet = Fix_Run(session);
 	if (!nRet)
@@ -674,8 +674,8 @@ bool TradeBusinessDD::CreateConnect()
 
 	
 
-		std::string gtAddr = m_Counter->m_sIP + "@" + boost::lexical_cast<std::string>(m_Counter->m_nPort) + "/tcp";
-		m_hHandle = Fix_Connect(gtAddr.c_str(), m_Counter->m_sUserName.c_str(), m_Counter->m_sPassword.c_str(), m_Counter->m_nConnectTimeout); 
+		std::string gtAddr = counter.m_sIP + "@" + boost::lexical_cast<std::string>(counter.m_nPort) + "/tcp";
+		m_hHandle = Fix_Connect(gtAddr.c_str(), counter.m_sUserName.c_str(), counter.m_sPassword.c_str(), counter.m_nConnectTimeout); 
 
 		
 		if (m_hHandle == 0)

@@ -28,10 +28,10 @@ private:
 	bool m_bCreatePool;
 
 public:
-	ConnectPool();
+	ConnectPool(std::vector<Counter> vCounter);
 	~ConnectPool(void);
 
-	void SetCounterServer(std::vector<Counter> vCounter);
+
 
 	bool CreateConnPool();
 	bool IncreaseConnPool();

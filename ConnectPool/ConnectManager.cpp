@@ -75,7 +75,7 @@ IBusiness* CConnectManager::GetConnect(std::string sysNo, int busiType, std::str
 	Branch& branch = itBranch->second;
 	ConnectPool* pool = branch.pool;
 	
-	if (pool != NULL)
+	if (pool->IsCreatePoolSuccess())
 	{
 		pConn = pool->GetConnect();
 

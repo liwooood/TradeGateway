@@ -137,7 +137,7 @@ bool TradeBusinessTest::Send(std::string& request, std::string& response, int& s
 
 	ParseRequest(request);
 
-	g_ConnectManager.GetConnect(sysNo, busiType, "0000");
+	
 
 	bool bRet = true;
 	

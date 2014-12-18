@@ -51,9 +51,9 @@ bool TradeBusinessJSD::CreateConnect()
 {
 	int rc = 0;
 	u_long bio = 1;
-	int connectTimeout = m_Counter->m_nConnectTimeout;
-	int readTimeout = m_Counter->m_nRecvTimeout * 1000;
-	int writeTimeout = m_Counter->m_nRecvTimeout * 1000;
+	int connectTimeout = counter.m_nConnectTimeout;
+	int readTimeout = counter.m_nRecvTimeout * 1000;
+	int writeTimeout = counter.m_nRecvTimeout * 1000;
 	sockfd = INVALID_SOCKET;
 
 
@@ -74,8 +74,8 @@ bool TradeBusinessJSD::CreateConnect()
 	
 	struct sockaddr_in addr;
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = inet_addr(m_Counter->m_sIP.c_str());
-	addr.sin_port = htons(m_Counter->m_nPort);
+	addr.sin_addr.s_addr = inet_addr(counter.m_sIP.c_str());
+	addr.sin_port = htons(counter.m_nPort);
 
 	rc = connect(sockfd, (const sockaddr *)&addr, sizeof(addr));
 	// 异步模式不用判断
