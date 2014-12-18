@@ -202,9 +202,6 @@
     <ClInclude Include="network\ssl\pkgheader.pb.h">
       <Filter>网络层\网络消息\protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="business\szkingdom_win\Encrypt.h">
-      <Filter>业务层\金证windows</Filter>
-    </ClInclude>
     <ClInclude Include="business\SunGuard\AGC.h">
       <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClInclude>
@@ -361,6 +358,9 @@
     <ClInclude Include="include\ConnectPool.h">
       <Filter>柜台连接池</Filter>
     </ClInclude>
+    <ClInclude Include="include\dogskin.h">
+      <Filter>业务层\金证windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -413,9 +413,6 @@
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\TradeServer.cpp">
       <Filter>业务层</Filter>
-    </ClCompile>
-    <ClCompile Include="business\szkingdom_win\Encrypt.cpp">
-      <Filter>业务层\金证windows</Filter>
     </ClCompile>
     <ClCompile Include="business\SunGuard\AGC.cpp">
       <Filter>业务层\金仕达AGC/WGX</Filter>
@@ -503,6 +500,9 @@
     </ClCompile>
     <ClCompile Include="ConnectPool\ConnectPool.cpp">
       <Filter>柜台连接池</Filter>
+    </ClCompile>
+    <ClCompile Include="business\szkingdom_win\dogskin.cpp">
+      <Filter>业务层\金证windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

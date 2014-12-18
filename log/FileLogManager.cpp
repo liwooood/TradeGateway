@@ -209,7 +209,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 
 	// 日志目录
 	std::string sLogFileName = gConfigManager::instance().m_sLogFilePath;
-	sLogFileName += "\\";
+	sLogFileName += "\\业务\\";
 
 	std::string sysNo = log.sysno();
 	if (sysNo.empty())

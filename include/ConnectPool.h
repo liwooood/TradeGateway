@@ -13,7 +13,7 @@
 class ConnectPool
 {
 private:
-	std::vector<Counter> m_vCounter;
+	
 
 
 	// 直接整合std::deque比较好
@@ -26,9 +26,14 @@ private:
 	
 	int m_nID; // 连接序列号
 	bool m_bCreatePool;
+	std::string logFile;
+	std::string systemNo;
+	std::string busiType;
+	int counterType;
+	std::vector<Counter> m_vCounter;
 
 public:
-	ConnectPool(std::vector<Counter> vCounter);
+	ConnectPool(std::string systemNo, std::string busiType, int counterType, std::vector<Counter> vCounter);
 	~ConnectPool(void);
 
 

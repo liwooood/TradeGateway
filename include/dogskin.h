@@ -1,15 +1,15 @@
-
-#pragma once
+#ifndef DOGSKIN_H
+#define DOGSKIN_H
 
 #include <string>
 
 typedef char * (*fpEncode) (char *, int); 
 
-class CEncrypt
+class Dogskin
 {
 public:
-	CEncrypt(void);
-	~CEncrypt(void);
+	Dogskin(void);
+	~Dogskin(void);
 
 	fpEncode Encode;
 	HMODULE hEncrypt;
@@ -21,4 +21,6 @@ public:
 	
 };
 
-extern CEncrypt g_Encrypt;
+extern Dogskin g_Encrypt;
+
+#endif

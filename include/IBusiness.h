@@ -22,14 +22,17 @@
 class IBusiness
 {
 protected:
+	std::string logFile;
+
 	// 连接相关
 	Counter counter;
-	
 	int connId; // 在连接池中的连接序号
+	std::string connectInfo;
+
 
 	// 不同的柜台，写不同的日志
 	int counterType;
-	std::string logFile;
+	
 
 
 	// 业务相关

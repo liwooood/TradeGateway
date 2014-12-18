@@ -37,9 +37,35 @@ void FileLog::Log(std::string log, int logLevel, std::string logFile)
 
 	std::string sLogFileName = "";
 	if (logFile.empty())
+	{
 		sLogFileName = sLogDir + "\\证券网关日志";
+	}
 	else
-		sLogFileName = sLogDir + "\\" + logFile;
+	{
+		std::size_t found = logFile.find_last_of("\\");
+		
+		std::string file = logFile;
+
+		if (found != std::string::npos)
+		{
+			std::string subDir  = logFile.substr(0, found);
+			file  = logFile.substr(found + 1);
+
+			sLogDir += "\\" + subDir;
+
+			boost::filesystem::path pp(sLogDir);
+			if (!boost::filesystem::exists(pp))
+			{
+				boost::filesystem::create_directories(pp);
+			}
+
+		}
+		
+			
+			
+
+		sLogFileName = sLogDir + "\\" + file;
+	}
 
 	sLogFileName += "_";
 

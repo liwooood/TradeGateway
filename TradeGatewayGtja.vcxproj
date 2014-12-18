@@ -140,7 +140,6 @@
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\SunGuard\AGC.h" />
     <ClInclude Include="business\SunGuard\sywg.h" />
-    <ClInclude Include="business\szkingdom_win\Encrypt.h" />
     <ClInclude Include="cache\CacheData.h" />
     <Text Include="bin_release\ChangeLog.txt" />
     <ClInclude Include="include\Branch.h" />
@@ -155,6 +154,7 @@
     <ClInclude Include="include\Counter.h" />
     <ClInclude Include="include\CustomMessage.h" />
     <ClInclude Include="include\DingDian.h" />
+    <ClInclude Include="include\dogskin.h" />
     <ClInclude Include="include\errcode.h" />
     <ClInclude Include="include\FileLog.h" />
     <ClInclude Include="include\FileLogManager.h" />
@@ -210,7 +210,7 @@
     <ClCompile Include="business\SunGuard\Crc.cpp" />
     <ClCompile Include="business\SunGuard\Des.cpp" />
     <ClCompile Include="business\SunGuard\TradeBusinessJSD.cpp" />
-    <ClCompile Include="business\szkingdom_win\Encrypt.cpp" />
+    <ClCompile Include="business\szkingdom_win\dogskin.cpp" />
     <ClCompile Include="business\szkingdom_win\TradeBusinessJZ.cpp" />
     <ClCompile Include="business\xinyi\TradeBusinessTest.cpp" />
     <ClCompile Include="cache\CacheData.cpp" />

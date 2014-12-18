@@ -11,7 +11,7 @@
 //#include "LogManager.h"
 #include "ConnectManager.h"
 #include "ConfigManager.h"
-#include "encrypt.h"
+#include "Dogskin.h"
 //ICU
 //#include <unicode/putil.h>
 //#include <unicode/ucnv.h>

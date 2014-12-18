@@ -1,23 +1,23 @@
 #include "StdAfx.h"
-#include ".\encrypt.h"
+#include "Dogskin.h"
 
 
 
 
-CEncrypt g_Encrypt;
+Dogskin g_Encrypt;
 
-CEncrypt::CEncrypt(void)
+Dogskin::Dogskin(void)
 {
 	hEncrypt = NULL;
 	Encode = NULL;
 }
 
-CEncrypt::~CEncrypt(void)
+Dogskin::~Dogskin(void)
 {
 	UnLoadDLL();
 }
 
-void CEncrypt::UnLoadDLL()
+void Dogskin::UnLoadDLL()
 {
 	if (hEncrypt != NULL)
 	{
@@ -26,7 +26,7 @@ void CEncrypt::UnLoadDLL()
 	}
 }
 
-bool CEncrypt::LoadDLL()
+bool Dogskin::LoadDLL()
 {
 	TCHAR szPath[MAX_PATH];
 	memset(szPath, 0x00, sizeof(szPath));
@@ -60,7 +60,7 @@ bool CEncrypt::LoadDLL()
 	return true;
 }
 
-std::string  CEncrypt::EncryptPWD(std::string sPassword)
+std::string  Dogskin::EncryptPWD(std::string sPassword)
 {
 	if (sPassword.empty())
 		return "";

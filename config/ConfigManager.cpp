@@ -381,7 +381,7 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 
 				Branch branch;
 				branch.servers = counters;
-				ConnectPool * pool = new ConnectPool(counters);
+				ConnectPool * pool = new ConnectPool(sysid, type, counterType, counters);
 				branch.pool = pool;
 
 

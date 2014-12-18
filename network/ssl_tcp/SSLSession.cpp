@@ -28,7 +28,7 @@ SSLSession::SSLSession(IOSType& ios, QueueType& q, int msgType, int port, boost:
 
 	this->msgType = msgType;
 	this->port = port;
-	logFile = "network_" + boost::lexical_cast<std::string>(port);
+	logFile = "ÍøÂç\\network_" + boost::lexical_cast<std::string>(port);
 
 	
 }

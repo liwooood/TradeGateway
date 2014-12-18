@@ -18,10 +18,11 @@ public:
 
 	void Log(std::string log, int logLevel=0, std::string logFile="证券网关日志");
 
-	void error(std::string logFile, std::string log);
+	
 	void debug(std::string logFile, std::string log);
 	void info(std::string logFile, std::string log);
 	void warn(std::string logFile, std::string log);
+	void error(std::string logFile, std::string log);
 };
 
 typedef boost::detail::thread::singleton<FileLog> gFileLog;

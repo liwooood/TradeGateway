@@ -19,6 +19,8 @@ TradeBusinessTest::TradeBusinessTest(int connId, Counter counter)
 {
 	this->connId = connId;
 	this->counter = counter;
+	logFile = "柜台\\仿真";
+	connectInfo = "连接序号" + boost::lexical_cast<std::string>(connId) + ", 柜台地址" + counter.serverAddr;
 }
 
 TradeBusinessTest::~TradeBusinessTest(void)
@@ -45,8 +47,8 @@ bool TradeBusinessTest::WriteMsgHeader(CustomMessage * pReq)
 	{
 
 		//std::string sErrInfo = "新意服务器写包头失败，错误代码：" + "sErrCode" + ", 错误消息：" + "sErrMsg";
-		std::string sErrInfo = "新意服务器写包头失败";
-		gFileLog::instance().Log(sErrInfo);
+		std::string sErrInfo = "写包头失败" + connectInfo;
+		gFileLog::instance().error(logFile, sErrInfo);
 
 		m_bConnected = false;
 		return m_bConnected;
@@ -62,8 +64,8 @@ bool TradeBusinessTest::WriteMsgContent(CustomMessage * pReq)
 	{
 		
 		//std::string sErrInfo = "新意服务器写包内容失败，错误代码：" + sErrCode + ", 错误消息：" + sErrMsg;
-		std::string sErrInfo = "新意服务器写包内容失败";
-		gFileLog::instance().Log(sErrInfo);
+		std::string sErrInfo = "写包内容失败" + connectInfo;
+		gFileLog::instance().error(logFile, sErrInfo);
 
 		m_bConnected = false;
 		return m_bConnected;
@@ -92,8 +94,8 @@ bool TradeBusinessTest::ReadMsgHeader(CustomMessage * pRes)
 	{
 		
 		//std::string sErrInfo = "新意服务器读包头失败，错误代码：" + sErrCode + ", 错误消息：" + sErrMsg;
-		std::string sErrInfo = "新意服务器读包头失败";
-		gFileLog::instance().Log(sErrInfo);
+		std::string sErrInfo = "读包头失败" + connectInfo;
+		gFileLog::instance().error(logFile, sErrInfo);
 
 		m_bConnected = false;
 		return m_bConnected;
@@ -110,6 +112,7 @@ bool TradeBusinessTest::ReadMsgContent(CustomMessage * pRes)
 
 	if (!pRes->DecoderMsgHeader())
 	{
+		gFileLog::instance().error(logFile, "解码包头失败" + connectInfo);
 		return false;
 	}
 		
@@ -118,8 +121,8 @@ bool TradeBusinessTest::ReadMsgContent(CustomMessage * pRes)
 	{
 		
 		//std::string sErrInfo = "新意服务器读包内容失败，错误代码：" + sErrCode + ", 错误消息：" + sErrMsg;
-		std::string sErrInfo = "新意服务器读包内容失败";
-		gFileLog::instance().Log(sErrInfo);
+		std::string sErrInfo = "读包内容失败" + connectInfo;
+		gFileLog::instance().error(logFile, sErrInfo);
 
 		m_bConnected = false;
 		return m_bConnected;			
@@ -180,7 +183,7 @@ bool TradeBusinessTest::Send(std::string& request, std::string& response, int& s
 		status = 1;
 		response = pRes->GetMsgContentString();
 		//std::string response(pRes->GetPkgBody().begin(),pRes->GetPkgBody().end());
-		gFileLog::instance().Log("新意服务器应答内容：" + pRes->GetMsgContentString());
+		//gFileLog::instance().Log("新意服务器应答内容：" + pRes->GetMsgContentString());
 	}
 	else
 	{
@@ -278,6 +281,7 @@ bool TradeBusinessTest::CreateConnect()
 	sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (sockfd == INVALID_SOCKET )
 	{
+		gFileLog::instance().error(logFile, "创建连接失败" + connectInfo);
 		return FALSE;
 	}
 	
@@ -286,6 +290,7 @@ bool TradeBusinessTest::CreateConnect()
 	rc = ioctlsocket(sockfd, FIONBIO, &bio); 
 	if (rc == SOCKET_ERROR)
 	{
+		gFileLog::instance().error(logFile, "设置为非阻塞模式失败" + connectInfo);
 		closesocket(sockfd);
 		return FALSE;
 	}
@@ -317,6 +322,7 @@ bool TradeBusinessTest::CreateConnect()
 	rc = select(0, NULL, &writefds, NULL, &timeout);
 	if (rc == 0)
 	{
+		gFileLog::instance().error(logFile, "select失败" + connectInfo);
 		// timeout
 		closesocket(sockfd);
 		return FALSE;
@@ -324,12 +330,14 @@ bool TradeBusinessTest::CreateConnect()
 
 	if (rc == SOCKET_ERROR)
 	{
+		gFileLog::instance().error(logFile, "select失败" + connectInfo);
 		closesocket(sockfd);
 		return FALSE;
 	}
 
 	if(!FD_ISSET(sockfd, &writefds))  
     {  
+		gFileLog::instance().error(logFile, "FD_ISSET失败" + connectInfo);
 		closesocket(sockfd);
 		return FALSE;
     }  
@@ -340,6 +348,7 @@ bool TradeBusinessTest::CreateConnect()
 	rc = ioctlsocket(sockfd, FIONBIO, &bio);
 	if (rc == SOCKET_ERROR)
 	{
+		gFileLog::instance().error(logFile, "ioctlsocket失败" + connectInfo);
 		closesocket(sockfd);
 		return FALSE;
 	}
@@ -347,7 +356,7 @@ bool TradeBusinessTest::CreateConnect()
 	// 设置读写超时
 	//rc = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO,(char*)&readTimeout, sizeof(readTimeout));
     //rc = setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO,(char*)&writeTimeout, sizeof(writeTimeout));
-
+	gFileLog::instance().debug(logFile, "创建连接成功" + connectInfo);
 	return TRUE;
 }
 
@@ -355,6 +364,7 @@ void TradeBusinessTest::CloseConnect()
 {
 	if (sockfd != INVALID_SOCKET)
 	{
+		gFileLog::instance().debug(logFile, "关闭连接, " + connectInfo);
 		closesocket(sockfd);
 		sockfd = INVALID_SOCKET;
 	}

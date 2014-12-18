@@ -34,7 +34,7 @@ bool IBusiness::IsConnected()
 
 std::string IBusiness::GetConnectInfo()
 {
-	return "";
+	return connectInfo;
 }
 
 bool IBusiness::ParseRequest(std::string& request)
