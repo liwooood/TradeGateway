@@ -22,6 +22,8 @@
 class IBusiness
 {
 protected:
+	
+	std::string SOH;
 	std::string logFile;
 
 	// 连接相关
@@ -34,9 +36,10 @@ protected:
 	int counterType;
 	
 
+	std::string gatewayInfo;
+	std::string counterInfo;
 
-	// 业务相关
-	std::string SOH;
+	
 	bool m_bConnected;
 	
 
@@ -82,21 +85,21 @@ public:
 	// 连接相关
 	virtual bool CreateConnect() = 0;
 	virtual void CloseConnect() = 0;
-	virtual std::string GetConnectInfo();
-	Counter& GetCounter();
+	std::string GetConnectInfo();
+	Counter& GetCounter();	
 
-	// 业务相关
 	virtual bool Send(std::string& request, std::string& response, int& status, std::string& errCode, std::string& errMsg) = 0;
 	bool ParseRequest(std::string& request);
-	
-	
-	
-	virtual bool IsConnected();
-	
-	bool FilterRequestField(std::string& key);
 	void RetNoRecordRes(std::string& response, int& status);
 	void GenResponse(int nErrCode, std::string sErrMsg, std::string& response, int& status, std::string& errCode, std::string& errMsg);
-	int ConvertIntToBusiType(int val);
+	void SetGatewayInfo(std::string gatewayIP, std::string gatewayPort);
+	
+	
+	
+	
+
+	bool FilterRequestField(std::string& key);
+	
 };
 
 #endif

@@ -37,14 +37,10 @@ TradeBusinessHS::TradeBusinessHS(int ConnectNo, Counter counter)
 	lpConnection = NULL;
 	lpConfig = NULL;
 
-	m_nID = ConnectNo;
-	m_Counter = counter;
-
-	boost::format fmt("序号%1% 柜台地址%2%:%3%");
-	fmt % m_nID % m_Counter.m_sIP % m_Counter.m_nPort;
-	m_sServerInfo = fmt.str();
-
-	
+	this->connId = ConnectNo;
+	this->counter = counter;
+	logFile = "柜台\\恒生";
+	connectInfo = "连接序号" + boost::lexical_cast<std::string>(connId) + ", 柜台地址" + counter.serverAddr;
 }
 
 
@@ -56,9 +52,9 @@ bool TradeBusinessHS::CreateConnect()
 	lpConfig = NewConfig();
 	lpConfig->AddRef();
 
-	std::string s = m_Counter.m_sIP;
+	std::string s = counter.m_sIP;
 	s += ":";
-	s += boost::lexical_cast<std::string>(m_Counter.m_nPort);
+	s += boost::lexical_cast<std::string>(counter.m_nPort);
 	lpConfig->SetString("t2sdk", "servers", s.c_str());
 
 	std::string license_file;
@@ -75,13 +71,13 @@ bool TradeBusinessHS::CreateConnect()
 	nRet = lpConnection->Create(NULL);
 
 		
-	nRet = lpConnection->Connect(connectTimeout);
+	nRet = lpConnection->Connect(counter.m_nConnectTimeout);
 
 	if (nRet != 0)
 	{
 		std::string sErrMsg = lpConnection->GetErrorMsg(nRet);
 			std::string msg = "建立连接失败" + s + ",错误信息" + sErrMsg;
-			gFileLog::instance().Log(msg, 0, "恒生");
+			gFileLog::instance().error(logFile, msg);
 
 		m_bConnected = false;
 		return false;
@@ -136,7 +132,7 @@ bool TradeBusinessHS::Send(std::string& request, std::string& response, int& sta
 		{
 			e.what();
 
-			GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
+			GenResponse(PARAM_FORMAT_ERROR, gError::instance().GetErrMsg(PARAM_FORMAT_ERROR) + "cssweb_route", response, status, errCode, errMsg);
 
 			bRet = true;	
 			goto FINISH;
@@ -152,7 +148,7 @@ bool TradeBusinessHS::Send(std::string& request, std::string& response, int& sta
 	{
 		e.what();
 
-		GenResponse(PARAM_ERROR, gError::instance().GetErrMsg(PARAM_ERROR), response, status, errCode, errMsg);
+		GenResponse(PARAM_FORMAT_ERROR, gError::instance().GetErrMsg(PARAM_FORMAT_ERROR) + "cssweb_funcid", response, status, errCode, errMsg);
 		bRet = true;	
 		goto FINISH;
 	}
@@ -173,12 +169,7 @@ bool TradeBusinessHS::Send(std::string& request, std::string& response, int& sta
 		pack->AddField(key.c_str(), 'S', 8000);
 	}
 
-	// 设置value
-	if (num > 1)
-	{
-		std::string sNum = "num=" + boost::lexical_cast<std::string>(num) + request;
-		gFileLog::instance().Log(sNum, 0, "num.log");
-	}
+	
 
 	for (int i=0; i<num; i++)
 	{
@@ -193,11 +184,7 @@ bool TradeBusinessHS::Send(std::string& request, std::string& response, int& sta
 			}
 
 			std::string value = reqmap[key];
-			TRACE("key=");
-			TRACE(key.c_str());
-			TRACE(", value=");
-			TRACE(value.c_str());
-			TRACE("\n");
+			
 
 			
 			// 如果是南京证券
@@ -256,7 +243,7 @@ bool TradeBusinessHS::Send(std::string& request, std::string& response, int& sta
 	//nRet = m_pConn->lpConnection->RecvBiz(nRet, &Pointer, gConfigManager::instance().m_nConnectTimeout, 0);
 	
 	
-	nRet = lpConnection->RecvBiz(nRet, &Pointer, m_Counter.m_nRecvTimeout*1000);
+	nRet = lpConnection->RecvBiz(nRet, &Pointer, counter.m_nRecvTimeout);
 
 
 	// 返回成功

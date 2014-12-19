@@ -340,9 +340,9 @@ bool ConfigManager::ReadSystemFromXML(std::string systemFile)
 
 					counter.m_nCounterType = counterType;
 
-					counter.m_nConnectTimeout = m_nConnectTimeout;
+					counter.m_nConnectTimeout = m_nConnectTimeout * 1000;
 
-					counter.m_nRecvTimeout = m_nRecvTimeout;
+					counter.m_nRecvTimeout = m_nRecvTimeout * 1000;
 
 					// Î¯ÍÐ·½Ê½
 				

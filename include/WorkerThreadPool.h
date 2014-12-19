@@ -98,10 +98,53 @@ private:
 			if (!func || !func(msg))
 			{
 				// 严重错误，需要记录日志
-				gFileLog::instance().error("工作线程池", "退出线程");
+				//error("工作线程池退出线程");
 				break;
 			}
 		}
 	}
+
+	
+void error(std::string log)
+{
+	
+	// 创建目录
+	std::string sLogDir = gConfigManager::instance().m_sLogFilePath;
+
+	
+	std::string sLogFileName = sLogDir + "\\证券网关日志";
+	
+	sLogFileName += "_";
+
+	boost::gregorian::date day = boost::gregorian::day_clock::local_day();
+	sLogFileName += to_iso_extended_string(day);
+	sLogFileName += ".log";
+
+	
+	HANDLE hFile = CreateFile(sLogFileName.c_str(), FILE_APPEND_DATA, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		return;
+	}
+
+	boost::posix_time::ptime beginTime =  boost::posix_time::microsec_clock::local_time();
+	std::string sBeginTime = boost::gregorian::to_iso_extended_string(beginTime.date()) + " " + boost::posix_time::to_simple_string(beginTime.time_of_day());
+	
+	std::stringstream ss;
+	ss << "时间：" <<  sBeginTime  << "\n";
+	ss << "内容：" << log << "\n";
+	std::string s = ss.str();
+
+	DWORD dwBytesWritten = 0;
+	
+
+	WriteFile(hFile, s.c_str(), s.size(), &dwBytesWritten, NULL);
+
+	
+
+	CloseHandle(hFile);
+
+}
+
 };
 #endif

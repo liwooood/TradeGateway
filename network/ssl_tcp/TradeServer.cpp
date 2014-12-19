@@ -241,7 +241,9 @@ bool TradeServer::ProcessRequest(IMessage* req)
 	}
 	catch(std::exception& exp)
 	{
-		errCode = PARAM_FORMAT_ERROR;
+		exp.what();
+
+		errCode = boost::lexical_cast<std::string>(PARAM_FORMAT_ERROR);
 		errMsg = gError::instance().GetErrMsg(PARAM_FORMAT_ERROR) + "cssweb_busitype";
 
 		response = "1" + SOH + "2" + SOH;
@@ -284,9 +286,25 @@ bool TradeServer::ProcessRequest(IMessage* req)
 		IBusiness *pBusiness = g_ConnectManager.GetConnect(sysNo, nBusiType, "0000");
 		if (pBusiness == NULL)
 		{
+			logLevel = Trade::TradeLog::ERROR_LEVEL;
+
+			errCode = boost::lexical_cast<std::string>(GET_CONNECT_ERROR);
+			errMsg = gError::instance().GetErrMsg(GET_CONNECT_ERROR);
+			
+			response = "1" + SOH + "2" + SOH;
+			response += "cssweb_code";
+			response += SOH;
+			response += "cssweb_msg";
+			response += SOH;
+			response += errCode;
+			response += SOH;
+			response += errMsg;
+			response += SOH;
+
+			goto FINISH;
 		}
 		
-		counterIp = pBusiness->GetCounter().serverAddr;
+		pBusiness->SetGatewayInfo(gatewayIp, gatewayPort);
 		pBusiness->Send(request, response, status, errCode, errMsg);
 
 		g_ConnectManager.PushConnect(pBusiness, sysNo, nBusiType, "0000");

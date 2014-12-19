@@ -303,6 +303,7 @@
     <Xml Include="bin_release\gtja.xml" />
     <Xml Include="bin_release\njzq.xml" />
     <Xml Include="bin_release\sywg.xml" />
+    <Xml Include="bin_release\test.xml" />
     <Xml Include="bin_release\tradegateway.xml">
       <SubType>Designer</SubType>
     </Xml>

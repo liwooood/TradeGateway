@@ -146,9 +146,6 @@
     <Filter Include="业务层\恒生T2">
       <UniqueIdentifier>{7c86cff7-a507-40ec-b078-f55c74d4c493}</UniqueIdentifier>
     </Filter>
-    <Filter Include="业务层\恒生T2\同步">
-      <UniqueIdentifier>{829bcd0e-0b38-4aa3-a424-b2d15422954a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="业务层\恒生T2\异步">
       <UniqueIdentifier>{dd02e4d4-6220-4f5f-b408-a428b9dadafc}</UniqueIdentifier>
     </Filter>
@@ -280,9 +277,6 @@
     <ClInclude Include="include\TradeBusinessJSD.h">
       <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClInclude>
-    <ClInclude Include="include\TradeBusinessHS.h">
-      <Filter>业务层\恒生T2\同步</Filter>
-    </ClInclude>
     <ClInclude Include="include\TradeBusinessDD.h">
       <Filter>业务层\顶点</Filter>
     </ClInclude>
@@ -360,6 +354,9 @@
     </ClInclude>
     <ClInclude Include="include\dogskin.h">
       <Filter>业务层\金证windows</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TradeBusinessHS.h">
+      <Filter>业务层\恒生T2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -447,9 +444,6 @@
     <ClCompile Include="business\SunGuard\TradeBusinessJSD.cpp">
       <Filter>业务层\金仕达AGC/WGX</Filter>
     </ClCompile>
-    <ClCompile Include="business\hundsun_t2\TradeBusinessHS.cpp">
-      <Filter>业务层\恒生T2\同步</Filter>
-    </ClCompile>
     <ClCompile Include="business\apexsoft\TradeBusinessDD.cpp">
       <Filter>业务层\顶点</Filter>
     </ClCompile>
@@ -503,6 +497,9 @@
     </ClCompile>
     <ClCompile Include="business\szkingdom_win\dogskin.cpp">
       <Filter>业务层\金证windows</Filter>
+    </ClCompile>
+    <ClCompile Include="business\hundsun_t2\TradeBusinessHS.cpp">
+      <Filter>业务层\恒生T2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -640,6 +637,9 @@
     </Xml>
     <Xml Include="bin_debug\FilterFunc_Test.xml">
       <Filter>日志\过滤查询功能号</Filter>
+    </Xml>
+    <Xml Include="bin_release\test.xml">
+      <Filter>配置文件\release</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>

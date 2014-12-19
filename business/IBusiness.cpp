@@ -27,10 +27,6 @@ Counter& IBusiness::GetCounter()
 	return counter;
 }
 
-bool IBusiness::IsConnected()
-{
-	return m_bConnected;
-}
 
 std::string IBusiness::GetConnectInfo()
 {
@@ -245,8 +241,36 @@ void IBusiness::RetNoRecordRes(std::string& response, int& status)
 void IBusiness::GenResponse(int nErrCode, std::string sErrMsg, std::string& response, int& status, std::string& errCode, std::string& errMsg)
 {
 	status = 0;
-
 	errCode = boost::lexical_cast<std::string>(nErrCode);
 	errMsg = sErrMsg;
+
+	response = "1";
+	response += SOH;
+	response += "4";
+	response += SOH;
+
+	response += "cssweb_code";
+	response += SOH;
+	response += "cssweb_msg";
+	response += SOH;
+	response += "cssweb_gwinfo";
+	response += SOH;
+	response += "cssweb_counter";
+	response += SOH;
+
+	response += errCode;
+	response += SOH;
+	response += errMsg;
+	response += SOH;
+
+	response += gatewayInfo;
+	response += SOH;
+	response += counter.serverAddr;
+	response += SOH;
+	
 }
 
+void IBusiness::SetGatewayInfo(std::string gatewayIP, std::string gatewayPort)
+{
+	gatewayInfo = gatewayIP + ":" + gatewayPort;
+}
