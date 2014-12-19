@@ -33,7 +33,7 @@ TcpServer::TcpServer(IOServicePool& ios, unsigned short port, QueueType& q, int 
 {
 	this->msgType = msgType;
 	this->port = port;
-	logFile = "network_" + boost::lexical_cast<std::string>(port);
+	logFile = "ÍøÂç\\network_" + boost::lexical_cast<std::string>(port);
 
 	acceptor.set_option(AcceptorType::reuse_address(true));
 

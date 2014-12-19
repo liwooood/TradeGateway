@@ -137,7 +137,14 @@ void SSLSession::OnReadHead(const boost::system::error_code& error, size_t trans
 {
 	if (error)
 	{
-		gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 读包头失败或客户端关闭连接， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		if (error.value() == 2) // 客户端关闭连接
+		{
+			gFileLog::instance().debug(shared_from_this()->logFile, shared_from_this()->client + " 客户端关闭连接， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		}
+		else
+		{
+			gFileLog::instance().error(shared_from_this()->logFile, shared_from_this()->client + " 客户端关闭连接， 错误代码:" + boost::lexical_cast<std::string>(error.value()) + ", 错误消息:" + error.message());
+		}
 
 		close();
 		return;
