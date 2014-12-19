@@ -43,7 +43,7 @@ protected:
 	bool m_bConnected;
 	
 
-
+	std::string req; // –°–¥«Î«Û
 	std::string sysNo;
 
 	int busiType;
@@ -92,14 +92,7 @@ public:
 	bool ParseRequest(std::string& request);
 	void RetNoRecordRes(std::string& response, int& status);
 	void GenResponse(int nErrCode, std::string sErrMsg, std::string& response, int& status, std::string& errCode, std::string& errMsg);
-	void SetGatewayInfo(std::string gatewayIP, std::string gatewayPort);
-	
-	
-	
-	
-
-	bool FilterRequestField(std::string& key);
-	
+	void SetGatewayInfo(std::string gatewayIP, std::string gatewayPort);	
 };
 
 #endif

@@ -46,8 +46,9 @@ bool IBusiness::ParseRequest(std::string& request)
 	keys.clear();
 	
 
-	//gFileLog::instance().Log("request=" + request);
-	boost::split(keyvalues, request, boost::is_any_of(SOH)); // 注意需要通过配置文件配置
+	req = boost::to_lower_copy(request);
+	
+	boost::split(keyvalues, req, boost::is_any_of(SOH)); // 注意需要通过配置文件配置
 
 	int size = keyvalues.size();
 	//std::string si = boost::lexical_cast<std::string>(size);
@@ -94,12 +95,12 @@ bool IBusiness::ParseRequest(std::string& request)
 	}
 
 	
-	sysNo = reqmap["cssweb_sysNo"];
+	sysNo = reqmap["cssweb_sysno"];
 
-	bt = reqmap["cssweb_busiType"];
+	bt = reqmap["cssweb_busitype"];
 	busiType = boost::lexical_cast<int>(bt);
 
-	sysVer = reqmap["cssweb_sysVer"];
+	sysVer = reqmap["cssweb_sysver"];
 
 	funcid = reqmap["cssweb_funcid"];
 	
@@ -107,7 +108,7 @@ bool IBusiness::ParseRequest(std::string& request)
 	route = reqmap["cssweb_route"];
 	hardinfo = reqmap["cssweb_hardinfo"];
 	note = reqmap["cssweb_note"];
-	cssweb_cacheFlag = reqmap["cssweb_cacheFlag"];
+	cssweb_cacheFlag = reqmap["cssweb_cacheflag"];
 
 
 	branchId = reqmap["branch_no"]; // 营业部id
@@ -172,47 +173,6 @@ bool IBusiness::ParseRequest(std::string& request)
 	
 
 	return true;
-}
-
-bool IBusiness::FilterRequestField(std::string& key)
-{
-	if (key == "cssweb_sysNo")
-	{
-		return true;
-	}
-	else if (key == "cssweb_busiType")
-	{
-		return true;
-	}
-	else if (key == "cssweb_sysVer")
-	{
-		return true;
-	}
-	else if (key == "cssweb_funcid")
-	{
-		return true;
-	}
-	else if (key == "cssweb_route")
-	{
-		return true;
-	}
-	else if (key == "cssweb_hardinfo")
-	{
-		return true;
-	}
-	else if (key == "cssweb_note")
-	{
-		return true;
-	}
-	else if (key == "cssweb_cacheFlag")
-	{
-		return true;
-	}
-	
-	else
-	{
-		return false;
-	}
 }
 
 // 生成请求成功，无数据返回信息

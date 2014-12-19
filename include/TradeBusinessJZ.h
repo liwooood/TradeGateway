@@ -1,11 +1,8 @@
-#ifndef TRADE_BUSINESS_H
-#define TRADE_BUSINESS_H
+#ifndef TRADE_BUSINESS_JZ_H
+#define TRADE_BUSINESS_JZ_H
 
 #include <string>
 #include <map>
-
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 
 
 #include "IBusiness.h"

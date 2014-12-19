@@ -1,5 +1,5 @@
-#ifndef _TRADE_SERVER_TCP_
-#define _TRADE_SERVER_TCP_
+#ifndef TRADE_SERVER_H
+#define TRADE_SERVER_H
 
 #include "CustomMessage.h"
 #include "QueueThreadSafe.h"

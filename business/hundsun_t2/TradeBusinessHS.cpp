@@ -84,6 +84,7 @@ bool TradeBusinessHS::CreateConnect()
 	}
 	else
 	{
+		gFileLog::instance().debug(logFile, "建立连接成功" + connectInfo);
 		m_bConnected = true;
 		return true;
 	}
@@ -104,6 +105,8 @@ void TradeBusinessHS::CloseConnect()
 		lpConfig->Release();
 		lpConfig = NULL;
 	}
+
+	gFileLog::instance().debug(logFile, "关闭连接" + connectInfo);
 }
 
 /*

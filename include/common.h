@@ -2,7 +2,7 @@
 #define _COMMON_H_
 
 // ∞Ê±æ–≈œ¢
-#define VERSION  "2.0.07"
+#define VERSION  "3.0"
 #define MY_BOOST_VERSION "1.55"
 #define SSL_VERSION "1.0.1g"
 

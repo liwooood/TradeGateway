@@ -336,11 +336,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 		//tmp += ",value=" + value;
 		//gFileLog::instance().Log(tmp);
 
-		if (FilterRequestField(key))
-		{
-			continue;
-		}
-		else if(key.compare("client_id")==0)
+		if(key.compare("client_id")==0)
 		{
 			continue;
 		}

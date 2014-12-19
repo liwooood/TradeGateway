@@ -170,6 +170,12 @@
     <Filter Include="客户端版本管理">
       <UniqueIdentifier>{3963840a-c9ab-4f62-8cd7-3aa35c6dd03c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="错误信息\debug">
+      <UniqueIdentifier>{266ce0e3-864a-4a9f-8212-f20f1575c3a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="错误信息\release">
+      <UniqueIdentifier>{43dbe72b-dbf1-477c-a6e2-661a40ce525d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -641,6 +647,12 @@
     <Xml Include="bin_release\test.xml">
       <Filter>配置文件\release</Filter>
     </Xml>
+    <Xml Include="bin_release\error.xml">
+      <Filter>错误信息\release</Filter>
+    </Xml>
+    <Xml Include="bin_debug\error.xml">
+      <Filter>错误信息\debug</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Text Include="lib\ICU\icu.txt">
@@ -660,9 +672,6 @@
     </Text>
     <Text Include="lib\ProtoBuf\ProtoBuf.txt">
       <Filter>第三方库\ProtoBuf</Filter>
-    </Text>
-    <Text Include="business\szkingdom\业务加解密.txt">
-      <Filter>业务层\金证windows</Filter>
     </Text>
     <Text Include="sywg代码备份.txt">
       <Filter>业务层\金仕达AGC/WGX</Filter>

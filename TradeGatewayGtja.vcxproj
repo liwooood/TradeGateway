@@ -282,6 +282,7 @@
     <Xml Include="bin_debug\agc.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="bin_debug\error.xml" />
     <Xml Include="bin_debug\FilterField_DD.xml" />
     <Xml Include="bin_debug\FilterField_HS.xml" />
     <Xml Include="bin_debug\FilterField_JSD.xml" />
@@ -300,6 +301,7 @@
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="bin_release\agc.xml" />
+    <Xml Include="bin_release\error.xml" />
     <Xml Include="bin_release\gtja.xml" />
     <Xml Include="bin_release\njzq.xml" />
     <Xml Include="bin_release\sywg.xml" />
@@ -309,7 +311,6 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="business\szkingdom\业务加解密.txt" />
     <Text Include="lib\Boost\Boost.txt" />
     <Text Include="lib\Botan\botan.txt" />
     <Text Include="lib\CrashRpt\CrashRpt.txt" />

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<erreros>
+	
+	<error code="1000" msg="连接柜台失败"/>
+		
+</erreros>

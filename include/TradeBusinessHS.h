@@ -4,10 +4,7 @@
 #include <string>
 #include <map>
 
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 
-#include "tradelog.pb.h"
 #include "t2sdk_interface.h"
 
 #include "IBusiness.h"
