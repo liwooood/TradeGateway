@@ -15,6 +15,7 @@
 #include "TcpMessageOld.h"
 #include "SslMessagePB.h"
 #include "CustomMessage.h" 
+#include "StatusData.h"
 
 
 TcpSession::MemPoolType TcpSession::memPool;
@@ -45,6 +46,34 @@ TcpSession::IOSType& TcpSession::getIOService()
 	return socket.get_io_service();
 }
 
+
+void TcpSession::start()
+{
+	if (msgType == MSG_TYPE_TCP_OLD)
+	{
+		gStatusData.tcpOldSessions++;
+
+		if (gStatusData.tcpOldSessions > gStatusData.tcpOldMaxSessions)
+			gStatusData.tcpOldMaxSessions = gStatusData.tcpOldSessions.load();
+	}
+	else if (msgType == MSG_TYPE_TCP_NEW)
+	{
+		gStatusData.tcpNewSessions++;
+
+		if (gStatusData.tcpNewSessions > gStatusData.tcpNewMaxSessions)
+			gStatusData.tcpNewMaxSessions = gStatusData.tcpNewSessions.load();
+	}
+	else
+	{
+	}
+
+	std::string clientIP = shared_from_this()->socket.remote_endpoint().address().to_v4().to_string();
+	int clientPort = shared_from_this()->socket.remote_endpoint().port();
+	client = clientIP + ":" + boost::lexical_cast<std::string>(clientPort);
+
+	read();
+}
+
 void TcpSession::close()
 {
 	// 关闭柜台连接
@@ -56,17 +85,17 @@ void TcpSession::close()
 
 	socket.close(ignored_ec);
 
-	
-}
-
-
-void TcpSession::start()
-{
-	std::string clientIP = shared_from_this()->socket.remote_endpoint().address().to_v4().to_string();
-	int clientPort = shared_from_this()->socket.remote_endpoint().port();
-	client = clientIP + ":" + boost::lexical_cast<std::string>(clientPort);
-
-	read();
+	if (msgType == MSG_TYPE_TCP_OLD)
+	{
+		gStatusData.tcpOldSessions--;
+	}
+	else if (msgType == MSG_TYPE_TCP_NEW)
+	{
+		gStatusData.tcpNewSessions--;
+	}
+	else
+	{
+	}
 }
 
 IMessage* TcpSession::CreateRequest()

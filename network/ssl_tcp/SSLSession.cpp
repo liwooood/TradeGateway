@@ -15,7 +15,7 @@
 #include "TcpMessageOld.h"
 #include "SslMessagePB.h"
 #include "CustomMessage.h" 
-
+#include "StatusData.h"
 
 
 SSLSession::SSLSession(IOSType& ios, QueueType& q, int msgType, int port, boost::asio::ssl::context& context)
@@ -49,20 +49,26 @@ boost::asio::ssl::stream<boost::asio::ip::tcp::socket>::lowest_layer_type& SSLSe
 	return socket.lowest_layer();
 }
 
-void SSLSession::close()
-{
-	//CloseCounterConnect();
-
-	boost::system::error_code ignored_ec;
-
-	socket.lowest_layer().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
-
-	socket.lowest_layer().close(ignored_ec);
-}
-
-
 void SSLSession::start()
 {
+	if (msgType == MSG_TYPE_SSL_PB)
+	{
+		gStatusData.sslOldSessions++;
+
+		if (gStatusData.sslOldSessions > gStatusData.sslOldMaxSessions)
+			gStatusData.sslOldMaxSessions = gStatusData.sslOldSessions.load();
+	}
+	else if (msgType == MSG_TYPE_SSL_NEW)
+	{
+		gStatusData.sslNewSessions++;
+
+		if (gStatusData.sslNewSessions > gStatusData.sslNewMaxSessions)
+			gStatusData.sslNewMaxSessions = gStatusData.sslNewSessions.load();
+	}
+	else
+	{
+	}
+
 	std::string clientIP = shared_from_this()->socket.lowest_layer().remote_endpoint().address().to_v4().to_string();
 	int clientPort = shared_from_this()->socket.lowest_layer().remote_endpoint().port();
 	client = clientIP + ":" + boost::lexical_cast<std::string>(clientPort);
@@ -84,6 +90,30 @@ void SSLSession::OnHandShake(const boost::system::error_code& error)
 	}	
 	
 	read();
+}
+
+
+void SSLSession::close()
+{
+	//CloseCounterConnect();
+
+	boost::system::error_code ignored_ec;
+
+	socket.lowest_layer().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
+
+	socket.lowest_layer().close(ignored_ec);
+
+	if (msgType == MSG_TYPE_SSL_PB)
+	{
+		gStatusData.sslOldSessions--;
+	}
+	else if (msgType == MSG_TYPE_SSL_NEW)
+	{
+		gStatusData.sslNewSessions--;
+	}
+	else
+	{
+	}
 }
 
 IMessage* SSLSession::CreateRequest()

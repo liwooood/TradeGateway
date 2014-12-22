@@ -135,4 +135,7 @@ public:
 	afx_msg void OnBnClickedAbout();
 	
 
+	boost::shared_ptr<boost::thread> statusDataThread;
+	void UpdateStatusData();
+	bool updateStatusDataFinish;
 };

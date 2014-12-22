@@ -10,8 +10,18 @@ public:
 	~StatusData(void);
 
 	// 会话数
-	boost::atomic_long sessions;
-	boost::atomic_long maxSessions;
+	boost::atomic_long sslOldSessions;
+	boost::atomic_long sslOldMaxSessions;
+
+	boost::atomic_long tcpOldSessions;
+	boost::atomic_long tcpOldMaxSessions;
+
+	boost::atomic_long sslNewSessions;
+	boost::atomic_long sslNewMaxSessions;
+
+	boost::atomic_long tcpNewSessions;
+	boost::atomic_long tcpNewMaxSessions;
+
 
 	// 登录数如何统计，只能以用户唯一标识为key
 	/*
@@ -23,5 +33,7 @@ public:
 	boost::atomic_long maxLoginUsers;
 
 };
+
+extern StatusData gStatusData;
 
 #endif
