@@ -46,7 +46,8 @@ bool IBusiness::ParseRequest(std::string& request)
 	keys.clear();
 	
 
-	req = boost::to_lower_copy(request);
+	//req = boost::to_lower_copy(request);
+	req = request;
 	
 	boost::split(keyvalues, req, boost::is_any_of(SOH)); // 注意需要通过配置文件配置
 
@@ -71,7 +72,9 @@ bool IBusiness::ParseRequest(std::string& request)
 
 		if (found != std::string::npos)
 		{
-			key = keyvalue.substr(0, found);
+			std::string k = keyvalue.substr(0, found);
+			key = boost::to_lower_copy(k);
+
 			value = keyvalue.substr(found + 1);
 
 			reqmap[key] = value;

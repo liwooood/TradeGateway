@@ -171,7 +171,7 @@ bool TradeBusinessHS::Send(std::string& request, std::string& response, int& sta
 		//pack->AddField(key.c_str());
 		pack->AddField(key.c_str(), 'S', 8000);
 
-		gFileLog::instance().error(logFile, "key1=" + key);
+		//gFileLog::instance().error(logFile, "key1=" + key);
 	}
 
 	
@@ -203,8 +203,8 @@ bool TradeBusinessHS::Send(std::string& request, std::string& response, int& sta
 
 			pack->AddStr(value.c_str());
 
-			gFileLog::instance().error(logFile, "key2=" + key);
-			gFileLog::instance().error(logFile, "value=" + value);
+			//gFileLog::instance().error(logFile, "key2=" + key);
+			//gFileLog::instance().error(logFile, "value=" + value);
 			
 		}
 	}

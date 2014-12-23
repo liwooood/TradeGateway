@@ -792,13 +792,14 @@ bool TradeServer::GetSysNoAndBusiType(std::string& request, std::string& sysNo, 
 		if (key == "cssweb_account")
 		{
 			account = value;
-
+			/*
 			if (account.empty())
 			{
 				errCode = boost::lexical_cast<std::string>(PARAM_ERROR);
 				errMsg = gError::instance().GetErrMsg(PARAM_ERROR) + "cssweb_account";
 				return false;
 			}
+			*/
 		}
 
 	}

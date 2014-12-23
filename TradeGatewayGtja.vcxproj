@@ -136,7 +136,6 @@
   <ItemGroup>
     <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="agc_encrypt.h" />
-    <ClInclude Include="business\apexsoft\DingDian.h" />
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\SunGuard\AGC.h" />
     <ClInclude Include="business\SunGuard\sywg.h" />

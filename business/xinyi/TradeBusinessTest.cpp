@@ -354,6 +354,7 @@ bool TradeBusinessTest::CreateConnect()
 	}
 
 	// 设置读写超时
+	//http://blog.csdn.net/anghlq/article/details/6578158
 	//rc = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO,(char*)&readTimeout, sizeof(readTimeout));
     //rc = setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO,(char*)&writeTimeout, sizeof(writeTimeout));
 	gFileLog::instance().debug(logFile, "创建连接成功" + connectInfo);

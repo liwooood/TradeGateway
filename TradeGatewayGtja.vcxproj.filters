@@ -214,9 +214,6 @@
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h">
       <Filter>业务层\恒生T2</Filter>
     </ClInclude>
-    <ClInclude Include="business\apexsoft\DingDian.h">
-      <Filter>业务层\顶点</Filter>
-    </ClInclude>
     <ClInclude Include="include\MiniDump.h">
       <Filter>CrashDump</Filter>
     </ClInclude>
