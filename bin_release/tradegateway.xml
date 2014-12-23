@@ -86,7 +86,7 @@
 
     <file>
       <enable>1</enable>
-      <path>d:\tradegateway\log</path>
+      <path>e:\trade\log</path>
       <threadpool>16</threadpool>
     </file>
 

@@ -1,5 +1,5 @@
-#ifndef _DINGDIAN_H_
-#define _DINGDIAN_H_
+#ifndef DINGDIAN_H
+#define DINGDIAN_H
 
 #include <map>
 #include <string>

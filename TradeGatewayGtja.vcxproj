@@ -139,11 +139,11 @@
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\SunGuard\AGC.h" />
     <ClInclude Include="business\SunGuard\sywg.h" />
-    <ClInclude Include="cache\CacheData.h" />
     <Text Include="bin_release\ChangeLog.txt" />
     <ClInclude Include="include\Branch.h" />
     <ClInclude Include="include\BusinessSystem.h" />
     <ClInclude Include="include\BusinessType.h" />
+    <ClInclude Include="include\CacheData.h" />
     <ClInclude Include="include\CallbackImpl.h" />
     <ClInclude Include="include\common.h" />
     <ClInclude Include="include\ConfigManager.h" />
@@ -256,7 +256,8 @@
     <ResourceCompile Include="TradeGatewayGtja.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\tradeparam.map" />
+    <None Include="bin_debug\apex_tradeparam.map" />
+    <None Include="bin_release\apex_tradeparam.map" />
     <None Include="bin_release\wer.reg" />
     <None Include="log\tradelog.bat" />
     <None Include="log\tradelog.proto" />
@@ -277,10 +278,10 @@
     <None Include="文档\系统设计文档\连接池.vsdx" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="bin\OutputDomain.xml" />
     <Xml Include="bin_debug\agc.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="bin_debug\apex_OutputDomain.xml" />
     <Xml Include="bin_debug\error.xml" />
     <Xml Include="bin_debug\FilterField_DD.xml" />
     <Xml Include="bin_debug\FilterField_HS.xml" />
@@ -300,6 +301,7 @@
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="bin_release\agc.xml" />
+    <Xml Include="bin_release\apex_OutputDomain.xml" />
     <Xml Include="bin_release\error.xml" />
     <Xml Include="bin_release\gtja.xml" />
     <Xml Include="bin_release\njzq.xml" />

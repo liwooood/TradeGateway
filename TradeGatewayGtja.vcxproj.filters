@@ -176,6 +176,12 @@
     <Filter Include="错误信息\release">
       <UniqueIdentifier>{43dbe72b-dbf1-477c-a6e2-661a40ce525d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="业务层\顶点\debug">
+      <UniqueIdentifier>{6eb0285b-a633-415e-849f-7429e8411b82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务层\顶点\release">
+      <UniqueIdentifier>{4d170613-2b13-4649-9a91-1cc00337443a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -183,9 +189,6 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>主框架</Filter>
-    </ClInclude>
-    <ClInclude Include="cache\CacheData.h">
-      <Filter>缓存</Filter>
     </ClInclude>
     <ClInclude Include="business\SunGuard\sywg.h">
       <Filter>业务层\金仕达AGC/WGX</Filter>
@@ -360,6 +363,9 @@
     </ClInclude>
     <ClInclude Include="include\TradeBusinessHS.h">
       <Filter>业务层\恒生T2</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CacheData.h">
+      <Filter>缓存</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -564,14 +570,17 @@
     <None Include="文档\系统设计文档\业务时序图.vsdx">
       <Filter>文档</Filter>
     </None>
-    <None Include="bin\tradeparam.map">
-      <Filter>业务层\顶点</Filter>
-    </None>
     <None Include="bin_release\wer.reg">
       <Filter>注册表</Filter>
     </None>
     <None Include="文档\交易系统说明.docx">
       <Filter>文档</Filter>
+    </None>
+    <None Include="bin_release\apex_tradeparam.map">
+      <Filter>业务层\顶点\release</Filter>
+    </None>
+    <None Include="bin_debug\apex_tradeparam.map">
+      <Filter>业务层\顶点\debug</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -586,9 +595,6 @@
     </Xml>
     <Xml Include="bin_release\agc.xml">
       <Filter>业务层\金仕达AGC/WGX\AGC配置文件\release</Filter>
-    </Xml>
-    <Xml Include="bin\OutputDomain.xml">
-      <Filter>业务层\顶点</Filter>
     </Xml>
     <Xml Include="bin_release\sywg.xml">
       <Filter>配置文件\release</Filter>
@@ -649,6 +655,12 @@
     </Xml>
     <Xml Include="bin_debug\error.xml">
       <Filter>错误信息\debug</Filter>
+    </Xml>
+    <Xml Include="bin_release\apex_OutputDomain.xml">
+      <Filter>业务层\顶点\release</Filter>
+    </Xml>
+    <Xml Include="bin_debug\apex_OutputDomain.xml">
+      <Filter>业务层\顶点\debug</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>

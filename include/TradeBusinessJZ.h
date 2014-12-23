@@ -6,6 +6,7 @@
 
 
 #include "IBusiness.h"
+#include "Dogskin.h"
 
 
 class TradeBusinessJZ : public IBusiness
@@ -23,6 +24,8 @@ public:
 
 	// 金证
 	void * handle; // 柜台连接句柄
+
+	Dogskin dogskin;
 	
 };
 #endif

@@ -15,8 +15,18 @@ public:
 	CCacheData(void);
 	~CCacheData(void);
 
-	// key=hash(request), value=response
-	std::map<std::string, std::string> m_mapCacheData;
+	/*
+	cssweb_cacheFlag	数据缓存标识
+fundList	开放式基金列表
+fundCompany	基金公司
+fundProducts	基金理财产品列表
+financingUnderlying	融资标的证券
+marginUnderlying	融券标的证券
+underlying	标的证券(全部)
+collateral	担保证券
+
+	*/
+	std::map<std::string/*cssweb_cacheFlag*/, std::string/*response*/> m_mapCacheData;
 
 
 

@@ -4,11 +4,10 @@
 #include <string>
 #include <map>
 
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 
-#include "tradelog.pb.h"
+
 #include "IBusiness.h"
+#include "DingDian.h"
 
 
 class TradeBusinessDD : public IBusiness
@@ -27,5 +26,8 @@ private:
 	char* EncryptPwd(const char* plainText, char* szPwd);
 	long m_hHandle;
 	void GetMacAndDiskID(std::string hardinfo, std::string& mac, std::string& diskid);
+
+	
+	CDingDian dd; 
 };
 #endif

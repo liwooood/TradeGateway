@@ -3,37 +3,15 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string.hpp>
 
-
-#include "TradeBusinessDD.h"
-//#include "LogManager.h"
-#include "ConnectManager.h"
-
-
-
-
-//#include "aes.h"
-
-#include "ConfigManager.h"
-
-
-
-//#include "CacheData.h"
-
-// ICU
-//#include <unicode/putil.h>
-//#include <unicode/ucnv.h>
-
-#include "mybotan.h"
-#include "FileLog.h"
-
-#include "TradeGatewayGtja.h"
-
-
 #include "fiddef.h"
 #include "fixapi.h"
-#include "DingDian.h"
 
+#include "TradeBusinessDD.h"
+#include "ConfigManager.h"
+#include "mybotan.h"
+#include "FileLog.h"
 #include "CacheData.h"
+#include "errcode.h"
 
 
 TradeBusinessDD::TradeBusinessDD()
@@ -43,8 +21,12 @@ TradeBusinessDD::TradeBusinessDD()
 
 TradeBusinessDD::TradeBusinessDD(int connId, Counter counter)
 {
+	m_hHandle = -1;
+
 	this->connId = connId;
 	this->counter = counter;
+	logFile = "柜台\\顶点";
+	connectInfo = "连接序号" + boost::lexical_cast<std::string>(connId) + ", 柜台地址" + counter.serverAddr;
 }
 
 TradeBusinessDD::~TradeBusinessDD(void)
@@ -74,110 +56,11 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	// 南京证券禁止修改资料功能
 	if ( (sysNo.compare("njzq_jlp") == 0 || sysNo.compare("njzq_flash") == 0) && funcid.compare("202002") == 0)
 	{
-		response = "1";
-		response += SOH;
-		response += "3";
-		response += SOH;
-
-		response += "cssweb_code";
-		response += SOH;
-		response += "cssweb_msg";
-		response += SOH;
-		response += "cssweb_gwInfo";
-		response += SOH;
-
-		response += "0";
-		response += SOH;
-		response += "修改客户资料请到掌厅办理!";
-		response += SOH;
-		response += "0.0.0.0:5000";
-		response += SOH;
-
-		status = 1;
-		errCode = "";
-		errMsg = "";
-		//logLevel = Trade::TradeLog::INFO_LEVEL;
-
+		GenResponse(NO_ACCESS_ERROR, gError::instance().GetErrMsg(NO_ACCESS_ERROR), response, status, errCode, errMsg);
 		goto FINISH;
 	}
-	/*
-	if (funcid == "000000")
-	{
-		//1.对解锁密码进行b64解码
-		std::string newpwd = reqmap["newpwd"];
-
-		char decoder[20];
-		memset(decoder, 0x00, sizeof(decoder));
-		int outlen;
-		g_MyBotan.Base64Decoder(newpwd, decoder, &outlen);
-		std::string unlock = decoder;
-		
-		//2.对登录密码进行解码，解密
-		std::string trdpwd = reqmap["trdpwd"];
-		std::string login;
-		bool bRet = g_MyBotan.Base16Decoder_AESDecrypt("AES-256/ECB/PKCS7", "29dlo*%AO+3i16BaweTw.lc!)61K{9^5", trdpwd, login);
-
-		//3.比较两个密码
-		if (unlock == login)
-		{
-			response = "1";
-			response += SOH;
-			response += "3";
-			response += SOH;
-
-			response += "cssweb_code";
-			response += SOH;
-			response += "cssweb_msg";
-			response += SOH;
-			response += "cssweb_gwInfo";
-			response += SOH;
-
-			response += "1";
-			response += SOH;
-			response += "解锁成功!";
-			response += SOH;
-			response += "0.0.0.0:5000";
-			response += SOH;
-
-			status = 1;
-			errCode = "";
-			errMsg = "";
-			//logLevel = Trade::TradeLog::INFO_LEVEL;
-
-			goto FINISH;
-		}
-		else
-		{
-			response = "1";
-			response += SOH;
-			response += "3";
-			response += SOH;
-
-			response += "cssweb_code";
-			response += SOH;
-			response += "cssweb_msg";
-			response += SOH;
-			response += "cssweb_gwInfo";
-			response += SOH;
-
-			response += "1100";
-			response += SOH;
-			response += "解锁失败!";
-			response += SOH;
-			response += "0.0.0.0:5000";
-			response += SOH;
-
-			status = 0;
-			errCode = "1100";
-			errMsg = "解锁失败";
-			//logLevel = Trade::TradeLog::INFO_LEVEL;
-
-			goto FINISH;
-		}
-	}
-	*/
-
 	
+	// 应该把功能封装进cache
 	if (!cssweb_cacheFlag.empty())
 	{
 		if (g_CacheData.m_mapCacheData.find(cssweb_cacheFlag) != g_CacheData.m_mapCacheData.end())
@@ -192,8 +75,8 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 				errCode = "";
 				errMsg = "";
 				//logLevel = Trade::TradeLog::INFO_LEVEL;
-
-				gFileLog::instance().Log("cache use " + cssweb_cacheFlag);
+				gFileLog::instance().debug(logFile, "从缓存获取" + cssweb_cacheFlag);
+				
 				goto FINISH;
 			}
 		}
@@ -203,31 +86,8 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	// 判断功能号是否已定义
 	if (g_DingDian.m_mReturnField.find(funcid) == g_DingDian.m_mReturnField.end())
 	{
-			response = "1";
-			response += SOH;
-			response += "3";
-			response += SOH;
-
-			response += "cssweb_code";
-			response += SOH;
-			response += "cssweb_msg";
-			response += SOH;
-			response += "cssweb_gwInfo";
-			response += SOH;
-
-			response += "1100";
-			response += SOH;
-			response += "功能号没有配置!";
-			response += SOH;
-			response += "0.0.0.0:5000";
-			response += SOH;
-
-			status = 0;
-			errCode = "2001";
-			errMsg = "功能号没有配置";
-			//logLevel = Trade::TradeLog::ERROR_LEVEL;
-
-			goto FINISH;
+		GenResponse(FUNC_NOT_FOUND_ERROR, gError::instance().GetErrMsg(FUNC_NOT_FOUND_ERROR), response, status, errCode, errMsg);
+		goto FINISH;
 	}
 
 	
@@ -236,13 +96,10 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	session = Fix_AllocateSession(m_hHandle);
 	
 	// set gydm
-	//gFileLog::instance().Log("set gydm:" + m_pConn->m_Counter->m_sGydm);
 	Fix_SetGYDM(session, counter.m_sGydm.c_str());
 	
 
 	// set fbdm & dest fbdm
-	
-	
 	khh = reqmap["FID_KHH"];
 	if (!khh.empty())
 	{
@@ -253,43 +110,18 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 		std::string zjzh = reqmap["FID_ZJZH"];
 		fbdm = zjzh.substr(0,4);
 	}
-	//gFileLog::instance().Log("set fbdm:"+fbdm);
+
 	Fix_SetFBDM(session, fbdm.c_str());
 	Fix_SetDestFBDM(session, fbdm.c_str());
 
 
 
 	// set wtfs
+	Fix_SetWTFS(session, counter.entrustMode.c_str());
 	
-	if (sysVer.compare("iphone")==0 || sysVer.compare("aphone") == 0)
-	{
-		//gFileLog::instance().Log("set wtfs:"+m_pConn->m_Counter->m_sWtfs_mobile);
-		/*
-		Fix_SetWTFS(session, m_Counter->m_sWtfs_mobile.c_str());
-
-		std::string wtfs;
-		if (sysVer == "iphone")
-			wtfs = "iphone委托方式=" + m_Counter->m_sWtfs_mobile;
-		if (sysVer == "android")
-			wtfs = "aphone委托方式=" + m_Counter->m_sWtfs_mobile;
-
-		//gFileLog::instance().Log(wtfs);
-		*/
-	}
-	else
-	{
-		
-	//	Fix_SetWTFS(session, m_Counter->m_sWtfs_web.c_str());
-
-//		std::string wtfs = "web委托方式=" + m_Counter->m_sWtfs_mobile;
-
-		//gFileLog::instance().Log(wtfs);
-	}
-
 
 
 	// set node
-	
 	if (sysVer.compare("iphone")==0 || sysVer.compare("aphone")==0)
 	{
 		std::string node;
@@ -322,186 +154,41 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	}
 
 
-	//gFileLog::instance().Log("Fix_CreateHead" + funcid);
+	
 	Fix_CreateHead(session, boost::lexical_cast<long>(funcid));
 
 	
-	//gFileLog::instance().Log("==开始设置请求参数==");
 	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
 	{
 		std::string key = it->first;
 		std::string value = it->second;
 
-		//std::string tmp = "key=" + key;
-		//tmp += ",value=" + value;
-		//gFileLog::instance().Log(tmp);
-
-		if(key.compare("client_id")==0)
-		{
-			continue;
-		}
-		else if(key.compare("branch_no")==0)
-		{
-			continue;
-		}
-		else if (key.compare("FBDM")==0)
+		
+		
+		if (key.compare("FBDM")==0)
 		{
 			Fix_SetFBDM(session, value.c_str());
 			Fix_SetDestFBDM(session, value.c_str());
 		}
-		else if (key.compare("FID_JYMM")==0)
+		else if(key.compare("FID_JYMM")==0 || key.compare("FID_MM")==0 || key.compare("FID_NEWMM")==0 || key.compare("FID_ZJMM")==0 || key.compare("FID_WBZHMM")==0)
 		{
 			char szPwd[256];
-				memset(szPwd, 0x00, sizeof(szPwd));
+			memset(szPwd, 0x00, sizeof(szPwd));
 
-				EncryptPwd(value.c_str(), szPwd);
-				if (szPwd != NULL)
-				{
-					long l = g_DingDian.m_mRequestField[key];
-					Fix_SetItem(session, l, szPwd);
-				}
-
-				/*
-			
-			// 登录
-			if (funcid.compare("190101")==0)
+			EncryptPwd(value.c_str(), szPwd);
+			if (szPwd != NULL)
 			{
-				if (sysVer.compare("web")==0 || sysVer.compare("flash")==0)
-				{
-					//加了FID_JMLX=2，所有不需要加密传给柜台
-					std::string pwd;
-	
-					bool bRet = g_MyBotan.Base16Decoder_AESDecrypt("AES-256/ECB/PKCS7", "29dlo*%AO+3i16BaweTw.lc!)61K{9^5", value, pwd);
-
-					long l = g_DingDian.m_mRequestField[key];
-					Fix_SetItem(session, l, pwd.c_str());
-				}
-				else
-				{
-					// iphone, aphone
-					//没加FID_JMLX=2，所以需要加密传给柜台
-
-					char szPwd[256];
-					memset(szPwd, 0x00, sizeof(szPwd));
-
-					EncryptPwd(value.c_str(), szPwd);
-					if (szPwd != NULL)
-					{
-						long l = g_DingDian.m_mRequestField[key];
-						Fix_SetItem(session, l, szPwd);
-					}
-				}
+				long l = g_DingDian.m_mRequestField[key];
+				Fix_SetItem(session, l, szPwd);
 			}
-			else
-			{
-				char szPwd[256];
-				memset(szPwd, 0x00, sizeof(szPwd));
-
-				EncryptPwd(value.c_str(), szPwd);
-				if (szPwd != NULL)
-				{
-					long l = g_DingDian.m_mRequestField[key];
-					Fix_SetItem(session, l, szPwd);
-				}
-			}
-			*/
-		}
-		else if(key.compare("FID_MM")==0 || key.compare("FID_NEWMM")==0 || key.compare("FID_ZJMM")==0 || key.compare("FID_WBZHMM")==0)
-		{
-			/*
-			if (sysVer.compare("flash")==0)
-			{
-				
-				if (cssweb_pwdType.compare("1")==0)
-				{
-					// 安全模式
-					std::string pwd;
-					bool bRet = g_MyBotan.Base16Decoder_AESDecrypt("AES-256/ECB/PKCS7", "29dlo*%AO+3i16BaweTw.lc!)61K{9^5", value, pwd);
-
-					char szPwd[256];
-					memset(szPwd, 0x00, sizeof(szPwd));
-
-					EncryptPwd(pwd.c_str(), szPwd);
-					if (szPwd != NULL)
-					{
-						long l = g_DingDian.m_mRequestField[key];
-						Fix_SetItem(session, l, szPwd);
-					}
-				}
-				else
-				{
-					// 普通模式
-					char decoder[20];
-					memset(decoder, 0x00, sizeof(decoder));
-					int outlen;
-					bool bRet = g_MyBotan.Base64Decoder(value, decoder, &outlen);
-
-					std::string pwd = decoder;
-
-					char szPwd[256];
-					memset(szPwd, 0x00, sizeof(szPwd));
-
-					EncryptPwd(pwd.c_str(), szPwd);
-					if (szPwd != NULL)
-					{
-						long l = g_DingDian.m_mRequestField[key];
-						Fix_SetItem(session, l, szPwd);
-					}
-
-					if (key.compare("FID_NEWMM")==0)
-					{
-						// 新密码
-						bool bRet = g_MyBotan.AESEncrypt_Base16Encoder("AES-256/ECB/PKCS7", "29dlo*%AO+3i16BaweTw.lc!)61K{9^5", pwd, flash_normal_modifypwd_newpwd);
-						gFileLog::instance().Log("新密码"+pwd+"，加密" + flash_normal_modifypwd_newpwd);
-					}
-				}
-			}
-			else if (sysVer.compare("web")==0)
-			{
-					// 安全模式
-					std::string pwd;
-					bool bRet = g_MyBotan.Base16Decoder_AESDecrypt("AES-256/ECB/PKCS7", "29dlo*%AO+3i16BaweTw.lc!)61K{9^5", value, pwd);
-
-					char szPwd[256];
-					memset(szPwd, 0x00, sizeof(szPwd));
-
-					EncryptPwd(pwd.c_str(), szPwd);
-					if (szPwd != NULL)
-					{
-						long l = g_DingDian.m_mRequestField[key];
-						Fix_SetItem(session, l, szPwd);
-					}
-			}
-			else
-			{*/
-				char szPwd[256];
-				memset(szPwd, 0x00, sizeof(szPwd));
-
-				EncryptPwd(value.c_str(), szPwd);
-				if (szPwd != NULL)
-				{
-					long l = g_DingDian.m_mRequestField[key];
-					Fix_SetItem(session, l, szPwd);
-				}
-			//}
 		}
 		else
 		{
-			//if (g_DingDian.m_mRequestField.find(key) == g_DingDian.m_mRequestField.end())
-			//{
-			//	RetErrRes(Trade::TradeLog::ERROR_LEVEL, response, "2000", "字段值在tradeparam.map中无法找到");
-			//	goto FINISH;
-			//}
-			//else
-			//{
-				long l = g_DingDian.m_mRequestField[key];
-				//gFileLog::instance().Log("Fix_SetItem:" + key);
-				//TRACE("%s=%s\n", key.c_str(),  value.c_str());
-				Fix_SetItem(session, l, value.c_str());
-			//}
+			long l = g_DingDian.m_mRequestField[key];
+			Fix_SetItem(session, l, value.c_str());
 		}
 	} // end for
-	//gFileLog::instance().Log("==结束设置请求参数==");
+	
 
 
 	// 默认为30秒
@@ -532,8 +219,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	Fix_GetItem(session, FID_MESSAGE, szValue, sizeof(szValue), 0);
 	fid_message = szValue;
 	
-	//tmp = "功能号：" + funcid + "fid_code: " + fid_code;
-	//gFileLog::instance().Log(tmp);
+	
 
 	int fidcode = -1;
 	if (!fid_code.empty())
@@ -545,13 +231,13 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	{
 		
 		long nRows = Fix_GetCount(session);
-		//gFileLog::instance().Log("Fix_GetCount");
+		
 
 		// 处理成功，无数据返回
 		if (nRows == 0)
 		{
 			RetNoRecordRes(response, status);
-			status = 1;
+			
 			goto FINISH;
 		}
 
@@ -559,11 +245,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 		mReturnField = g_DingDian.m_mReturnField[funcid];
 		int nCols = mReturnField.size();
 
-		//flash交易，普通模式，修改密码功能
-		//if (sysVer.compare("flash")==0 && cssweb_pwdType.compare("0")==0 && funcid.compare("202010")==0)
-		////{
-			//nCols += 1;
-		//}
+	
 
 		response = boost::lexical_cast<std::string>(nRows);
 		response += SOH;
@@ -582,12 +264,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 			response += SOH;
 		}
 
-		//flash交易，普通模式，修改密码功能
-		//if (sysVer.compare("flash")==0 && cssweb_pwdType.compare("0")==0 && funcid.compare("202010")==0)
-		//{
-		//	response += "cssweb_pwd";
-		//	response += SOH;
-		//}
+		
 
 
 		for (int row=0; row<nRows; row++)
@@ -607,12 +284,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 			} // end for col
 		} // end for row
 
-		//flash交易，普通模式，修改密码功能
-		//if (sysVer=="flash" && cssweb_pwdType == "0" && funcid=="202010")
-		//{
-		//	response += flash_normal_modifypwd_newpwd;
-		//	response += SOH;
-		//}
+	
 
 		status = 1;
 		errCode = "";
@@ -622,7 +294,7 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 		// 结果集缓存
 		if (!cssweb_cacheFlag.empty())
 		{
-			gFileLog::instance().Log("加入缓存" + cssweb_cacheFlag);
+			gFileLog::instance().debug(logFile, "加入缓存" + cssweb_cacheFlag);
 			g_CacheData.m_mapCacheData[cssweb_cacheFlag] = response;
 			
 		}
@@ -632,10 +304,6 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 		GenResponse(fidcode, fid_message, response, status, errCode, errMsg);
 		goto FINISH;
 	}
-
-
-
-
 
 
 FINISH:
@@ -664,25 +332,24 @@ char* TradeBusinessDD::EncryptPwd(const char* plainText, char* szPwd)
 
 bool TradeBusinessDD::CreateConnect()
 {
-	
-
 	int nRet = 0;
 
-	
 
-		std::string gtAddr = counter.m_sIP + "@" + boost::lexical_cast<std::string>(counter.m_nPort) + "/tcp";
-		m_hHandle = Fix_Connect(gtAddr.c_str(), counter.m_sUserName.c_str(), counter.m_sPassword.c_str(), counter.m_nConnectTimeout); 
+	std::string gtAddr = counter.m_sIP + "@" + boost::lexical_cast<std::string>(counter.m_nPort) + "/tcp";
+	m_hHandle = Fix_Connect(gtAddr.c_str(), counter.m_sUserName.c_str(), counter.m_sPassword.c_str(), counter.m_nConnectTimeout); 
 
 		
-		if (m_hHandle == 0)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+	if (m_hHandle == 0)
+	{
+		gFileLog::instance().error(logFile, "建立连接失败" + connectInfo);
 
+		return false;
+	}
+	else
+	{
+		gFileLog::instance().debug(logFile, "建立连接成功" + connectInfo);
+		return true;
+	}
 }
 
 void TradeBusinessDD::CloseConnect()
@@ -692,6 +359,8 @@ void TradeBusinessDD::CloseConnect()
 		Fix_Close(m_hHandle);
 		m_hHandle = -1;
 	}
+
+	gFileLog::instance().debug(logFile, "关闭连接" + connectInfo);
 }
 
 void TradeBusinessDD::GetMacAndDiskID(std::string hardinfo, std::string& mac, std::string& diskid)

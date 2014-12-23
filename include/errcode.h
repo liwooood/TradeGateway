@@ -13,6 +13,8 @@
 #define BUSI_CRYPT_ERROR 1005
 #define PARAM_FORMAT_ERROR 1006
 #define GET_CONNECT_ERROR 1007
+#define NO_ACCESS_ERROR 1008
+#define FUNC_NOT_FOUND_ERROR 1009
 
 
 class Error
@@ -31,6 +33,8 @@ public:
 		err[CONFIG_ERROR] = "参数和配置文件不匹配";
 		err[BUSI_CRYPT_ERROR] = "业务层加解密错误";
 		err[GET_CONNECT_ERROR] = "获取连接错误";
+		err[NO_ACCESS_ERROR] = "修改客户资料请到掌厅办理!"; // 南京证券
+		err[FUNC_NOT_FOUND_ERROR] = "功能在配置文件未定义"; // 
 	}
 
 	std::string GetErrMsg(int errCode)
