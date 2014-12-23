@@ -182,6 +182,12 @@
     <Filter Include="业务层\顶点\release">
       <UniqueIdentifier>{4d170613-2b13-4649-9a91-1cc00337443a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="客户端版本管理\debug">
+      <UniqueIdentifier>{cec62294-577c-432b-a40c-3a609a5b4fcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="客户端版本管理\release">
+      <UniqueIdentifier>{82973a51-6a83-4cf5-a50a-c23a98aab8bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -367,6 +373,9 @@
     <ClInclude Include="include\CacheData.h">
       <Filter>缓存</Filter>
     </ClInclude>
+    <ClInclude Include="include\VersionControl.h">
+      <Filter>客户端版本管理</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -510,6 +519,9 @@
     <ClCompile Include="business\hundsun_t2\TradeBusinessHS.cpp">
       <Filter>业务层\恒生T2</Filter>
     </ClCompile>
+    <ClCompile Include="VersionControl.cpp">
+      <Filter>客户端版本管理</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\TradeGatewayGtja.ico">
@@ -581,6 +593,9 @@
     </None>
     <None Include="bin_debug\apex_tradeparam.map">
       <Filter>业务层\顶点\debug</Filter>
+    </None>
+    <None Include="bin_release\t2sdk.ini">
+      <Filter>配置文件\release</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -687,6 +702,12 @@
     </Text>
     <Text Include="bin_release\ChangeLog.txt">
       <Filter>配置文件\release</Filter>
+    </Text>
+    <Text Include="bin_release\versionandroid.txt">
+      <Filter>客户端版本管理\release</Filter>
+    </Text>
+    <Text Include="bin_debug\versionandroid.txt">
+      <Filter>客户端版本管理\debug</Filter>
     </Text>
   </ItemGroup>
 </Project>

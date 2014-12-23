@@ -158,10 +158,10 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 	Fix_CreateHead(session, boost::lexical_cast<long>(funcid));
 
 	
-	for (std::map<std::string, std::string>::iterator it = reqmap.begin(); it != reqmap.end(); it++)
+	for (std::vector<std::string>::iterator it = keys.begin(); it != keys.end(); it++)
 	{
-		std::string key = it->first;
-		std::string value = it->second;
+		std::string key = *it;
+		std::string value = reqmap[key];
 
 		
 		

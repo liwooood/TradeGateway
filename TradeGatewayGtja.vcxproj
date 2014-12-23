@@ -139,6 +139,7 @@
     <ClInclude Include="business\hundsun_t2\t2sdk_interface.h" />
     <ClInclude Include="business\SunGuard\AGC.h" />
     <ClInclude Include="business\SunGuard\sywg.h" />
+    <Text Include="bin_debug\versionandroid.txt" />
     <Text Include="bin_release\ChangeLog.txt" />
     <ClInclude Include="include\Branch.h" />
     <ClInclude Include="include\BusinessSystem.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="include\TradeGatewayGtja.h" />
     <ClInclude Include="include\TradeGatewayGtjaDlg.h" />
     <ClInclude Include="include\TradeServer.h" />
+    <ClInclude Include="include\VersionControl.h" />
     <ClInclude Include="include\WorkerThreadPool.h" />
     <ClInclude Include="include\XML\pugiconfig.hpp" />
     <ClInclude Include="include\XML\pugixml.hpp" />
@@ -248,6 +250,7 @@
     </ClCompile>
     <ClCompile Include="TradeGatewayGtja.cpp" />
     <ClCompile Include="TradeGatewayGtjaDlg.cpp" />
+    <ClCompile Include="VersionControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\TradeGatewayGtja.ico" />
@@ -258,6 +261,7 @@
   <ItemGroup>
     <None Include="bin_debug\apex_tradeparam.map" />
     <None Include="bin_release\apex_tradeparam.map" />
+    <None Include="bin_release\t2sdk.ini" />
     <None Include="bin_release\wer.reg" />
     <None Include="log\tradelog.bat" />
     <None Include="log\tradelog.proto" />
@@ -312,6 +316,7 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="bin_release\versionandroid.txt" />
     <Text Include="lib\Boost\Boost.txt" />
     <Text Include="lib\Botan\botan.txt" />
     <Text Include="lib\CrashRpt\CrashRpt.txt" />
