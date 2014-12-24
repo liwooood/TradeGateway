@@ -8,7 +8,7 @@
 
 #include "IBusiness.h"
 #include "DingDian.h"
-
+#include "VersionControl.h"
 
 class TradeBusinessDD : public IBusiness
 {
@@ -29,5 +29,6 @@ private:
 
 	
 	CDingDian dd; 
+	VersionControl vc;
 };
 #endif

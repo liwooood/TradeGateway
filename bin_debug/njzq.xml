@@ -14,21 +14,22 @@
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>5</CounterType>
 
+      <!--业务模式 0柜台连接池模式 1会话模式，金仕达模式只能使用会话模式-->
+      <CounterMode>0</CounterMode>
+      
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
-      <recv_timeout>60</recv_timeout>
+      <recv_timeout>10</recv_timeout>
 
       <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
-      <connect_timeout>10</connect_timeout>
+      <connect_timeout>1</connect_timeout>
 
-      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
-      <idle_timeout>540</idle_timeout>
+    
 
       <!-- 柜员代码 -->
       <gydm>99995559</gydm>
 
       <!--委托方式-->
-      <wtfs_web>32</wtfs_web>
-      <wtfs_mobile>256</wtfs_mobile>
+       <entrust>256</entrust>
 
 
       <branch>
@@ -36,9 +37,24 @@
         <enable>1</enable>
         <server>
           <enable>1</enable>
+          <ip>172.25.0.235</ip>
+          <port>9101</port>
+          
+          <!--以下信息金证柜台专用-->
           <servername>KCBP01</servername>
-          <ip>221.226.125.220</ip>
-          <port>8080</port>
+          <username>KCXP00</username>
+          <password>888888</password>
+          <req>req_zb</req>
+          <res>ans_zb</res>
+        </server>
+        
+        <server>
+          <enable>1</enable>
+          <ip>172.25.0.102</ip>
+          <port>9101</port>
+          
+          <!--以下信息金证柜台专用-->
+          <servername>KCBP01</servername>
           <username>KCXP00</username>
           <password>888888</password>
           <req>req_zb</req>
@@ -56,25 +72,32 @@
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>1</CounterType>
 
+      <!--业务模式 0柜台连接池模式 1会话模式，金仕达模式只能使用会话模式-->
+      <CounterMode>0</CounterMode>
+
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
       <recv_timeout>10</recv_timeout>
 
       <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
       <connect_timeout>1</connect_timeout>
 
-      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
-      <idle_timeout>540</idle_timeout>
+   
+      <!-- 柜员代码 -->
+      <gydm>99995559</gydm>
 
-
+      <!--委托方式-->
+      <entrust>256</entrust>
 
       <branch>
         <branch_list>0000</branch_list>
         <enable>1</enable>
         <server>
           <enable>1</enable>
+          <ip>172.25.0.55</ip>
+          <port>19001</port>
+          
+          <!--以下信息金证柜台专用-->
           <servername>KCBP01</servername>
-          <ip>221.226.125.220</ip>
-          <port>8080</port>
           <username>KCXP00</username>
           <password>888888</password>
           <req>req_zb</req>
@@ -99,30 +122,34 @@
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>5</CounterType>
 
+      <!--业务模式 0柜台连接池模式 1会话模式，金仕达模式只能使用会话模式-->
+      <CounterMode>0</CounterMode>
+      
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
-      <recv_timeout>60</recv_timeout>
+      <recv_timeout>10</recv_timeout>
 
       <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
-      <connect_timeout>10</connect_timeout>
+      <connect_timeout>1</connect_timeout>
 
-      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
-      <idle_timeout>540</idle_timeout>
+      
 
       <!-- 柜员代码 -->
       <gydm>99995559</gydm>
 
       <!--委托方式-->
-      <wtfs_web>32</wtfs_web>
-      <wtfs_mobile>256</wtfs_mobile>
+      <entrust>32</entrust>
+      
 
       <branch>
         <branch_list>0000</branch_list>
         <enable>1</enable>
         <server>
           <enable>1</enable>
+          
+          <ip>172.25.0.235</ip>
+          <port>9101</port>
+          <!--以下信息金证柜台专用-->
           <servername>KCBP01</servername>
-          <ip>221.226.125.220</ip>
-          <port>8080</port>
           <username>KCXP00</username>
           <password>888888</password>
           <req>req_zb</req>
@@ -144,30 +171,33 @@
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>5</CounterType>
 
+      <!--业务模式 0柜台连接池模式 1会话模式，金仕达模式只能使用会话模式-->
+      <CounterMode>0</CounterMode>
+      
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
-      <recv_timeout>180</recv_timeout>
+      <recv_timeout>10</recv_timeout>
 
       <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
-      <connect_timeout>10</connect_timeout>
+      <connect_timeout>1</connect_timeout>
 
-      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
-      <idle_timeout>540</idle_timeout>
-
+  
       <!-- 柜员代码 -->
       <gydm>99995559</gydm>
 
       <!--委托方式-->
-      <wtfs_web>32</wtfs_web>
-      <wtfs_mobile>256</wtfs_mobile>
+      <entrust>32</entrust>
+      
 
       <branch>
         <branch_list>0000</branch_list>
         <enable>1</enable>
         <server>
           <enable>1</enable>
+          
+          <ip>172.25.0.235</ip>
+          <port>9101</port>
+          <!--以下信息金证柜台专用-->
           <servername>KCBP01</servername>
-          <ip>221.226.125.220</ip>
-          <port>8080</port>
           <username>KCXP00</username>
           <password>888888</password>
           <req>req_zb</req>
@@ -189,30 +219,33 @@
       <!-- 柜台类型：1.恒生T2, 2.恒生COM 3.金证windows 4.金证linux， 5.顶点  6.金仕达， 7.核新同花顺统一认证-->
       <CounterType>5</CounterType>
 
+      <!--业务模式 0柜台连接池模式 1会话模式，金仕达模式只能使用会话模式-->
+      <CounterMode>0</CounterMode>
+      
       <!-- 请求处理超时时间：秒 （如果柜台api没有提供接口则无效）-->
-      <recv_timeout>180</recv_timeout>
+      <recv_timeout>10</recv_timeout>
 
       <!-- 连接超时：秒（如果柜台api没有提供接口则无效）-->
-      <connect_timeout>10</connect_timeout>
+      <connect_timeout>1</connect_timeout>
 
-      <!-- 柜台连接，在idle_timeout时间内没有产生数据流量，则被强制中断并重连，单位秒, 540=60*9-->
-      <idle_timeout>540</idle_timeout>
 
       <!-- 柜员代码 -->
       <gydm>99995559</gydm>
 
       <!--委托方式-->
-      <wtfs_web>32</wtfs_web>
-      <wtfs_mobile>256</wtfs_mobile>
+      <entrust>32</entrust>
+     
 
       <branch>
         <branch_list>0000</branch_list>
         <enable>1</enable>
         <server>
           <enable>1</enable>
+          
+          <ip>172.25.0.235</ip>
+          <port>9101</port>
+          <!--以下信息金证柜台专用-->
           <servername>KCBP01</servername>
-          <ip>221.226.125.220</ip>
-          <port>8080</port>
           <username>KCXP00</username>
           <password>888888</password>
           <req>req_zb</req>

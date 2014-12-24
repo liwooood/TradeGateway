@@ -53,6 +53,98 @@ bool TradeBusinessDD::Send(std::string& request, std::string& response, int& sta
 
 	ParseRequest(request);
 
+	// 针对客户端版本更新的特殊处理
+	if (funcid.compare("190101") == 0 && sysVer.compare("aphone") == 0)
+	{
+		std::string ver = "";
+		ver = reqmap["cssweb_appversion"];
+		if (ver.length() == 0 || ver.compare("") == 0 )
+		{
+			response = "1";
+			response += SOH;
+			response += "3";
+			response += SOH;
+
+			response += "cssweb_code";
+			response += SOH;
+			response += "cssweb_msg";
+			response += SOH;
+			response += "cssweb_gwInfo";
+			response += SOH;
+
+			response += "0";
+			response += SOH;
+			response += gVersionControl::instance().forceupdatemsg;
+			response += SOH;
+			response += "0.0.0.0:5000";
+			response += SOH;
+
+			status = 1;
+			errCode = "";
+			errMsg = "";
+			goto FINISH;
+		}
+
+		if ( gVersionControl::instance().mapVersions.find(ver) != gVersionControl::instance().mapVersions.end())
+		{
+			std::string update = gVersionControl::instance().mapVersions[ver];
+			if (update.compare("force") == 0)
+			{
+				response = "1";
+				response += SOH;
+				response += "3";
+				response += SOH;
+
+				response += "cssweb_code";
+				response += SOH;
+				response += "cssweb_msg";
+				response += SOH;
+				response += "cssweb_gwInfo";
+				response += SOH;
+
+				response += "0";
+				response += SOH;
+				response += gVersionControl::instance().forceupdatemsg;
+				response += SOH;
+				response += "0.0.0.0:5000";
+				response += SOH;
+
+				status = 1;
+				errCode = "";
+				errMsg = "";
+
+				goto FINISH;
+			}
+		}
+		else
+		{
+			response = "1";
+			response += SOH;
+			response += "3";
+			response += SOH;
+
+			response += "cssweb_code";
+			response += SOH;
+			response += "cssweb_msg";
+			response += SOH;
+			response += "cssweb_gwInfo";
+			response += SOH;
+
+			response += "0";
+			response += SOH;
+			response += gVersionControl::instance().forceupdatemsg;
+			response += SOH;
+			response += "0.0.0.0:5000";
+			response += SOH;
+
+			status = 1;
+			errCode = "";
+			errMsg = "";
+
+			goto FINISH;
+		}
+	}
+
 	// 南京证券禁止修改资料功能
 	if ( (sysNo.compare("njzq_jlp") == 0 || sysNo.compare("njzq_flash") == 0) && funcid.compare("202002") == 0)
 	{
