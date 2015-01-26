@@ -1,2 +1,35 @@
 因为用到了压缩功能，所以编译boost的时候需要指定zlib源代码，使用boost::iostream的功能
 b2 --prefix=d:\boost\1.57 -sZLIB_SOURCE=d:\zlib\zlib-1.2.8 toolset=msvc-12.0 install
+
+
+二、编译
+
+1.打开Visual Studio 2013  x86 native Tools命令提示窗口
+
+2.进入对应的目录
+
+cd E:\thirdlib\boost_1_57_0\tools\build
+
+3.执行bootstrap.bat
+
+在E:\third lib\boost_1_57_0\tools\build会生成 bjam.exe文件.
+
+4.Copy bjam.exe 到boost的根目录
+
+copy bjam.exe 到 E:\thirdlib\boost_1_57_0 下
+
+6.进入boost的根目录
+
+cd E:\thirdlib\boost_1_57_0 
+
+7.执行bjam.exe 编译命令，如下：
+
+可以编译静态库和动态库，个人推荐编译静态库。
+
+(1)编译所有boost静态库 （release|debug），包括头文件和库文件
+
+bjam --toolset=msvc-12.0 --prefix=E:\thirdlib\boost_1_57_0 \output --without-python --build-type=complete  link=static   threading=multi install
+(2)编译所有boost动态库 （release|debug），包括头文件和库文件
+
+bjam --toolset=msvc-12.0 --prefix=E:\thirdlib\boost_1_57_0 \output --without-python --build-type=complete  link=shared  threading=multi install
+

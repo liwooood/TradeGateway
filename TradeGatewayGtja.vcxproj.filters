@@ -188,6 +188,12 @@
     <Filter Include="客户端版本管理\release">
       <UniqueIdentifier>{82973a51-6a83-4cf5-a50a-c23a98aab8bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="网络层\Boost::ASIO">
+      <UniqueIdentifier>{77b0d1c5-a338-4d57-bf83-f26059db6b38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="网络层\ACE">
+      <UniqueIdentifier>{9abaafc3-95f5-46db-8229-7fd053085421}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -265,9 +271,6 @@
     <ClInclude Include="include\TradeServer.h">
       <Filter>业务层</Filter>
     </ClInclude>
-    <ClInclude Include="include\MyBotan.h">
-      <Filter>加解密</Filter>
-    </ClInclude>
     <ClInclude Include="include\IMessage.h">
       <Filter>网络层\网络消息</Filter>
     </ClInclude>
@@ -316,24 +319,6 @@
     <ClInclude Include="include\TradeBusinessTest.h">
       <Filter>业务层\仿真柜台</Filter>
     </ClInclude>
-    <ClInclude Include="include\IOServicePool.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SSLServer.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
-    <ClInclude Include="include\TcpServer.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ISession.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SSLSession.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
-    <ClInclude Include="include\TcpSession.h">
-      <Filter>网络层</Filter>
-    </ClInclude>
     <ClInclude Include="include\ConnectManager.h">
       <Filter>柜台连接池</Filter>
     </ClInclude>
@@ -376,6 +361,27 @@
     <ClInclude Include="include\VersionControl.h">
       <Filter>客户端版本管理</Filter>
     </ClInclude>
+    <ClInclude Include="include\IOServicePool.h">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ISession.h">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SSLServer.h">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SSLSession.h">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TcpServer.h">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TcpSession.h">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MyBotan.h.txt">
+      <Filter>加解密</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -389,12 +395,6 @@
     </ClCompile>
     <ClCompile Include="cache\CacheData.cpp">
       <Filter>缓存</Filter>
-    </ClCompile>
-    <ClCompile Include="encrypt\MyBotan.cpp">
-      <Filter>加解密</Filter>
-    </ClCompile>
-    <ClCompile Include="encrypt\testbotan.cpp">
-      <Filter>加解密</Filter>
     </ClCompile>
     <ClCompile Include="output\FileLog.cpp">
       <Filter>调试输出</Filter>
@@ -477,21 +477,6 @@
     <ClCompile Include="business\xinyi\TradeBusinessTest.cpp">
       <Filter>业务层\仿真柜台</Filter>
     </ClCompile>
-    <ClCompile Include="network\ssl_tcp\SSLServer.cpp">
-      <Filter>网络层</Filter>
-    </ClCompile>
-    <ClCompile Include="network\ssl_tcp\TcpServer.cpp">
-      <Filter>网络层</Filter>
-    </ClCompile>
-    <ClCompile Include="network\ISession.cpp">
-      <Filter>网络层</Filter>
-    </ClCompile>
-    <ClCompile Include="network\ssl_tcp\SSLSession.cpp">
-      <Filter>网络层</Filter>
-    </ClCompile>
-    <ClCompile Include="network\ssl_tcp\TcpSession.cpp">
-      <Filter>网络层</Filter>
-    </ClCompile>
     <ClCompile Include="ConnectPool\Branch.cpp">
       <Filter>柜台连接池\配置信息</Filter>
     </ClCompile>
@@ -521,6 +506,24 @@
     </ClCompile>
     <ClCompile Include="VersionControl.cpp">
       <Filter>客户端版本管理</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ISession.cpp">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ssl_tcp\SSLServer.cpp">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ssl_tcp\SSLSession.cpp">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ssl_tcp\TcpServer.cpp">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ssl_tcp\TcpSession.cpp">
+      <Filter>网络层\Boost::ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="encrypt\MyBotan.cpp.txt">
+      <Filter>加解密</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -708,6 +711,9 @@
     </Text>
     <Text Include="bin_debug\versionandroid.txt">
       <Filter>客户端版本管理\debug</Filter>
+    </Text>
+    <Text Include="encrypt\testbotan.cpp.txt">
+      <Filter>加解密</Filter>
     </Text>
   </ItemGroup>
 </Project>

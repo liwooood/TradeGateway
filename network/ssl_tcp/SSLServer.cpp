@@ -8,7 +8,7 @@
 SSLServer::SSLServer(unsigned short port, QueueType& q, int msgType, int ioThreadNum)
 		:iosPool(*boost::factory<IOServicePool*>()(ioThreadNum))
 		,queue(q)
-		,acceptor(iosPool.get(),boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+		,acceptor(iosPool.get(),boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port), true)
 		,context(boost::asio::ssl::context::sslv23)
 		//,m_session()
 {

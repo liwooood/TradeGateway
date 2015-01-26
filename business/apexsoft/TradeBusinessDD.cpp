@@ -8,7 +8,7 @@
 
 #include "TradeBusinessDD.h"
 #include "ConfigManager.h"
-#include "mybotan.h"
+
 #include "FileLog.h"
 #include "CacheData.h"
 #include "errcode.h"

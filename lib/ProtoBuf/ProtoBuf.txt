@@ -2,4 +2,4 @@ protobuf 2.4.1
       //proto_path_.push_back(make_pair<string, string>(virtual_path, disk_path));
 	  proto_path_.push_back(make_pair(virtual_path, disk_path));
 
-
+已使用pb2.6.0，以上问题已不存在

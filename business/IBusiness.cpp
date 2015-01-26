@@ -9,7 +9,7 @@
 #include "ConfigManager.h"
 #include "FileLog.h"
 #include "ConnectManager.h"
-#include "MyBotan.h"
+
 
 
 IBusiness::IBusiness(void)

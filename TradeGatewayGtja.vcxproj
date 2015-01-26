@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,14 +19,14 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -61,8 +61,8 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\;.\include;D:\boost\1.55\include\boost-1_55\;D:\protobuf\protobuf-2.4.1\src;d:\openssl\include;d:\botan\debug\include;d:\crashrpt\include;d:\icu\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;.\include;D:\boost\1.57\include\boost-1_57\;D:\protobuf\protobuf-2.6.0\src;d:\openssl\include;d:\botan\debug\include;d:\crashrpt\include;d:\icu\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NO_WARN_MBCS_MFC_DEPRECATION;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -80,7 +80,7 @@
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>bin_debug\TradeGateway.exe</OutputFile>
-      <AdditionalLibraryDirectories>D:\boost\1.55\lib;D:\protobuf\protobuf-2.4.1\vsprojects\Debug;d:\openssl\lib;d:\botan\debug\;D:\CrashRpt\lib;d:\icu\icu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\boost\1.57\lib;D:\protobuf\protobuf-2.6.0\vsprojects\Debug;d:\openssl\lib;d:\botan\debug\;D:\CrashRpt\lib;d:\icu\icu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -103,14 +103,15 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>.\;.\include;D:\boost\1.55\include\boost-1_55\;D:\protobuf\protobuf-2.4.1\src;d:\openssl\include;d:\botan\release\include;d:\crashrpt\include;d:\icu\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;.\include;D:\boost\1.57\include\boost-1_57\;D:\protobuf\protobuf-2.6.0\src;d:\openssl\include;d:\botan\release\include;d:\crashrpt\include;d:\icu\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NO_WARN_MBCS_MFC_DEPRECATION;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -120,7 +121,7 @@
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>bin_release\TradeGateway.exe</OutputFile>
-      <AdditionalLibraryDirectories>D:\boost\1.55\lib;D:\protobuf\protobuf-2.4.1\vsprojects\Release;d:\openssl\lib;d:\botan\release\;d:\ocilib\ocilib\lib32\;D:\ImageMagick\ImageMagick-6.8.7-Q16\lib;d:\crashrpt\lib;d:\icu\icu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\boost\1.57\lib;D:\protobuf\protobuf-2.6.0\vsprojects\Release;d:\openssl\lib;d:\botan\release\;d:\ocilib\ocilib\lib32\;D:\ImageMagick\ImageMagick-6.8.7-Q16\lib;d:\crashrpt\lib;d:\icu\icu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -165,7 +166,9 @@
     <ClInclude Include="include\QueueThreadSafe.h" />
     <ClInclude Include="include\MiniDump.h" />
     <ClInclude Include="include\MsgHeader.h" />
-    <ClInclude Include="include\MyBotan.h" />
+    <Text Include="include\MyBotan.h.txt">
+      <FileType>CppHeader</FileType>
+    </Text>
     <ClInclude Include="include\SslMessagePB.h" />
     <ClInclude Include="include\SSLServer.h" />
     <ClInclude Include="include\SSLSession.h" />
@@ -222,8 +225,9 @@
     <ClCompile Include="ConnectPool\ConnectManager.cpp" />
     <ClCompile Include="ConnectPool\ConnectPool.cpp" />
     <ClCompile Include="ConnectPool\Counter.cpp" />
-    <ClCompile Include="encrypt\MyBotan.cpp" />
-    <ClCompile Include="encrypt\testbotan.cpp" />
+    <Text Include="encrypt\MyBotan.cpp.txt">
+      <FileType>CppCode</FileType>
+    </Text>
     <ClCompile Include="include\XML\pugixml.cpp" />
     <ClCompile Include="log\DistributedLogManager.cpp" />
     <ClCompile Include="log\FileLogManager.cpp" />
@@ -298,7 +302,9 @@
     <Xml Include="bin_debug\FilterFunc_JZ.xml" />
     <Xml Include="bin_debug\FilterFunc_Test.xml" />
     <Xml Include="bin_debug\gtja.xml" />
-    <Xml Include="bin_debug\njzq.xml" />
+    <Xml Include="bin_debug\njzq.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="bin_debug\sywg.xml" />
     <Xml Include="bin_debug\test.xml" />
     <Xml Include="bin_debug\tradegateway.xml">
@@ -317,6 +323,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="bin_release\versionandroid.txt" />
+    <Text Include="encrypt\testbotan.cpp.txt" />
     <Text Include="lib\Boost\Boost.txt" />
     <Text Include="lib\Botan\botan.txt" />
     <Text Include="lib\CrashRpt\CrashRpt.txt" />

@@ -9,7 +9,7 @@
 TcpServer::TcpServer(unsigned short port, QueueType& q, int msgType, int ioThreadNum):
 	  iosPool(*boost::factory<IOServicePool*>()(ioThreadNum)),
 	  queue(q),
-	  acceptor(iosPool.get(), TCPType::endpoint(TCPType::v4(), port))
+	  acceptor(iosPool.get(), TCPType::endpoint(TCPType::v4(), port), true)
 	  //,session()
 {
 	this->msgType = msgType;

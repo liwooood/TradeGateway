@@ -15,7 +15,7 @@
 //ICU
 //#include <unicode/putil.h>
 //#include <unicode/ucnv.h>
-#include "mybotan.h"
+
 
 #include "FileLog.h"
 

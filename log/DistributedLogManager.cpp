@@ -8,7 +8,7 @@
 #include "FileLog.h"
 #include "LogConnect.h"
 #include "LogConnectPool.h"
-#include "mybotan.h"
+
 
 
 DistributedLogManager::DistributedLogManager(void)
@@ -179,7 +179,7 @@ bool DistributedLogManager::kafka_log(Trade::TradeLog log)
 
 	json += "\"request\":\"";
 	std::string b64Request = "";
-	g_MyBotan.Base64Encoder((const unsigned char*) sFilterRequest.c_str(), sFilterRequest.length(), b64Request);
+	//g_MyBotan.Base64Encoder((const unsigned char*) sFilterRequest.c_str(), sFilterRequest.length(), b64Request);
 	json += b64Request;
 	json += "\",";
 
@@ -249,7 +249,7 @@ bool DistributedLogManager::kafka_log(Trade::TradeLog log)
 	
 	json += "\"response\":\"";
 	std::string b64Response = "";
-	g_MyBotan.Base64Encoder((const unsigned char*) log.response().c_str(), log.response().length(), b64Response);
+	//g_MyBotan.Base64Encoder((const unsigned char*) log.response().c_str(), log.response().length(), b64Response);
 	json += b64Response;
 	json += "\",";
 
