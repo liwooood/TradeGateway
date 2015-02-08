@@ -287,7 +287,7 @@ bool FileLogManager::file_log(Trade::TradeLog log)
 		sLogFileName += account;
 
 	// 功能号
-	sLogFileName += "_" + funcid;
+	//sLogFileName += "_" + funcid;
 
 	/*
 	//日志级别

@@ -3,7 +3,7 @@
 
 // 版本信息
 #define VERSION  "3.0"
-#define MY_BOOST_VERSION "1.55"
+#define MY_BOOST_VERSION "1.57"
 #define SSL_VERSION "1.0.1g"
 
 // 柜台类型

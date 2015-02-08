@@ -379,9 +379,6 @@
     <ClInclude Include="include\TcpSession.h">
       <Filter>网络层\Boost::ASIO</Filter>
     </ClInclude>
-    <ClInclude Include="include\MyBotan.h.txt">
-      <Filter>加解密</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -521,9 +518,6 @@
     </ClCompile>
     <ClCompile Include="network\ssl_tcp\TcpSession.cpp">
       <Filter>网络层\Boost::ASIO</Filter>
-    </ClCompile>
-    <ClCompile Include="encrypt\MyBotan.cpp.txt">
-      <Filter>加解密</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -713,6 +707,12 @@
       <Filter>客户端版本管理\debug</Filter>
     </Text>
     <Text Include="encrypt\testbotan.cpp.txt">
+      <Filter>加解密</Filter>
+    </Text>
+    <Text Include="encrypt\MyBotan.cpp.txt">
+      <Filter>加解密</Filter>
+    </Text>
+    <Text Include="include\MyBotan.h.txt">
       <Filter>加解密</Filter>
     </Text>
   </ItemGroup>
